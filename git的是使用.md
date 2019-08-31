@@ -1,4 +1,23 @@
 
+# 安装
+centos 7 安装
+
++ 查看是否安装了
+rpm -qa|grep git
++ 若已安装需要先卸载
+rpm -e --nodeps git  或者  rpm -e git
++ 安装git
+yum install git
+
+
+
+## 注意
+执行一下 这个命令：
+
+git config --global credential.helper store
+
+然后，下次再输入一次 账号密码 就可以了。
+
 
 一 基本知识
 
