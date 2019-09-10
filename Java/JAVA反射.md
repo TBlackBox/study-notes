@@ -215,7 +215,7 @@ Method --> public Object invoke(Object obj,Object… args):
 
 # 总结
 
-理解反射后，你会发现发射很强大。特别是在需要切换业务时，假如通过非反射的方法实现，需要修改代码，new 不同的对象。但如果使用反射，就只需要修改配置文件就可以了，学习了spring 后会堆反射有更深的理解。下面是一个读取配置的例子。
++ 理解反射后，你会发现发射很强大。特别是在需要切换业务时，假如通过非反射的方法实现，需要修改代码，new 不同的对象。但如果使用反射，就只需要修改配置文件就可以了，学习了spring 后会堆反射有更深的理解。下面是一个读取配置的例子。
 
 1. 新建一个text.txt
 
@@ -250,4 +250,28 @@ public static void main(String[] args) throws Exception {
         System.out.println(field.get(obj)); //输出哈哈哈
     }
 
+```
++ 通过反射越过泛型检查
+泛型是在编译期间起作用的。在编译后的.class文件中是没有泛型的。所有比如T或者E类型啊，本质都是通过Object处理的。所以可以通过使用反射来越过泛型。
+```
+ArrayList<String> list = new ArrayList<>();
+	list.add("this");
+	list.add("is");
+	
+	//	strList.add(5);报错
+	
+	/********** 越过泛型检查    **************/
+	
+	//获取ArrayList的Class对象，反向的调用add()方法，添加数据
+	Class listClass = list.getClass(); 
+	//获取add()方法
+	Method m = listClass.getMethod("add", Object.class);
+	//调用add()方法
+	m.invoke(list, 5);
+	
+	//遍历集合
+	for(Object obj : list){
+		System.out.println(obj);
+		}
+	}
 ```
