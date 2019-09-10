@@ -38,6 +38,10 @@ public class User {
 	public String username;		//用户名
 	public int sex;				//性别
 	public float balance;		//余额
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
 }
 
 ```
@@ -106,6 +110,8 @@ User user =constructor.newInstance(实参);
 接下来都是通过constructor获取对象的实例了，多不展示代码了，
 
 **说明：形参。class,例如：float.class。实参，表示对应的要初始化的数据，例如：5.2f** 
+
+**Constructor 类,代表类的构造方法, 里面有方法  newInstance(Object... initargs)	根据传递的参数创建类的对象**
 
 5. 获取创建对象的属性的方法 
 
@@ -190,4 +196,58 @@ Method --> public Object invoke(Object obj,Object… args):
 
   args:调用方式时所传递的实参；
 
+调用实例
 
+```
+	//获取类对象   常用
+	Class pClass = Class.forName(className);
+	Constructor Constructor = pClass.getConstructor();
+	User user =(User) Constructor.newInstance(null);
+	
+	Method m = pClass.getMethod("setUsername", String.class);
+	m.invoke(user, "haha");
+	//通过反射修改属性
+	Field  field = pClass.getDeclaredField("username");
+	System.out.println(field.get(user));
+
+```
+
+
+# 总结
+
+理解反射后，你会发现发射很强大。特别是在需要切换业务时，假如通过非反射的方法实现，需要修改代码，new 不同的对象。但如果使用反射，就只需要修改配置文件就可以了，学习了spring 后会堆反射有更深的理解。下面是一个读取配置的例子。
+
+1. 新建一个text.txt
+
+```
+class=test.User
+method=setUsername
+```
+
+2. 通过反射调用方法
+
+```
+public static void main(String[] args) throws Exception {
+        //从text.txt中获取类名称和方法名称
+        File springConfigFile = new File("D:\\Jason\\project\\hbspace\\reflect\\src\\test\\text.txt");
+        Properties springConfig= new Properties();
+        springConfig.load(new FileInputStream(springConfigFile));
+        String className = (String) springConfig.get("class");
+        String methodName = (String) springConfig.get("method");
+        System.out.println(className); //输出test.User
+        System.out.println(methodName); //输出 setUsername
+        //根据类名称获取类对象
+        Class clazz = Class.forName(className);
+        //获取构造器
+        Constructor c = clazz.getConstructor();
+        //根据构造器，实例化出对象
+        Object obj = c.newInstance();
+        //根据方法名称，获取方法对象
+        Method m = clazz.getMethod(methodName,String.class);
+        //调用对象的指定方法
+        m.invoke(obj,"哈哈哈");
+        Field field = clazz.getDeclaredField("username");
+        System.out.println(field.get(obj)); //输出哈哈哈
+    }
+
+```
