@@ -29,30 +29,30 @@ spring:
 3. 通过JestClient操作ES
 在JestAutoConfiguration里注入了JestClient，通过他可以操作es.
 ```java
-	@Autowired
-	JestClient jestClient;
+@Autowired
+JestClient jestClient;
 
-	@Autowired
-	public void testJestClient() throws IOException {
-		//1. 构建一个索引功能
-		// user是要存的参数  test 是索引  tag1 是类型
-		Index index = new Index.Builder("user").index("test").type("tag1").build();
-		//2. 执行
-		jestClient.execute(index);
+@Autowired
+public void testJestClient() throws IOException {
+	//1. 构建一个索引功能
+	// user是要存的参数  test 是索引  tag1 是类型
+	Index index = new Index.Builder("user").index("test").type("tag1").build();
+	//2. 执行
+	jestClient.execute(index);
 
-		//搜索
-		//查询表达式
-		String json = "{\n" +
-				"    \"query\" : {\n" +
-				"        \"match_all\" : {}\n" +
-				"    }\n" +
-				"}'";
-		//构建搜索功能
-		Search search = new Search.Builder(json).addIndex("test").addType("type").build();
-		SearchResult  searchResult = jestClient.execute(search);
-		//通过searchResult获取信息
-		System.out.println(searchResult.getJsonObject());
-	}
+	//搜索
+	//查询表达式
+	String json = "{\n" +
+			"    \"query\" : {\n" +
+			"        \"match_all\" : {}\n" +
+			"    }\n" +
+			"}'";
+	//构建搜索功能
+	Search search = new Search.Builder(json).addIndex("test").addType("type").build();
+	SearchResult  searchResult = jestClient.execute(search);
+	//通过searchResult获取信息
+	System.out.println(searchResult.getJsonObject());
+}
 ```
 
 

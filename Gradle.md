@@ -1,27 +1,5 @@
 
-# 安装
 
-centos 7
-+ 创建文件夹
-mkdir /opt/gradle
-
-+ 下载
-wget https://downloads.gradle-dn.com/distributions/gradle-5.6.1-all.zip
-
-+ 解压 
-unzip /opt/gradle gradle-5.6.1-all.zip
-
-+ 配置 
-vim /etc/profile
-在底部添加 
-    PATH=$PATH:/opt/gradle/gradle-3.5/bin
-    export PATH
-
-+ 让配置生效
-source /etc/profile
-
-+ 检查是否完成
-gradle --version
 
 # 介绍
 Gradle是一个构建系统，脚本是用groovy写的
@@ -35,11 +13,9 @@ Gradle Wrapper的作用是简化Gradle本身的安装、部署。不同版本的
 ## 需要的环境
 JDK 6 以上 ，自带Groovy库，不用安装，其他安装将会被忽略
 
-官网和下载地址  
-    https://gradle.org/install/
+[官网和下载地址](https://gradle.org/install/)
 
-w3cschool教程
-    https://www.w3cschool.cn/gradle_user_guide/
+[w3cschool教程](https://www.w3cschool.cn/gradle_user_guide/)
 
 ## 基于两个概念
 
@@ -314,20 +290,57 @@ api/build.gradle
     }
 
 ## 命令
-* gradle -q projects
+* gradle -q projects  
 列出所有子项目名称
-* gradlew -q tasks 
-列出所有任务
-* gradlew -q help --task libs
+* gradlew -q tasks   
+列出所有任务  
+* gradlew -q help --task libs  
 指定任务的详细信息. 或者多项目构建中相同任务名称的所有任务的信息.
-* gradlew dependencies 
+* gradlew dependencies   
 列出项目的依赖列表, 所有依赖会根据任务区分,以树型结构展示出来.
-* gradle dependencyInsight 
-命令可以查看指定的依赖,例如：gradle -q webapp:dependencyInsight * * --dependency groovy --configuration compile
-* gradle properties 
+* gradle dependencyInsight   
+命令可以查看指定的依赖,例如：`gradle -q webapp:dependencyInsight * * --dependency groovy --configuration compile`
+* gradle properties   
 可以获取项目所有属性列表
-* --profile 参数可以收集一些构建期间的信息并保存到 build/reports/profile 目录下. 并且会以构建时间命名这些文件.
+* --profile  
+ 参数可以收集一些构建期间的信息并保存到 build/reports/profile 目录下. 并且会以构建时间命名这些文件.
 
 
 由于时间关系，先学到这来，还有更多的东西，需要深入学习。
 
+# 安装
+
+centos 7
++ 创建文件夹
+```
+mkdir /opt/gradle
+```
+
++ 下载
+```
+wget https://downloads.gradle-dn.com/distributions/gradle-5.6.1-all.zip
+```
+
++ 解压 
+```
+unzip /opt/gradle gradle-5.6.1-all.zip
+```
+
++ 配置 
+```
+vim /etc/profile
+```
+在底部添加 
+```
+    PATH=$PATH:/opt/gradle/gradle-5.6.1/bin
+    export PATH
+```
++ 让配置生效
+```
+source /etc/profile
+```
+
++ 检查是否完成
+```
+gradle --version
+```
