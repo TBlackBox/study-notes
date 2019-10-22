@@ -1,5 +1,5 @@
 # 简介
-springboot的redis缓存配置只需要引入starter,修改相应的配置文件即可。
+springboot提供了许多的缓存类型，redis缓存配置只需要引入starter,修改相应的配置文件即可。
 
 # 配置
 1. 添加starter
@@ -59,7 +59,7 @@ public class JsonRedisTemplate extends RedisTemplate {
 ```
 
 2. 创建redis配置类
-    ```java
+```java
     @Configuration
     public class RedisConfigtion {
         @Bean
@@ -74,6 +74,7 @@ public class JsonRedisTemplate extends RedisTemplate {
             return redisTemplate;
         }
     }
+
 ```
 
 **注意：如果需要序列化其他类型，改变序列化参数即可**
@@ -95,3 +96,6 @@ public class JsonRedisTemplate extends RedisTemplate {
 		System.out.println(json.getString("name"));
 	}
 ```
+
+# 总结
+这只是一个简单的配置用法，springboot的详细用法需要参照其他文档使用。
