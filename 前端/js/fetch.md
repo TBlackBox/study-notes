@@ -129,3 +129,74 @@ function testGetCookieRequestNoParame(){
 	});
 }
 ```
+
+
+# fetch的简单封装(需要更好的改进)
+```
+
+//test();
+function test(){
+	let data = GET('/menu/tree',null);
+	data.then(response => {
+		if(response.ok){
+			console.log("response:",response.json());
+		} 
+	}).catch();
+}
+
+/**
+ * GET请求
+ * @param url 请求地址
+ * @param data 请求参数
+ */
+async function GET(url, data) {
+	if(data !=null){
+		url += '?' + obj2String(data);
+	}
+	initObj = {
+	  method: 'GET',
+	  credentials: 'include'
+	}
+   return await fetch(url, initObj);
+}
+ 
+
+/**
+ * POST请求
+ * @param url 请求地址
+ * @param data 请求参数
+ */
+async function POST(url, data = null,headers = null) {
+	if(headers == null){
+		headers = new Headers({
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/x-www-form-urlencoded'
+	      })
+	}
+	
+	if(data != null){
+		data = obj2String(date);
+	}
+	
+	initObj = {
+      method: 'POST',
+      credentials: 'include',
+      headers: headers,
+      body: data
+    }
+  return await fetch(url, initObj);
+}
+
+
+/**
+ * 将对象转成 a=1&b=2的形式
+ * @param obj 对象
+ */
+function obj2String(obj, arr = [], idx = 0) {
+  for (let item in obj) {
+    arr[idx++] = [item, obj[item]]
+  }
+  return new URLSearchParams(arr).toString()
+}
+
+```
