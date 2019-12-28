@@ -1,7 +1,6 @@
 
 https://juejin.im/post/5a6eceb8f265da3e467555fe
 # 简介
-
 Lombok是一款好用顺手的工具，就像Google Guava一样，在此予以强烈推荐，每一个Java工程师都应该使用它。Lombok是一种Java™实用工具，可用来帮助开发人员消除Java的冗长代码，尤其是对于简单的Java对象（POJO）。它通过注释实现这一目的。通过在开发环境中实现Lombok，开发人员可以节省构建诸如hashCode()和equals()这样的方法以及以往用来分类各种accessor和mutator的大量时间。
 
 # 2 IntelliJ安装Lombok
@@ -22,9 +21,6 @@ setting -> plugins   搜索  lombok
 
 ```
    
-
-
-
 # Lombok注解说明
 
 val：用在局部变量前面，相当于将变量声明为final
