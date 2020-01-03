@@ -115,4 +115,162 @@ stream.forEach(System.out::println);
 |limit(long MaxSize)| 截断流，使其元素不超过给定的数量|
 |skip(long n)|跳过元素，返回一个扔掉了前n个元素的流。若流中的元素不足n个，则返回一个空流。与limit(n)互补|
 
-2.
+
+2. 映射
+| 方法 | 描述 |
+|----------|---------|
+|map(Function f)|接受一个函数作为参数，该函数会被应用到每个元素上，并将其映射成一个新的元素|
+|mapToDouble(ToDoubleFunction f)|接受一个函数作为参数，该函数会被应用到每个元素上，产生一个新的DoubleStream,同理函数可以是`mapToInt` `mapToLong`|
+|flatMap(Function f)|接收一个函数作为参数，将流中的每一个值都换成另外一个流，然后将所有流链接成一个流|
+
+3. 排序
+|方法|描述|
+|---------|----------|
+|sorted()|产生一个新流，其中按自然顺序排序|
+|sorted(Comparatr comp)|产生一个新流，其中按照比较器的顺序排序|
+
+
+# Stream的终止操作
+终端操作会从流的流水线生产结果，其结果可以是任何不时流的值，例如：List,Integer,慎重void。下面看一下有哪些终端操作。
+1. 查找与匹配
+|方法|描述|
+|--------|----------|
+|allMatch(Predicate )|检查是否匹配所有元素|
+|anyMatch(Predicate p)|检查是否至少匹配一个元素|
+|noneMatch(Predicate p)|检查是否没有匹配所有元素|
+|findFirst()|返回第一个元素|
+|findAny()|返回当前流中的任意元素|
+|count()|返回流中元素总数|
+|max(Comparator c)|返回流中最大值|
+|min(Comparatoc c)|返回流中最小值|
+|forEach(Consumer c)|内部迭代（使用Collection接口需要用户去做迭代，称为外部部迭代，相反，Stream API 使用内部迭代——他帮你把迭代做了）|
+
+2. 归约
+|方法|描述|
+|--------|----------|
+|reduce(T iden,BinaryOperator b)|可以将流中的元素反复结合起来，得到一个值。返回 T,iden:为初始值，没有为空的情况|
+|reduce(BinaryOperator b)|可以将流中的元素反复结合起来，得到一个值，返回Optional<T>,因为没有初始值，可能存在为空的情况，所有返回Optional<T>|
+
+3. 收集
+|方法|描述|
+|---------|---------|
+|collect(Collector c)|将流转化为其他形式，接受一个Collector接口的实现，用于给Dtream中的元素做汇总的方法|
+
+`Collector`接口中的方法实现决定了如何对流执行收集操作(如收集到`List`,`Set`,`Map`)。Collectors适用类提供了很多的静态方法，可以方便地创建收集器实例。
+
+*** 常用的说明 ***
+为方便说明,构建下面的列表
+```
+List<Employee> emps = Arrays.asList(
+            new Employee(102, "李四", 79, 6666.66, Status.BUSY),
+            new Employee(101, "张三", 18, 9999.99, Status.FREE),
+            new Employee(103, "王五", 28, 3333.33, Status.VOCATION),
+            new Employee(104, "赵六", 8, 7777.77, Status.BUSY),
+            new Employee(104, "赵六", 8, 7777.77, Status.FREE),
+            new Employee(104, "赵六", 8, 7777.77, Status.FREE),
+            new Employee(105, "田七", 38, 5555.55, Status.BUSY)
+);
+```
+上面的字段分别表示，员工ID,名字，年龄，工资，工作状态
+
+* 获取所有工资的总和
+```
+Optional<Double> sum = emps.stream()
+            .map(Employee::getSalary)
+            .collect(Collectors.reducing(Double::sum));
+
+System.out.println(sum.get());
+
+```
+
+* 将名字转化为字符串，用`,`分隔，收尾加`+`
+```
+String str = emps.stream()
+            .map(Employee::getName)
+            .collect(Collectors.joining("," , "+", "+"));
+
+System.out.println(str);
+```
+
+* 分区
+
+工资大于5000一个集合，工资小于5000一个集合
+```
+Map<Boolean, List<Employee>> map = emps.stream()
+			.collect(Collectors.partitioningBy((e) -> e.getSalary() >= 5000));
+		
+System.out.println(map);
+```
+
+* 分组
+1. 单级分组
+```
+Map<Status, List<Employee>> map = emps.stream()
+                        .collect(Collectors.groupingBy(Employee::getStatus));
+            
+            System.out.println(map);
+```
+
+2. 多级分组
+下面就实现了先按照状态分，分类在按照年龄分组。
+```
+Map<Status, Map<String, List<Employee>>> map = emps.stream()
+			.collect(Collectors.groupingBy(Employee::getStatus, Collectors.groupingBy((e) -> {
+				if(e.getAge() >= 60)
+					return "老年";
+				else if(e.getAge() >= 35)
+					return "中年";
+				else
+					return "成年";
+			})));
+		
+System.out.println(map);
+
+```
+
+* 常用的操作
+```
+//获取工资最大
+Optional<Double> max = emps.stream()
+            .map(Employee::getSalary)
+            .collect(Collectors.maxBy(Double::compare));
+
+System.out.println(max.get());
+
+//获取工资最小
+Optional<Employee> op = emps.stream()
+            .collect(Collectors.minBy((e1, e2) -> Double.compare(e1.getSalary(), e2.getSalary())));
+
+System.out.println(op.get());
+
+//获取工资的和  返回double
+Double sum = emps.stream()
+            .collect(Collectors.summingDouble(Employee::getSalary));
+
+System.out.println(sum);
+
+//获取工资平均值 返回double
+Double avg = emps.stream()
+            .collect(Collectors.averagingDouble(Employee::getSalary));
+
+System.out.println(avg);
+
+//获取总数
+Long count = emps.stream()
+            .collect(Collectors.counting());
+
+System.out.println(count);
+
+System.out.println("--------------------------------------------");
+
+
+//通过这种形式也能获取上面的值 看DoubleSummaryStatistics的方法
+DoubleSummaryStatistics dss = emps.stream()
+            .collect(Collectors.summarizingDouble(Employee::getSalary));
+
+System.out.println(dss.getMax());
+
+```
+
+
+# 串行流和并行流
