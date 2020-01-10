@@ -35,7 +35,7 @@
 	415  Unsupported Media Type(媒体类型不支持)
 	416  Requested Range Not Satisfiable(请求范围不合要求)
 	417  Expectation Failed(预期结果失败)
-#服务器端错误
+# 服务器端错误
 	500  Internal Server Error(内部服务器错误)
 	501  Implemented(未实现)
 	502  Bad Gateway(网关错误)
