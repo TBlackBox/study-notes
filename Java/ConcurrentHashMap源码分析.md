@@ -4,7 +4,7 @@ http://www.jasongj.com/java/concurrenthashmap/
 
 # 简介
 
-1.8版本的并发HashMap相较与1.7的版本，去掉了分段锁，每次操作都在hash table的一个桶位上进行cas或加锁操作，细化了加锁粒度，提高并发能力。初次之外，在哈希冲突处理方面更新了增到8转红黑树，减到6转链表。
+1.8版本的并发HashMap相较与1.7的版本，去掉了分段锁，每次操作都在hash table的一个桶位上进行cas或加锁操作，细化了加锁粒度，提高并发能力。初次之外，在哈希冲突处理方面更新了增到8转红黑树，减到6转链表。ConcurrentHashMap 大量采用CAS的算法。
 
 
 
