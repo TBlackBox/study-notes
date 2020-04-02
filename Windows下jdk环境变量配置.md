@@ -9,3 +9,4 @@
 3.在path里加入  win10  ,win7记得用；分离
 	%JAVA_HOME%\bin
 	%JAVA_HOME%\jre\bin
+

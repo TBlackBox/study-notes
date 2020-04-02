@@ -66,7 +66,7 @@ Hello world!
     task hello << {
         println 'Hello world!'
     }
-
+    
     task intro(dependsOn: hello) << {
         println "I'm Gradle"
     }
@@ -131,9 +131,9 @@ gradle build 命令的输出：
     :test
     :check
     :build
-
+    
     BUILD SUCCESSFUL
-
+    
     Total time: 1 secs
 
 其余一些有用的任务是:
@@ -187,7 +187,7 @@ Java 插件加入的任务是常规性的任务,准确地说,就如同它们在�
 测试阶段加入一个系统属性
 
     build.gradle
-
+    
     test {
         systemProperties 'property': 'value'
     }
@@ -242,17 +242,17 @@ build.gradle
     subprojects {
         apply plugin: 'java'
         apply plugin: 'eclipse-wtp'
-
+    
         repositories {
         mavenCentral()
         }
-
+    
         dependencies {
             testCompile 'junit:junit:4.11'
         }
-
+    
         version = '1.0'
-
+    
         jar {
             manifest.attributes provider: 'gradle'
         }
@@ -284,7 +284,7 @@ api/build.gradle
             from configurations.runtime
         }
     }
-
+    
     artifacts {
     archives dist
     }
@@ -310,7 +310,7 @@ api/build.gradle
 
 # 安装
 
-centos 7
+## centos 7
 + 创建文件夹
 ```
 mkdir /opt/gradle
@@ -344,3 +344,22 @@ source /etc/profile
 ```
 gradle --version
 ```
+
+## windows 下安装
+
+1. 下载二进制文件
+下载地址：https://gradle.org/releases/
+[下载地址](https://gradle.org/releases/)
+下`binary-only `这个
+2. 配置环境变量
+新建系统变量
+名字
+```
+GRADLE_HOME
+```
+值（安装包方的地方）
+```
+D:\Jason\soft\gradle-6.1.1
+```
+3. 测试
+最后重新打开cmd命令行，输入：gradle -v  检查是否配置成功
