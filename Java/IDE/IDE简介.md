@@ -1,0 +1,3 @@
+# IDE简介
+
+Java方面现在用得最多JavaIDE应该是eclipse和IntellijIDE,eclipse 是老牌得，intellijIDE是后起之秀，但他的增量编译，智能分析等带来了性能提升，得到了大规模得认可，大有取代eclipse之势。

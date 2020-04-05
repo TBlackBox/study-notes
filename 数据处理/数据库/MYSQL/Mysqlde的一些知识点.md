@@ -208,3 +208,26 @@ SELECT * FROM t1 WHERE m1 IN (SELECT DISTINCT m2 FROM t2);
 ```
 SELECT * FROM t1 WHERE m1 IN (SELECT m2 FROM t2 GROUP BY m2);
 ```
+
+
+# 剖析单条查询
+
+## profiling的使用 
+1. 可以通过下面语句开启sql语句执行记录，默认是关闭。
+```
+set profiling = 1;
+```
+
+2. 显示SQL语句执行的时间，比较简单。
+```
+show profiles;
+```
+3. 比较详细的显示查询的信息
+```
+show profile for query 2;
+```
+4. 通过下面语句进行关闭。
+```
+set profiling = 0;
+```
+*** 注意：****如果要通过排序显示的话，看mysql高性能83页，如果要查看sql语句的执行计划的话，可以使用`explain` 。
