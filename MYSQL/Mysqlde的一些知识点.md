@@ -186,3 +186,25 @@ ALTER TABLE index_demo DROP INDEX idx_c2_c3;
 2. `SELECT`里的子查询必须是标量子查询(即查询的结果只有一条)
 3. 在想要得到标量子查询或者行子查询，但又不能保证子查询的结果集只有一条记录时，应该使用LIMIT 1语句来限制记录数量。
 4. 对于[NOT] IN/ANY/SOME/ALL子查询来说，子查询中不允许有LIMIT语句。
+5. 不允许在一条语句中增删改某个表的记录时同时还对该表进行子查询。
+```
+DELETE FROM t1 WHERE m1 < (SELECT MAX(m1) FROM t1);
+```
+6. 多余的情况
+* ORDER BY子句
+子查询的结果其实就相当于一个集合，集合里的值排不排序一点儿都不重要，比如下边这个语句中的ORDER BY子句简直就是画蛇添足：
+```
+SELECT * FROM t1 WHERE m1 IN (SELECT m2 FROM t2 ORDER BY m2);
+```
+
+* DISTINCT语句
+集合里的值去不去重也没啥意义，比如这样：
+```
+SELECT * FROM t1 WHERE m1 IN (SELECT DISTINCT m2 FROM t2);
+```
+
+* 没有聚集函数以及HAVING子句的GROUP BY子句。
+在没有聚集函数以及HAVING子句时，GROUP BY子句就是个摆设，比如这样：
+```
+SELECT * FROM t1 WHERE m1 IN (SELECT m2 FROM t2 GROUP BY m2);
+```
