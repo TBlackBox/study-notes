@@ -43,7 +43,7 @@ git merge [third_repository]/master  --allow-unrelated-histories
 ```
 这样即能够合并两个Git项目为一个且保留两个项目的历史记录。其中，third_repository为要合并的项目的远程仓库名称，需要先使用git remote add third_repository [third_repository_url]添加为当前项目的远程仓库，并git fetch third_repository；--allow-unrelated-histories参数则是允许合并不相关的历史记录。
 
-+ 使用Git官方的服务器作为中央版本库，还是使用Github这种，本地库与远程库交互的一种方式就是通过公私钥来进行的。如下：
++ 使用Git官方的服务器作为中央版本库，还是使用Github这种，本地库与远程库交互的一种方式就是通过公私钥来进行的.
 ```
 ssh-keygen -t rsa -C [userName]
 ```
