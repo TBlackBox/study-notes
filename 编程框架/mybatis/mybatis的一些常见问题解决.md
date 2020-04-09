@@ -123,3 +123,33 @@
  	</select>
 
 ```
+
+# 子查询
+描述:
+一对一的实体，可以通过子查询查询数据
+```
+<resultMap type="orderModel" id="resultMap01">
+	<id column="id" property="id"/>
+	<association property="属性" javaType="实体类" column="pay_id" select="selectPayCodeByChannelId"/>
+</resultMap>
+<select id="selectByParam" resultMap="resultMap01">
+	SELECT
+		`t`.`id`
+		`t`.`pay_id`,
+	FROM
+		`order` AS `t`
+	<where>
+		<if test="state != null">AND `t`.`state` = #{state}</if>
+	</where>
+</select>
+<!-- 子语句 -->
+<select id="selectPayCodeByChannelId" resultType="payCodeEntity">
+	SELECT
+		`t`.`name`
+	FROM
+		`t` AS `t`
+	WHERE
+		`t`.`id` = #{pageChannelId}
+</select>
+
+```
