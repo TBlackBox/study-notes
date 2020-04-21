@@ -313,6 +313,7 @@ TRUNCATE TABLE table1
  
 24、说明：选择从10到15的记录
 select top 5 * from (select top 15 * from table order by id asc) table_别名 order by id desc
+
 三、技巧
 
 1、1=1，1=2的使用，在SQL语句组合时用的较多
