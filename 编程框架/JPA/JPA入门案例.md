@@ -1,6 +1,7 @@
 # 环境搭建
 
-由于JPA是sun公司制定的API规范，所以我们不需要导入额外的JPA相关的jar包，只需要导入JPA的提供商的jar包。我们选择Hibernate作为JPA的提供商，所以需要导入Hibernate的相关jar包。
+由于JPA是sun公司制定的API规范，所以我们不需要导入额外的JPA相关的jar包，只需要导入JPA的提供商的jar包。
+我们选择Hibernate作为JPA的提供商（Hibernate是JPA的一种实现），所以需要导入Hibernate的相关jar包。
 
 下载网址：
 http://sourceforge.net/projects/hibernate/files/hibernate-orm/5.0.7.Final/
