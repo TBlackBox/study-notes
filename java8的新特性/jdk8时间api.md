@@ -94,6 +94,102 @@ LocalDateTime localDateTime = LocalDateTime.now();
 	    System.out.println(localDateTime.isEqual(localDateTime2));
 ```
 
+## 高级一点的时间调整
+
+比如将时间调到下一个工作日，或者是下个月的最后一天，这时候我们可以使用`with()`方法的另一个重载方法，它接收一个`TemporalAdjuster`参数，可以使我们更加灵活的调整日期：
+
+```
+// 返回下一个距离当前时间最近的星期日
+LocalDate date7 = date.with(nextOrSame(DayOfWeek.SUNDAY)); 
+// 返回本月最后一个星期六
+LocalDate date9 = date.with(lastInMonth(DayOfWeek.SATURDAY));  
+```
+
+要使上面的代码正确编译，你需要使用静态导入`TemporalAdjusters`对象：
+
+```
+import static java.time.temporal.TemporalAdjusters.*;
+```
+
+`TemporalAdjusters`类中包含了很多静态方法可以直接使用，下面的表格列出了一些方法：
+
+| 方法名                        | 描述                                                        |
+| :---------------------------- | :---------------------------------------------------------- |
+| `dayOfWeekInMonth`            | 返回同一个月中每周的第几天                                  |
+| `firstDayOfMonth`             | 返回当月的第一天                                            |
+| `firstDayOfNextMonth`         | 返回下月的第一天                                            |
+| `firstDayOfNextYear`          | 返回下一年的第一天                                          |
+| `firstDayOfYear`              | 返回本年的第一天                                            |
+| `firstInMonth`                | 返回同一个月中第一个星期几                                  |
+| `lastDayOfMonth`              | 返回当月的最后一天                                          |
+| `lastDayOfNextMonth`          | 返回下月的最后一天                                          |
+| `lastDayOfNextYear`           | 返回下一年的最后一天                                        |
+| `lastDayOfYear`               | 返回本年的最后一天                                          |
+| `lastInMonth`                 | 返回同一个月中最后一个星期几                                |
+| `next / previous`             | 返回后一个/前一个给定的星期几                               |
+| `nextOrSame / previousOrSame` | 返回后一个/前一个给定的星期几，如果这个值满足条件，直接返回 |
+
+如果上面表格中列出的方法不能满足你的需求，你还可以创建自定义的`TemporalAdjuster`接口的实现，`TemporalAdjuster`也是一个函数式接口，所以我们可以使用Lambda表达式：
+
+```
+@FunctionalInterface
+public interface TemporalAdjuster {   
+	Temporal adjustInto(Temporal temporal);
+}
+```
+
+比如给定一个日期，计算该日期的下一个工作日（不包括星期六和星期天）：
+
+```
+LocalDate date = LocalDate.of(2017, 1, 5);
+date.with(temporal -> {
+    // 当前日期
+    DayOfWeek dayOfWeek = DayOfWeek.of(temporal.get(ChronoField.DAY_OF_WEEK));
+
+    // 正常情况下，每次增加一天
+    int dayToAdd = 1;
+
+    // 如果是星期五，增加三天
+    if (dayOfWeek == DayOfWeek.FRIDAY) {
+        dayToAdd = 3;
+    }
+
+    // 如果是星期六，增加两天
+    if (dayOfWeek == DayOfWeek.SATURDAY) {
+        dayToAdd = 2;
+    }
+
+    return temporal.plus(dayToAdd, ChronoUnit.DAYS);
+});
+```
+
+# Period
+Period在概念上和Duration类似，区别在于Period是以年月日来衡量一个时间段，比如4年5个月23天
+
+## 通过of()创建
+```
+Period period = Period.of(4, 5, 23);
+		
+int year = period.getYears();
+//值：4
+System.out.println(year);
+Period minPeriod = period.minusYears(2);
+//值：2
+System.out.println(minPeriod.getYears());
+```
+还有很多的方法可以用，创建方法也有很多
+
+## 通过between创建
+Period对象也可以通过between()方法创建，值得注意的是，由于Period是以年月日衡量时间段，所以between()方法只能接收LocalDate类型的参数：
+```
+// 2020-01-05 到 2020-02-05 这段时间
+Period period = Period.between(
+                LocalDate.of(2020, 1, 5),
+                LocalDate.of(2020, 2, 5));
+```
+
+
+
 
 # Instant 时间戳
 Instant : 时间戳，使用 Unix 元年1970年1月1日 00:00:00 所经历的毫秒值。
@@ -113,7 +209,81 @@ System.out.println(instant.toEpochMilli());
 //得到纳秒 输出 388000000
 System.out.println(instant.getNano());
 ```
-## 时区调节
+还有3种获取时间的方式
+```
+//1970-01-01T00:00:00 + 120毫秒的时间   值： 1970-01-01T00:00:00.120Z
+Instant instant1 = Instant.ofEpochMilli(120);
+//1970-01-01T00:00:00 + 120秒的时间  值：1970-01-01T00:02:00Z
+Instant instant2 = Instant.ofEpochSecond(120);
+//1970-01-01T00:00:00 + 120秒 + 1000000纳秒的时间  值：1970-01-01T00:02:00.001Z
+Instant instant3 = Instant.ofEpochSecond(120, 1000000);
 ```
 
+# Duration
+## Duration与Instant比较
+相同点：  
+Duration的内部实现与Instant类似，也是包含两部分：seconds表示秒，nanos表示纳秒。
+区别：  
+Instant用于表示一个时间戳（或者说是一个时间点），而Duration表示一个时间段，所以Duration类中不包含now()静态方法。
+
+## 通过 Duration.between()方法创建Duration对象
+```
+//2020-01-10 12:00:00
+LocalDateTime from = LocalDateTime.of(2020, Month.JANUARY, 10, 12, 0, 0);   
+// 2020-02-10 12:10:10
+LocalDateTime to = LocalDateTime.of(2020, Month.FEBRUARY, 10, 12, 10, 10);    
+// 表示从2020-01-10 12:00:00 到2020-02-10 12:10:10 这段时间
+Duration duration = Duration.between(from, to);    
+
+// 这段时间的总天数    值：31
+long days = duration.toDays();
+// 这段时间的小时数  值：744
+long hours = duration.toHours(); 
+// 这段时间的分钟数 值:44650
+long minutes = duration.toMinutes(); 
+// 这段时间的秒数 值：2679010
+long seconds = duration.getSeconds(); 
+// 这段时间的毫秒数 值：2679010000
+long milliSeconds = duration.toMillis();   
+// 这段时间的纳秒数 值：2679010000000000
+long nanoSeconds = duration.toNanos(); 
+```
+
+## 通过of()创建
+```
+// 10天  
+Duration duration1 = Duration.of(10, ChronoUnit.DAYS);   
+// 10000毫秒
+Duration duration2 = Duration.of(10000, ChronoUnit.MILLIS);  
+```
+还有一些静态方法可以进行创建
+```
+//天为单位
+ public static Duration ofDays(long days){};
+ //小时为单位
+ public static Duration ofHours(long hours) {}
+ //分钟为单位
+ public static Duration ofMinutes(long minutes) {}
+ //等等  还有很多 
+```
+
+
+# 格式化日期
+新的日期API中提供了一个DateTimeFormatter类用于处理日期格式化操作，它被包含在java.time.format包中，Java 8的日期类有一个format()方法用于将日期格式化为字符串，该方法接收一个DateTimeFormatter类型参数：
+```
+LocalDateTime dateTime = LocalDateTime.now();
+String strDate1 = dateTime.format(DateTimeFormatter.BASIC_ISO_DATE);    // 20170105
+String strDate2 = dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE);    // 2017-01-05
+String strDate3 = dateTime.format(DateTimeFormatter.ISO_LOCAL_TIME);    // 14:20:16.998
+String strDate4 = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));   // 2017-01-05
+String strDate5 = dateTime.format(DateTimeFormatter.ofPattern("今天是：YYYY年 MMMM DD日 E", Locale.CHINESE)); // 今天是：2017年 一月 05日 星期四
+
+```
+同样，日期类也支持将一个字符串解析成一个日期对象，例如：
+```
+String strDate6 = "2017-01-05";
+String strDate7 = "2017-01-05 12:30:05";
+
+LocalDate date = LocalDate.parse(strDate6, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+LocalDateTime dateTime1 = LocalDateTime.parse(strDate7, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 ```
