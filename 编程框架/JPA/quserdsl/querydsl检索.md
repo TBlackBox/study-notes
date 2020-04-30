@@ -156,4 +156,49 @@ jPAQueryFactory.selectFrom(QUser.user)
     .setLockMode(LockModeType.OPTIMISTIC)
     .fetch();
 ```
-`LockModeType`
+`LockModeType`枚举
+```
+    /**
+     *  Synonymous with <code>OPTIMISTIC</code>.
+     *  <code>OPTIMISTIC</code> is to be preferred for new
+     *  applications.
+     */
+    READ,
+
+    /**
+     *  Synonymous with <code>OPTIMISTIC_FORCE_INCREMENT</code>.
+     *  <code>OPTIMISTIC_FORCE_IMCREMENT</code> is to be preferred for
+     *
+     */
+    WRITE,
+
+    /**
+     * Optimistic lock.
+     */
+    OPTIMISTIC,
+
+    /**
+     * Optimistic lock, with version update.
+     */
+    OPTIMISTIC_FORCE_INCREMENT,
+
+    /**
+     * Pessimistic read lock.
+     */
+    PESSIMISTIC_READ,
+
+    /**
+     * Pessimistic write lock.
+     */
+    PESSIMISTIC_WRITE,
+
+    /**
+     * Pessimistic write lock, with version update.
+     */
+    PESSIMISTIC_FORCE_INCREMENT,
+
+    /**
+     * No lock.
+     */
+    NONE
+```
