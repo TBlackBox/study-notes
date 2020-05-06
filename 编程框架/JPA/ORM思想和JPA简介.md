@@ -1,4 +1,4 @@
-# ORM思想
+# 1. ORM思想
 ## 什么是orm
 
 ORM（Object-Relational Mapping） 表示对象关系映射。在面向对象的软件开发中，通过ORM，就可以把对象映射到关系型数据库中。只要有一套程序能够做到建立对象与数据库的关联，操作对象就可以直接操作数据库数据，就可以说这套程序实现了ORM对象关系映射
@@ -11,7 +11,7 @@ ORM（Object-Relational Mapping） 表示对象关系映射。在面向对象的
 ## 常见的orm框架
 Mybatis（ibatis）、Hibernate、Jpa
 
-# hibeinate框架的介绍
+# 2. hibeinate框架的介绍
 Hibernate是一个开放源代码的对象关系映射框架，它对JDBC进行了非常轻量级的对象封装，它将POJO与数据库表建立映射关系，是一个全自动的orm框架，hibernate可以自动生成SQL语句，自动执行，使得Java程序员可以随心所欲的使用对象编程思维来操纵数据库。
 
 
@@ -36,14 +36,20 @@ JPA通过JDK 5.0注解描述对象－关系表的映射关系，并将运行期�
 
 ## 高级特性
    JPA 中能够支持面向对象的高级特性，如类之间的继承、多态和类之间的复杂关系，这样的支持能够让开发者最大限度的使用面向对象的模型设计企业应用，而不需要自行处理这些特性在关系数据库的持久化。
-   
 
-# JPA与hibernate的关系
+
+# 3. JPA与hibernate的关系
 
 JPA规范本质上就是一种ORM规范，注意不是ORM框架——因为JPA并未提供ORM实现，它只是制订了一些规范，提供了一些编程的API接口，但具体实现则由服务厂商来提供实现。      
 
 java运用程序======>JPA====>Hibernate=======>数据库
 
 
-
 JPA和Hibernate的关系就像JDBC和JDBC驱动的关系，JPA是规范，Hibernate除了作为ORM框架之外，它也是一种JPA实现。JPA怎么取代Hibernate呢？JDBC规范可以驱动底层数据库吗？答案是否定的，也就是说，如果使用JPA规范进行数据库操作，底层需要hibernate作为其实现类完成数据持久化工作。
+
+# 4. 目前JPA的几种实现
+- Hibernate EntityManager(RedHat)
+- TopLink Essentials(Oracle/GlassFish,EJB 3.0中的JPA参考实现)
+- Apache OpenJPA（BEA）
+- EclipseLink(http://www.eclipse.org/eclipselink/)
+- JDO等ORM框架
