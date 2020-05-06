@@ -287,3 +287,60 @@ String strDate7 = "2017-01-05 12:30:05";
 LocalDate date = LocalDate.parse(strDate6, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 LocalDateTime dateTime1 = LocalDateTime.parse(strDate7, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 ```
+
+# 时区
+Java 8中的时区操作被很大程度上简化了，新的时区类java.time.ZoneId是原有的java.util.TimeZone类的替代品。ZoneId对象可以通过ZoneId.of()方法创建，也可以通过ZoneId.systemDefault()获取系统默认时区：
+```
+ZoneId shanghaiZoneId = ZoneId.of("Asia/Shanghai");
+ZoneId systemZoneId = ZoneId.systemDefault();
+```
+of()方法接收一个“区域/城市”的字符串作为参数，你可以通过getAvailableZoneIds()方法获取所有合法的“区域/城市”字符串：
+```
+Set<String> zoneIds = ZoneId.getAvailableZoneIds();
+```
+对于老的时区类TimeZone，Java 8也提供了转化方法：
+```
+ZoneId oldToNewZoneId = TimeZone.getDefault().toZoneId();
+```
+有了ZoneId，我们就可以将一个LocalDate、LocalTime或LocalDateTime对象转化为ZonedDateTime对象：
+```
+LocalDateTime localDateTime = LocalDateTime.now();
+ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, shanghaiZoneId);
+```
+将zonedDateTime打印到控制台为：
+```
+2017-01-05T15:26:56.147+08:00[Asia/Shanghai]
+```
+ZonedDateTime对象由两部分构成，LocalDateTime和ZoneId，其中2017-01-05T15:26:56.147部分为LocalDateTime，+08:00[Asia/Shanghai]部分为ZoneId。
+
+另一种表示时区的方式是使用ZoneOffset，它是以当前时间和世界标准时间（UTC）/格林威治时间（GMT）的偏差来计算，例如：
+```
+ZoneOffset zoneOffset = ZoneOffset.of("+09:00");
+LocalDateTime localDateTime = LocalDateTime.now();
+OffsetDateTime offsetDateTime = OffsetDateTime.of(localDateTime, zoneOffset);
+```
+
+# 其他历法
+Java中使用的历法是ISO 8601日历系统，它是世界民用历法，也就是我们所说的公历。平年有365天，闰年是366天。闰年的定义是：非世纪年，能被4整除；世纪年能被400整除。为了计算的一致性，公元1年的前一年被当做公元0年，以此类推。
+
+此外Java 8还提供了4套其他历法（很奇怪为什么没有汉族人使用的农历），每套历法都包含一个日期类，分别是：
+
+- ThaiBuddhistDate：泰国佛教历
+- MinguoDate：中华民国历
+- JapaneseDate：日本历
+- HijrahDate：伊斯兰历
+每个日期类都继承ChronoLocalDate类，所以可以在不知道具体历法的情况下也可以操作。不过这些历法一般不常用，除非是有某些特殊需求情况下才会使用。
+
+这些不同的历法也可以用于向公历转换：
+```
+LocalDate date = LocalDate.now();
+JapaneseDate jpDate = JapaneseDate.from(date);
+```
+由于它们都继承ChronoLocalDate类，所以在不知道具体历法情况下，可以通过ChronoLocalDate类操作日期：
+```
+Chronology jpChronology = Chronology.ofLocale(Locale.JAPANESE);
+ChronoLocalDate jpChronoLocalDate = jpChronology.dateNow();
+```
+我们在开发过程中应该尽量避免使用ChronoLocalDate，尽量用与历法无关的方式操作时间，因为不同的历法计算日期的方式不一样，比如开发者会在程序中做一些假设，假设一年中有12个月，如果是中国农历中包含了闰月，一年有可能是13个月，但开发者认为是12个月，多出来的一个月属于明年的。再比如假设年份是累加的，过了一年就在原来的年份上加一，但日本天皇在换代之后需要重新纪年，所以过了一年年份可能会从1开始计算。
+
+在实际开发过程中建议使用LocalDate，包括存储、操作、业务规则的解读；除非需要将程序的输入或者输出本地化，这时可以使用ChronoLocalDate类。
