@@ -201,9 +201,6 @@ var SocketBox = {
 				//点对点私人消息
 				answerTextMessage(body);
 			}
-			/*if(data.extend.code == 30001 && data.extend.data.messageType == 1000){
-				answerTextMessage(mess);
-			}*/
 		},
 		sendData(auth, mess){
 			//发送数据
