@@ -16,6 +16,65 @@ maven引入
 ```
 
 # 案列
+创建两个实例，供后面的列子使用
+```
+public class Admin {
+	private Integer id;
+	private String name;
+	private Integer age;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Integer getAge() {
+		return age;
+	}
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	@Override
+	public String toString() {
+		return "Admin [id=" + id + ", name=" + name + ", age=" + age + "]";
+	}
+}
+```
+```
+public class User {
+
+	private String name;
+	private Integer age;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Integer getAge() {
+		return age;
+	}
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+	@Override
+	public String toString() {
+		return "User [name=" + name + ", age=" + age + "]";
+	}
+}
+
+```
+
+
+
 1. 相同实体的拷贝
 ```
 MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
