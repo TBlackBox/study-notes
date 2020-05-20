@@ -168,7 +168,7 @@ Java代码目录移到了./src中，测试代码目录到了./test/java中，测
 一项jar包依赖可以由groupId:artifactId:version标识   
 完整的标识为：groupId:artifactId:type:classifier:version  
 
-依赖在编译部署中参与的情况可以由scope来指定, 分为: compile、test、provided、system、import，默认为compile。其中的import是在Maven 2.0.9后引入的，仅仅支持在中使用，导入外部的依赖版本管理。
+依赖在编译部署中参与的情况可以由scope来指定, 分为: `compile`、`test`、`provided`、`system`、`import`，默认为compile。其中的import是在Maven 2.0.9后引入的，仅仅支持在中使用，导入外部的依赖版本管理。
 依赖是一个树状结构，采用最近依赖原则，也可以通过`exclusions`标签来排除一些包。这里的最近依赖指的是在依赖树中，离当前结点最近的依赖优先级高，同样远时第一个优先。
 
 ## 镜像库
@@ -205,7 +205,7 @@ Maven的构建生命周期中几个常见phase（阶段）如下：
 4. package：根据项目类型的不同进行打包
 5. verify： 验证打包的正确性
 6. install：将打好的包安装到本地
-7。 deploy：将打好的包发布到远程库中
+7. deploy：将打好的包发布到远程库中
 
 当然，对应上述每一个phase,还有pre、post、proces做前缀的一些phase。还有一些在命令行中不常用的phase如：test-compile、integration-test等
 
