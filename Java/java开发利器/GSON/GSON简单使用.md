@@ -1,9 +1,43 @@
 # 简介
 
+## Gson 特点
+- Gson是目前功能最全的Json解析神器，Gson当初是为因应Google公司内部需求而由Google自行研发而来，但自从在2008年五月公开发布第一版后已被许多公司或用户应用。
+- Gson的应用主要为toJson与fromJson两个转换函数，无依赖，不需要例外额外的jar，能够直接跑在JDK上。
+- 而在使用这种对象转换之前需先创建好对象的类型以及其成员才能成功的将JSON字符串成功转换成相对应的对象。
+- 类里面只要有get和set方法，Gson完全可以将复杂类型的json到bean或bean到json的转换，是JSON解析的神器。
+- Gson在功能上面无可挑剔，但是性能上面比FastJson有所差距。
 
+## Fastjson的特点
+- Fastjson是一个Java语言编写的高性能的JSON处理器,由阿里巴巴公司开发。
+- 无依赖，不需要例外额外的jar，能够直接跑在JDK上。
+- FastJson在复杂类型的Bean转换Json上会出现一些问题，可能会出现引用的类型，导致Json转换出错，需要制定引用。
+- FastJson采用独创的算法，将parse的速度提升到极致，超过所有json库。
+
+
+在项目选型的时候可以使用Google的Gson和阿里巴巴的FastJson两种并行使用，
+如果只是功能要求，没有性能要求，可以使用google的Gson，
+如果有性能上面的要求可以使用Gson将bean转换json确保数据的正确，使用FastJson将Json转换Bean
+
+
+# Gson的资料地址
 [api文档](https://www.javadoc.io/doc/com.google.code.gson/gson/latest/com.google.gson/module-summary.html)
 [github地址](https://github.com/google/gson)
 [用法指导](https://github.com/google/gson/blob/master/UserGuide.md)
+
+# Gson的几个核心库
+Gson类：解析json的最基础的工具类
+GsonBuilder类：解析json的最基础的工具类
+
+JsonParser类：解析器来解析JSON字符串到JsonElements的解析树
+
+JsonElement类：一个类代表的JSON元素抽象类，下面4个类都继承了他
+- JsonObject类：JSON对象类型
+- JsonArray类：JsonObject数组
+- JsonNull类： null值
+- JsonPrimitive类：可以理解为基础类型
+
+TypeToken类：用于创建type，比如泛型List<?>
+
 # maven引入
 ```
 <dependencies>
@@ -236,7 +270,7 @@ private class DateTimeSerializer implements JsonSerializer<DateTime> {
 }
 ```
 
-## 创建一个`DateTime`序列化器
+## 创建一个`DateTime`反序列化器
 ```
 private class DateTimeDeserializer implements JsonDeserializer<DateTime> {
   public DateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
@@ -303,7 +337,7 @@ null
 ```
 
 # 版本支持
-可以使用@Since批注维护同一对象的多个版本。可以在类，字段以及将来的方法中使用此注释。为了利用此功能，您必须将Gson实例配置为忽略大于某个版本号的任何字段/对象。如果在Gson实例上未设置任何版本，则它将对所有字段和类进行序列化和反序列化，而与版本无关。
+可以使用`@Since`批注维护同一对象的多个版本。可以在类，字段以及将来的方法中使用此注释。为了利用此功能，您必须将Gson实例配置为忽略大于某个版本号的任何字段/对象。如果在Gson实例上未设置任何版本，则它将对所有字段和类进行序列化和反序列化，而与版本无关。
 例如：
 ```
 public class VersionedClass {
@@ -438,4 +472,23 @@ System.out.println(jsonRepresentation);
 参考[FieldNamingPolicy](https://www.javadoc.io/doc/com.google.code.gson/gson/2.8.5/com/google/gson/FieldNamingPolicy.html)里面的类型值。
 
 # 总结 
-更多东西看官方文档
+
+1. Gson的几个注解
+ - `@Expose`
+ 字段的排除，序列化和反序列化对该字段不生效，必须配置下面的才生效。
+ ```
+ Gson gson = new GsonBuilder()
+ .excludeFieldsWithModifiers(Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE)
+ .create();
+ ```
+ - `@SerializedName`
+重命名字段
+- `@Since`
+对版本的支持，用于指定版本,配合下面的使用
+```
+Gson gson = new GsonBuilder().setVersion(1.0).create();
+```
+- `@JsonAdapter`
+指示用于类或字段的Gson TypeAdapter的注释。
+
+更多东西看官方文档和分析源码。
