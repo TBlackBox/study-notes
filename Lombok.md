@@ -69,7 +69,7 @@ val：用在局部变量前面，相当于将变量声明为final
 # 3.2 Lombok代码示例
 
 val示例
-
+```
 public static void main(String[] args) {
     val sets = new HashSet<String>();
     val lists = new ArrayList<String>();
@@ -79,9 +79,10 @@ public static void main(String[] args) {
     final List<String> lists2 = new ArrayList<>();
     final Map<String, String> maps2 = new HashMap<>();
 }
+```
 复制代码
 @NonNull示例
-
+```
 public void notNullExample(@NonNull String string) {
     string.length();
 }
@@ -93,9 +94,10 @@ public void notNullExample(String string) {
         throw new NullPointerException("null");
     }
 }
+```
 复制代码
 @Cleanup示例
-
+```
 public static void main(String[] args) {
     try {
         @Cleanup InputStream inputStream = new FileInputStream(args[0]);
@@ -118,16 +120,18 @@ public static void main(String[] args) {
         }
     }
 }
+```
 复制代码
 @Getter/@Setter示例
-
+```
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PROTECTED)
 private int id;
 private String shap;
-复制代码
-@ToString示例
+```
 
+@ToString示例
+```
 @ToString(exclude = "id", callSuper = true, includeFieldNames = true)
 public class LombokDemo {
     private int id;
@@ -138,17 +142,20 @@ public class LombokDemo {
         System.out.println(new LombokDemo());
     }
 }
-复制代码
+```
+
 @EqualsAndHashCode示例
 
+```
 @EqualsAndHashCode(exclude = {"id", "shape"}, callSuper = false)
 public class LombokDemo {
     private int id;
     private String shap;
 }
-复制代码
-@NoArgsConstructor, @RequiredArgsConstructor and @AllArgsConstructor示例
+```
 
+@NoArgsConstructor, @RequiredArgsConstructor and @AllArgsConstructor示例
+```
 @NoArgsConstructor
 @RequiredArgsConstructor(staticName = "of")
 @AllArgsConstructor
@@ -168,9 +175,11 @@ public class LombokDemo {
         new LombokDemo(1, "circle", 2);
     }
 }
-复制代码
-@Data示例
 
+```
+
+@Data示例
+```
 import lombok.Data;
 @Data
 public class Menu {
@@ -188,9 +197,9 @@ public class Menu {
     //总得分
     private float totalScore = 0;
 }
-复制代码
+```
 @Value示例
-
+```
 @Value
 public class LombokDemo {
     @NonNull
@@ -205,9 +214,10 @@ public class LombokDemo {
     }
     ...
 }
-复制代码
-@Builder示例
+```
 
+@Builder示例
+```
 @Builder
 public class BuilderExample {
     private String name;
@@ -218,9 +228,10 @@ public class BuilderExample {
         BuilderExample test = BuilderExample.builder().age(11).name("test").build();
     }
 }
-复制代码
-@SneakyThrows示例
+```
 
+@SneakyThrows示例
+```
 import lombok.SneakyThrows;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -243,9 +254,10 @@ public class Test {
         throw new UnsupportedEncodingException();
     }
 }
-复制代码
-@Synchronized示例
+```
 
+@Synchronized示例
+```
 public class SynchronizedDemo {
     @Synchronized
     public static void hello() {
@@ -259,9 +271,9 @@ public class SynchronizedDemo {
         }
     }
 }
-复制代码
+```
 @Getter(lazy = true)
-
+```
 public class GetterLazyExample {
     @Getter(lazy = true)
     private final double[] cached = expensive();
@@ -273,6 +285,7 @@ public class GetterLazyExample {
         return result;
     }
 }
+```
 
 // 相当于如下所示: 
 
@@ -343,3 +356,11 @@ public class MyAnnotaionProcessor extends AbstractProcessor {
         return true; // no further processing of this annotation type
     }
 }
+
+```
+
+```
+
+```
+
+```
