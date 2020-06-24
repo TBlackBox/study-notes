@@ -1,6 +1,8 @@
 # 简介
 AtomicBoolean是Java.util.concurrent.atomic包下的原子变量。主要用于比较和赋值需要一个原子操作的地方 。
 
+AtomicBoolean的value的类型并不是布尔型，而是整型，它会把对应的布尔值转换成整型，true的时候对应1，false的时候对应0。至于为什么是整型，是因为Unsafe提供的compareAndSwap方法不能修改布尔型变量
+
 # 例子
 通过例子说明，AtomicBoolean的部分作用
 
