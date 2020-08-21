@@ -11,7 +11,7 @@
 <dependency>
     <groupId>com.alibaba</groupId>
     <artifactId>fastjson</artifactId>
-    <version>1.2.68</version>
+    <version>1.2.73</version>
 </dependency>
 ```
 android
@@ -19,7 +19,7 @@ android
 <dependency>
     <groupId>com.alibaba</groupId>
     <artifactId>fastjson</artifactId>
-    <version>1.1.71.android</version>
+    <version>1.1.72.android</version>
 </dependency>
 ```
 

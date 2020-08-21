@@ -1,0 +1,2 @@
+# 简介
+Java提供了`RandomAccessFile`,可以对文件随机访问的操作，访问包括读和写操作。该类的读写是基于指针的操作。RandomAccessFile允许你来回读写文件，也可以替换文件中的某些部分。FileInputStream和FileOutputStream没有这样的功能。

@@ -103,8 +103,8 @@ server {
 
 * 生成 p12 文件(会输入一次密码)
 ```
-            openssl pkcs12 -export -in fullchain.cer -inkey springboot.io.key -out springboot.io.p12
- ```           
+openssl pkcs12 -export -in fullchain.cer -inkey springboot.io.key -out springboot.io.p12
+```
 2. 根据p12 文件生成 keystore 文件
 ```
 keytool -importkeystore -v  -srckeystore springboot.io.p12 -srcstoretype pkcs12 -srcstorepass 123456 -destkeystore springboot.io.keystore -deststoretype jks -deststorepass 123456
@@ -114,7 +114,7 @@ keytool -importkeystore -v  -srckeystore springboot.io.p12 -srcstoretype pkcs12 
 ```
 keytool -importkeystore -srckeystore springboot.io.keystore -destkeystore springboot.io.keystore -deststoretype pkcs12
 ```
-	
+
 3. springboot配置
 ```
 #ssl

@@ -1,0 +1,45 @@
+# 下载jdk
+下载地址
+```
+http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+```
+# 创建文件夹
+```
+mkdir /usr/local/java/
+```
+#  上传jar包
+```
+安装上传命令
+yum install lrzsz
+
+```
+
+# 解压
+```
+rm -rf jdk-8u261-linux-x64.tar.gz 
+```
+
+# 配置
+```
+ vi /etc/profile
+```
+ 添加下面到最后
+```
+export JAVA_HOME=/usr/local/java/jdk1.8.0_261
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=${JAVA_HOME}/bin:$PATH
+```
+
+# 是环境变量生效
+```
+source /etc/profile
+```
+
+# 测试是否配置完成
+```
+java -version
+```
+
+
+
