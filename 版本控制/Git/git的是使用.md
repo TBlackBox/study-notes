@@ -192,11 +192,6 @@ http://www.aikaiyuan.com/8875.html
  
 
 用git pull来更新代码的时候，遇到了下面的问题：
-
-1
-2
-3
-4
 error: Your local changes to the following files would be overwritten by merge:
     xxx/xxx/xxx.php
 Please, commit your changes or stash them before you can merge.
@@ -207,10 +202,6 @@ Aborting
 1）直接commit本地的修改 ----也一般不用这种方法
 
 2）通过git stash  ---- 通常用这种方法
-
-1
-2
-3
 git stash
 git pull
 git stash pop
@@ -229,4 +220,4 @@ git stash clear: 清空Git栈。此时使用gitg等图形化工具会发现，�
 1
 2
 git reset --hard
-git pull<br><br><br><br><br><br>
+git pull<br>
