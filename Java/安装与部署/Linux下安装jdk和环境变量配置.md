@@ -43,3 +43,19 @@ java -version
 
 
 
+# 安装openjdk
+## CentOS自带JDK是否已安装
+```
+yum list installed |grep java
+```
+
+## 查看yum库中的Java安装包
+```
+yum -y list java*
+```
+
+## 安装
+```
+yum -y install java-1.8.0-openjdk*
+```
+
