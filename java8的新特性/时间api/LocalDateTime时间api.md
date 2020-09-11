@@ -164,6 +164,14 @@ date.with(temporal -> {
 ```
 
 
+#  LocalDataTime 转秒和毫秒
+```
+//获取秒数
+Long second = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
+//获取毫秒数
+Long milliSecond = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+```
+
 
 
 
