@@ -14,7 +14,11 @@ yum install git
 ## 注意
 执行一下 这个命令：
 
+```
 git config --global credential.helper store
+```
+
+
 
 然后，下次再输入一次 账号密码 就可以了。
 
