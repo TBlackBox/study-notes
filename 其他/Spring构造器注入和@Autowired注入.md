@@ -44,9 +44,6 @@ public class AdminServiceImpl implements AdminService {
 
 
 @RequestMapping("/test")
-
-
-
 public class TestController {
 
     private final List<TestService> testServices;
@@ -62,7 +59,6 @@ public class TestController {
     @Autowired
     public void setTestServices(List<ChainAsbtract> chains){
         this.chains = chains;
-
     }
 
 }
