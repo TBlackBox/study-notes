@@ -202,3 +202,18 @@ jPAQueryFactory.selectFrom(QUser.user)
      */
     NONE
 ```
+
+## 例子
+
+1. 通过`BooleanBuilder`构建查询条件，BooleanBuilder 返回`Predicate`
+
+```
+public Optional<T> findOne(Predicate predicate) {
+	return this.baseRepository.findOne(predicate);
+}
+```
+
+```
+this.findOne(new BooleanBuilder(QAdmin.admin.account.eq(account))).orElseThrow(()-> new NotFoundException("改账号不存在").setErrorData(account));
+```
+

@@ -483,11 +483,11 @@ public class Person {
 
 ```xml
 <!--导入配置文件处理器，配置文件进行绑定就会有提示-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
-			<optional>true</optional>
-		</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-configuration-processor</artifactId>
+    <optional>true</optional>
+</dependency>
 ```
 
 #### 1、properties配置文件在idea中默认utf-8可能会乱码
