@@ -334,11 +334,48 @@ I/O 线程通常执行实际的输出操作，例如 SocketChannel.write（ByteB
 
 入站事件和出站事件在一个双向链表中，入站事件会从链表 head 往后传递到最后一个入站的 handler，出站事件会从链表 tail 往前传递到最前一个出站的 handler，两种类型的 handler 互不干扰。
 
-**Netty 工作原理架构**
+## **Netty 工作原理架构**
 
 初始化并启动 Netty 服务端过程如下：
+```java
+public static void main(String[] args) { 
+       // 创建mainReactor 
+       NioEventLoopGroup boosGroup = new NioEventLoopGroup(); 
+       // 创建工作线程组 
+       NioEventLoopGroup workerGroup = new NioEventLoopGroup(); 
+ 
+       final ServerBootstrap serverBootstrap = new ServerBootstrap(); 
+       serverBootstrap  
+                // 组装NioEventLoopGroup  
+               .group(boosGroup, workerGroup) 
+                // 设置channel类型为NIO类型 
+               .channel(NioServerSocketChannel.class) 
+               // 设置连接配置参数 
+               .option(ChannelOption.SO_BACKLOG, 1024) 
+               .childOption(ChannelOption.SO_KEEPALIVE, true) 
+               .childOption(ChannelOption.TCP_NODELAY, true) 
+               // 配置入站、出站事件handler 
+               .childHandler(new ChannelInitializer<NioSocketChannel>() { 
+                   @Override 
+                   protected void initChannel(NioSocketChannel ch) { 
+                       // 配置入站、出站事件channel 
+                       ch.pipeline().addLast(...); 
+                       ch.pipeline().addLast(...); 
+                   } 
+   }); 
+ 
+       // 绑定端口 
+       int port = 8080; 
+       serverBootstrap.bind(port).addListener(future -> { 
+           if (future.isSuccess()) { 
+               System.out.println(new Date() + ": 端口[" + port + "]绑定成功!"); 
+           } else { 
+               System.err.println("端口[" + port + "]绑定失败!"); 
+           } 
+       }); 
+} 
 
-public static void main(String[] args) {     // 创建mainReactor     NioEventLoopGroup boosGroup = new NioEventLoopGroup();     // 创建工作线程组     NioEventLoopGroup workerGroup = new NioEventLoopGroup();      final ServerBootstrap serverBootstrap = new ServerBootstrap();     serverBootstrap          // 组装NioEventLoopGroup         .group(boosGroup, workerGroup)         // 设置channel类型为NIO类型         .channel(NioServerSocketChannel.class)         // 设置连接配置参数         .option(ChannelOption.SO_BACKLOG, 1024)         .childOption(ChannelOption.SO_KEEPALIVE, true)         .childOption(ChannelOption.TCP_NODELAY, true)         // 配置入站、出站事件handler         .childHandler(new ChannelInitializer<NioSocketChannel>() {           @Override           protected void initChannel(NioSocketChannel ch) {             // 配置入站、出站事件channel             ch.pipeline().addLast(...);             ch.pipeline().addLast(...);           }   });      // 绑定端口     int port = 8080;     serverBootstrap.bind(port).addListener(future -> {       if (future.isSuccess()) {         System.out.println(new Date() + ": 端口[" + port + "]绑定成功!");       } else {         System.err.println("端口[" + port + "]绑定失败!");       }     }); } 
+```
 
 基本过程如下：
 
@@ -350,7 +387,7 @@ public static void main(String[] args) {     // 创建mainReactor     NioEventLo
 
 ![img](../../sources\netty\_1573320798.jpeg)
 
-服务端 Netty Reactor 工作架构图
+​															服务端 Netty Reactor 工作架构图
 
 Server 端包含 1 个 Boss NioEventLoopGroup 和 1 个 Worker NioEventLoopGroup。
 
@@ -370,18 +407,18 @@ NioEventLoopGroup 相当于 1 个事件循环组，这个组里包含多个事�
 
 其中任务队列中的 Task 有 3 种典型使用场景。
 
-**①用户程序自定义的普通任务**
-
+### **用户程序自定义的普通任务**
+```java
 ctx.channel().eventLoop().execute(new Runnable() {   @Override   public void run() {     //...   } }); 
-
-**②非当前 Reactor 线程调用 Channel 的各种方法**
+```
+### **非当前 Reactor 线程调用 Channel 的各种方法**
 
 例如在推送系统的业务线程里面，根据用户的标识，找到对应的 Channel 引用，然后调用 Write 类方法向该用户推送消息，就会进入到这种场景。最终的 Write 会提交到任务队列中后被异步消费。
 
-**③用户自定义定时任务**
-
+### **③用户自定义定时任务**
+```java
 ctx.channel().eventLoop().schedule(new Runnable() {   @Override   public void run() {    } }, 60, TimeUnit.SECONDS); 
-
+```
 **总结**
 
 现在稳定推荐使用的主流版本还是 Netty4，Netty5 中使用了 ForkJoinPool，增加了代码的复杂度，但是对性能的改善却不明显，所以这个版本不推荐使用，官网也没有提供下载链接。
