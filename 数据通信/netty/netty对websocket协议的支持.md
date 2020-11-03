@@ -46,23 +46,30 @@ public class ChannelHandler extends ChannelInitializer<SocketChannel>{
 
 
 ## **桢**：
- WebSocket规范中定义了6种类型的桢，netty为其提供了具体的对应的POJO实现。
+ WebSocket规范中定义了6种类型的桢，由IETF 发布的WebSocket RFC，定义了6 种帧，Netty 为它们每种都提供了一个POJO 实现，下面我们来看一下 WebSocketFrame 六种不同的类型，前三种为数据帧，后三种为控制帧，其中最后两种帧为心跳报文，ping发起心跳，pong回应心跳。
  ## WebSocketFrame
  所有桢的父类，所谓桢就是WebSocket服务在建立的时候，在通道中处理的数据类型。
- 
+
  ## TextWebSocketFrame
- 处理文本协议数据，处理TextWebSocketFrame类型的数据，websocket专门处理文本的frame就是TextWebSocketFrame。
+ 包含了文本数据，处理文本协议数据，处理TextWebSocketFrame类型的数据，websocket专门处理文本的frame就是TextWebSocketFrame。
 
 
 ## BinaryWebSocketFrame
-处理二进制数据
+包含了二进制数据
+
+## ContinuationWebSocketFrame
+
+包含属于上一个BinaryWebSocketFrame或者TextWebSocketFrame的文本数据或者二进制数据
 
 ## CloseWebSocketFrame
-关闭链接
+表示一个CLOSE请求，包含一个关闭的状态码和关闭的原因
 
 ## PingWebSocketFrame
-ping   二进制数据
+
+请求传输一个PongWebSocketFrame
+
+
 
 ## PongWebSocketFrame
-pong 二进制数据
+作为一个对于PingWebSocketFrame的响应被发送
 
