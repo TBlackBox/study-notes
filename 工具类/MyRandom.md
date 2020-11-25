@@ -32,12 +32,12 @@ public class MyRandom{
 	
 	/**
 	 * 获取两个long 之间的随机值 min 闭  max 开
-	 * @param min
+	 * @param min-
 	 * @param max
 	 * @return
 	 */
 	public static long getMyRandomLong(long min,long max){
-		if (min == max){
+		if (min == max){ 
 			return max;
 		}else if (min > max){
 			long tmp = max;
