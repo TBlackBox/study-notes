@@ -14,14 +14,14 @@ OkHttp实现了一个可选的，默认情况下关闭的Cache。OkHttp旨在实
 
 # 强制网络响应
 在某些情况下，例如在用户单击“刷新”按钮后，可能有必要跳过缓存并直接从服务器获取数据。要强制完全刷新，请添加no-cache指令：
-```
+```java
 Request request = new Request.Builder()
        .cacheControl(new CacheControl.Builder().noCache().build())
        .url("http://publicobject.com/helloworld.txt")
        .build();
 ```
 如果仅需要强制服务器验证缓存的响应，请改用效率更高的max-age = 0指令：
-```
+```java
 Request request = new Request.Builder()
        .cacheControl(new CacheControl.Builder()
            .maxAge(0, TimeUnit.SECONDS)
@@ -32,7 +32,7 @@ Request request = new Request.Builder()
 
 # 强制执行缓存响应
 有时，您可能想显示资源是否立即可用，但不是。可以使用它，以便您的应用程序可以在等待最新数据下载时显示某些内容。要将请求限制为本地缓存的资源，请添加only-if-cached指令：
-```
+```java
  Request request = new Request.Builder()
          .cacheControl(new CacheControl.Builder()
              .onlyIfCached()
@@ -47,7 +47,7 @@ Request request = new Request.Builder()
      }
 ```
 在过时的响应比没有响应要好的情况下，此技术效果更好。要允许过时的缓存响应，请使用max-stale指令，以秒为单位的最大过时度：
-```
+```java
  Request request = new Request.Builder()
        .cacheControl(new CacheControl.Builder()
            .maxStale(365, TimeUnit.DAYS)
