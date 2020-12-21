@@ -353,7 +353,7 @@ public boolean remove(Object o) {
         // 遍历整个数组，找到元素第一次出现的位置，并将其快速删除
         for (int index = 0; index < size; index++)
             // 如果要删除的元素为null，则以null进行比较，使用==
-            if (elementData[index] == null) {
+            if (elementData[index] == null) {·
                 fastRemove(index);
                 return true;
             }
