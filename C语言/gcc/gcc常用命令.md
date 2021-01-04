@@ -88,10 +88,6 @@ gcc -c test2.c -o test2.o
 gcc test1.o test2.o -o test
 ```
 
-
-
-
-
 #### 4检错
 
 ```c
@@ -173,3 +169,12 @@ gcc –L /usr/dev/mysql/lib –static –lmysqlclient test.o –o test
 有关环境变量：
 LIBRARY_PATH环境变量：指定程序静态链接库文件搜索路径
 LD_LIBRARY_PATH环境变量：指定程序动态链接库文件搜索路径
+
+
+
+# 将.c文件编译为.so文件
+
+```
+gcc -O -fpic -shared -o libsamlec.so SampleC.c
+```
+
