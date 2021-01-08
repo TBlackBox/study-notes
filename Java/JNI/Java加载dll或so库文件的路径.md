@@ -4,10 +4,10 @@
 
 1. Java的System.load 和 System.loadLibrary都可以用来加载库文件
 
-2. `例如你可以这样载入一个windows平台下JNI库文件：`
-
+2. 例如你可以这样载入一个windows平台下JNI库文件
+这里用windows举例，linux的动态链接库是.a文件
 ```
-System.load("C://Documents and Settings//TestJNI.dll"); //绝对路径
+System.load("C://test//TestJNI.dll"); //绝对路径
 ```
 
 3. System.loadLibrary参数为库文件名
