@@ -3,7 +3,7 @@ Log4j应该是目前Java开发中用的最为广泛的日志框架。
 
 # 配置
 Log4j支持XML、Proerties配置，通常还是使用Properties：
-```
+```properties
 root_log_dir=${catalina.base}/logs/app/
 
 # 设置rootLogger的日志级别以及appender
@@ -42,7 +42,7 @@ log4j.appender.A3.MaxBackupIndex = 3 #最大文件个数
 log4j.appender.A3.MaxFileSize = 1024MB
 ```
 如果Log4j文件不直接在classpath下的话，可以使用PropertyConfigurator来进行配置：
-```
+```java
 PropertyConfigurator.configure("...");
 ```
 Log4j的日志级别相对于JDK Logging来说，简化了一些：DEBUG < INFO < WARN < ERROR < FATAL。
@@ -53,7 +53,7 @@ log4j.additivity.myLogger=false
 ```
 # 使用
 程序中对于Log4j的使用也非常简单：
-```
+```java
 import org.apache.log4j.Logger;
 
 
@@ -63,11 +63,11 @@ LOGGER.info("logger info");
 ...
 ```
 这里需要注意的是，虽然Log4j可以根据配置文件中日志级别的不同做不同的输出，但由于字符串创建或者拼接也是耗资源的，因此，下面的用法是不合理的。
-```
+```java
 LOGGER.debug("...");
 ```
 合理的做法应该是首先判断当前的日志级别是什么，再去做相应的输出，如：
-```
+```java
 if(LOGGER.isDebugEnabled()){
     LOGGER.debug("...");
 }
@@ -76,7 +76,7 @@ if(LOGGER.isDebugEnabled()){
 
 # 性能优化
 Log4j为了应对某一时间里大量的日志信息进入Appender的问题提供了缓冲来进一步优化性能：
-```
+```xml
 log4j.appender.A3.BufferedIO=true   
 #Buffer单位为字节，默认是8K，IO BLOCK大小默认也是8K 
 log4j.appender.A3.BufferSize=8192 
@@ -84,7 +84,7 @@ log4j.appender.A3.BufferSize=8192
 以上表示当日志内容达到8k时，才会将日志输出到日志输出目的地。
 
 除了缓冲以外，Log4j还提供了AsyncAppender来做异步日志。但是AsyncAppender只能够通过xml配置使用：
-```
+```xml
 <appender name="A2"
    class="org.apache.log4j.DailyRollingFileAppender">
    <layout class="org.apache.log4j.PatternLayout">

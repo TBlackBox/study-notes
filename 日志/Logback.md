@@ -1,4 +1,4 @@
-Logback
+## Logback
 Logback是由Log4j创始人设计的又一个开源日志组件，相对Log4j而言，在各个方面都有了很大改进。
 
 Logback当前分成三个模块：
@@ -8,7 +8,7 @@ Logback当前分成三个模块：
 + logback-access访问模块与Servlet容器集成提供通过HTTP来访问日志的功能。
 配置
 Logback的配置文件如下：
-```
+```xml
 <!--logback.xml-->
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
@@ -63,7 +63,7 @@ Logback的配置文件如下：
 </configuration>
 ```
 Logback的配置文件读取顺序（默认都是读取classpath下的）：logback.groovy -> logback-test.xml -> logback.xml。如果想要自定义配置文件路径，那么只有通过修改logback.configurationFile的系统属性。
-```
+```xml
 System.setProperty("logback.configurationFile", "...");
 或者
 -Dlogback.configurationFile="xx"
@@ -76,7 +76,7 @@ Logback中的logger同样也是有继承机制的。配置文件中的additivit�
 
 # 使用
 Logback由于是天然与SLF4J集成的，因此它的使用也就是SLF4J的使用。
-```
+```java
 import org.slf4j.LoggerFactory;
 
 private static final Logger LOGGER=LoggerFactory.getLogger(xx.class);
@@ -86,14 +86,14 @@ LOGGER.info(" this is a test in {}", xx.class.getName())
 SLF4J同样支持占位符。
 
 此外，如果想要打印json格式的日志（例如，对接日志到Logstash中），那么可以使用logstash-logback-encoder做为RollingFileAppender的encoder。
-```
+```java
 <encoder class="net.logstash.logback.encoder.LogstashEncoder" >
 ...
 </encoder>
 ```
 # 性能优化
 Logback提供了AsyncAppender进行异步日志输出，此异步appender实现上利用了队列做缓冲，使得日志输出性能得到提高。
-```
+```java
 <appender name="FILE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
       <File>${root_log_dir}app.log</File>
       <Append>true</Append>
@@ -111,7 +111,7 @@ Logback提供了AsyncAppender进行异步日志输出，此异步appender实现�
        
        <appender-ref ref ="FILE_APPENDER"/>  
 </appender>  
-```       
+```
 这里需要特别注意以下两个参数的配置：
 
 + queueSize：队列的长度,该值会影响性能，需要合理配置。
@@ -119,12 +119,12 @@ Logback提供了AsyncAppender进行异步日志输出，此异步appender实现�
 此外，由于是异步输出，为了保证日志一定会被输出以及后台线程能够被及时关闭，在应用退出时需要显示关闭logback。有两种方式：
 
 + 在程序退出的地方（ServletContextListener的contextDestroyed方法、Spring Bean的destroy方法）显式调用下面的代码。
-```
+```java
 LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
 loggerContext.stop();
 ```
 + 在logback配置文件里，做如下配置。
-```
+```xml
 <configuration>
 
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
