@@ -15,7 +15,7 @@ Maven是继Ant后出现的一款基于约定优于配置（约定的一些规范
 
 # 列子
 Maven基于pom（Project Object Model）进行。一个项目所有的配置都放置在pom.xml文件中，包括定义项目的类型、名字，管理依赖关系，定制插件的行为等等。
-```
+```xml
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -102,7 +102,7 @@ Maven基于pom（Project Object Model）进行。一个项目所有的配置都�
 
 # 继承
 可以通过parent实现pom的继承做统一配置管理，子pom中的配置优先级高于父pom。
-```
+```xml
 ?xml version=”1.0″ encoding=”UTF-8″?>
 
 <project>
@@ -111,10 +111,10 @@ Maven基于pom（Project Object Model）进行。一个项目所有的配置都�
 
  <!-- 一般放到项目名字  版本号的前面 -->
 <parent>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-parent</artifactId>
-            <version>2.2.4.RELEASE</version>
-            <relativePath/>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.2.4.RELEASE</version>
+    <relativePath/>
 </parent>
 
 …
@@ -140,7 +140,7 @@ Maven基于pom（Project Object Model）进行。一个项目所有的配置都�
 * target/test-classes 测试代码编译结果目标目录
 
 ## 通过配置自定义结构
-```
+```xml
  <build>
    <plugins>
        <plugin>
@@ -174,7 +174,7 @@ Java代码目录移到了./src中，测试代码目录到了./test/java中，测
 ## 镜像库
 Maven中还有一个镜像库的配置，即在Maven的settings.xml中配置Maven镜像库。和pom.xml中的repository不同的是镜像会拦截住对远程中央库的请求，只在镜像库中进行依赖的搜索以及下载。而如果只是配置了repository，那么在repository中找不到相应的依赖时，会继续去远程中央库进行搜索和下载。
 setting.xml配置文件：
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -212,7 +212,7 @@ Maven的构建生命周期中几个常见phase（阶段）如下：
 
 # Profile多环境支持
 现实开发中一个很常见的需求就是需要根据不同的环境打包不同的文件或者读取不同的属性值。Maven中的profile即可解决此问题。
-```
+```xml
 <profiles>
    <profile>
        <id>dev</id>
@@ -263,18 +263,18 @@ Maven的构建生命周期中几个常见phase（阶段）如下：
 如此，分为dev、test以及prod三种环境，对应每一种环境，其资源文件路径都不一样。在使用mvn时，使用-P参数指定profile即可生效。
 
 此外，示例中resource下的filtering设置为true, 是为了能够在编译过程中将资源文件中的占位符替换为Maven中相应属性对应的值。例如，在resources下的config.properties文件内容：
-```
+```properties
 resouceDir=${resources.dir}
 ```
 在profile为dev时，编译结束此文件会变为:
-```
+```properties
 resouceDir=src/main/resources/dev
 ```
 
 而示例中的filters配置则是将外部文件的属性引入进来，同样也能够使用占位符。
 
 如果是Web项目，想要在webapp下使用占位符，那么则需要配置maven-war-plugin:
-```
+```xml
 <plugin>  
     <groupId>org.apache.maven.plugins</groupId>  
     <artifactId>maven-war-plugin</artifactId>  
@@ -296,7 +296,7 @@ resouceDir=src/main/resources/dev
 
 # 复用test
 当需要将写的测试用例（src/test下的资源和类）以jar包形式发布出去的时候，需要用到test-jar。首先，在打包时配置maven-jar-plugin，如下：
-```
+```xml
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-jar-plugin</artifactId>
@@ -326,7 +326,7 @@ resouceDir=src/main/resources/dev
 
 ```
 使用时，指定dependency的type为test-jar：
-```
+```xml
 <dependency>
     <groupId>xx</groupId>
     <artifactId>xx</artifactId>
@@ -338,7 +338,7 @@ resouceDir=src/main/resources/dev
 
 # Scala支持
 Scala的官方构建工具是sbt，但是由于某些原因，在国内访问很慢。Maven有插件提供了对Scala项目的支持。
-```
+```xml
 <build>
     <plugins>
         <plugin>
