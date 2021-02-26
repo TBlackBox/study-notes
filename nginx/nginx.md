@@ -199,6 +199,7 @@ events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接，
 ### http块
 这部分是配置中最频繁的一部分，代理，缓存和日志等绝大多数功能和第三方模块的配置都在这里。
 **注意：http块包含两部分http全局块和server块**
+
 #### http全局块
 http 全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求数上限等。
 
@@ -250,7 +251,7 @@ firewall-cmd –reload
                                           真实服务器1（8080）
                                        -
                                     -
-客服端------>反向代理服务器（80） ------>  真实服务器2（8081）
+客服端------>反向代理服务器（80） ------>      真实服务器2（8081）
                                     -
                                        - 
                                            真实服务器3（8082）
@@ -485,12 +486,12 @@ https://github.com/Neilpang/acme.sh/wiki/%E8%AF%B4%E6%98%8E
 
 	2,执行
 		source ~/.bashrc
-
+	
 	3,执行
 		# 阿里云后台的密钥
 		export Ali_Key="1858118"
 		export Ali_Secret="1858118"
-
+	
 		# 填写自己的域名
 		acme.sh --issue --dns dns_ali -d javafroum.cn -d *.javafroum.cn
 		
@@ -499,11 +500,11 @@ https://github.com/Neilpang/acme.sh/wiki/%E8%AF%B4%E6%98%8E
 		* 对这种方式有顾虑的,请慎重,不过也可以自行删掉用户级的定时任务,并且清理掉~/.acme.sh文件夹就行
 	
 	4,在证书生成目录执行
-    ```
-        acme.sh --installcert -d javafroum.cn -d *.javafroum.cn  \
-        --keypath       /usr/local/ssl/javafroum.cn.key  \
-        --fullchainpath /usr/local/ssl/javafroum.cn.pem
-    ````
+	```
+	    acme.sh --installcert -d javafroum.cn -d *.javafroum.cn  \
+	    --keypath       /usr/local/ssl/javafroum.cn.key  \
+	    --fullchainpath /usr/local/ssl/javafroum.cn.pem
+	````
 		
 		* 会把key和pem生成到指定的目录
 	
@@ -547,9 +548,9 @@ server {
 ```
 	6,acme.sh 源码
 		#!/usr/bin/env sh
-
+	
 		#https://github.com/Neilpang/get.acme.sh
-
+	
 		_exists() {
 		  cmd="$1"
 		  if [ -z "$cmd" ] ; then
@@ -564,7 +565,7 @@ server {
 		  ret="$?"
 		  return $ret
 		}
-
+	
 		if _exists curl && [ "${ACME_USE_WGET:-0}" = "0" ]; then
 		  curl https://raw.githubusercontent.com/Neilpang/acme.sh/master/acme.sh | INSTALLONLINE=1  sh
 		elif _exists wget ; then
@@ -597,7 +598,7 @@ server {
 ------------------------------------
 手动安装单域名证书					|
 ------------------------------------
-	
+
 1,clone 
 	git clone git@github.com:certbot/certbot.git
 
@@ -607,7 +608,7 @@ server {
 
 	 * 非当前服务器上生成(manual)
 		./letsencrypt-auto certonly --manual --email [邮箱] -d [域名] -d [域名]
-
+	
 		* 需要在服务器的上安装可访问的,脚本提供的文本
 			
 			CjhdUm0L4oQU0ZHg7F7832FtFweUPlRFJs0LxJGx_qg.-ielpqOUtyZI_Q0f9xYi8-Bj57TsuD5y4mGIMxW9GwM			文本
@@ -624,14 +625,14 @@ server {
 		
 
 		Saving debug log to /var/log/letsencrypt/letsencrypt.log
-
+	
 		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		Processing /etc/letsencrypt/renewal/springcloud.io.conf(处理/etc/letsencrypt/renewal/springcloud.io.conf)							
 		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		Cert not yet due for renewal(证书还没有到期)														
-
+	
 		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+	
 		The following certs are not due for renewal yet:(下列证书尚未到期续期)									
 		  /etc/letsencrypt/live/springcloud.io/fullchain.pem expires on 2018-11-29 (skipped)
 		No renewals were attempted.(没有尝试更新)
@@ -645,12 +646,12 @@ server {
 # 转换为 tomcat 的格式
 	1,进入目录  /etc/letsencrypt/live/[域名]/ 执行
 		openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out [域名].p12
-
+	
 		* 生成 p12 文件(会输入一次密码)
-
+	
 	2,根据p12 文件生成 keystore 文件
 		keytool -importkeystore -v  -srckeystore [域名].p12 -srcstoretype pkcs12 -srcstorepass [p12文件的密码] -destkeystore [域名].keystore -deststoretype jks -deststorepass [keytroe的密码]
-
+	
 		* 如果提示警告,可以考虑复制警告的命令,再执行一波
 				keytool -importkeystore -srckeystore [域名].keystore -destkeystore [域名].keystore -deststoretype pkcs12
 
@@ -661,7 +662,7 @@ server {
 	wget https://dl.eff.org/certbot-auto
 	
 	chmod 775 certbot-auto
-
+	
 	* 也可采用certbot官方 yum安装方式
 
 2,执行

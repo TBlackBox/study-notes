@@ -33,14 +33,15 @@ SpringMVC通过使用HandlerAdapter 配置的HttpMessageConverters来解析HttpE
 
 ### @RequestBody批量接受数据
 解析json数据,controller写法
-```
+```java
 @PostMapping
-	public void test(@RequestBody List<User> users) {
+public void test(@RequestBody List<User> users) {
 }
 ```
 由于@RequestBody可用来处理 Content-Type 为 application/json 编码的内容。所以在postman中，选择body的类型为row -> JSON(application/json)，这样在 Headers 中也会自动变为 Content-Type : application/json 编码格式。
 发送的数据：
-```
+
+```json
 [
     {
         username:"dd",
@@ -59,7 +60,7 @@ body 里面的 json 语句的 key 值要与后端实体类的属性一一对应�
 
 ### 通过Map 接受json数据
 上面实体类中的具体写法，那么如果传递到非实体类中，body里面的json数据需要怎么解析呢？在controller通过map来接受
-```
+```java
 @PostMapping
 public void testMap(@RequestBody List<Map<String, String>> maps) {
 }
