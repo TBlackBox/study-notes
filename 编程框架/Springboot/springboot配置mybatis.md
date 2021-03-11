@@ -18,7 +18,7 @@
 
 
 2. 在pom.xml里添加数据源配置
-```
+```yml
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
@@ -29,7 +29,7 @@ spring:
 ```
 
 3. pom.xml里面添加配置文件路径和映射文件路径
-```
+```xml
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations:
@@ -39,7 +39,7 @@ mybatis:
 并在resources下创建mybatis和mapper文件夹
 
 4. 在mybatis文件夹下加入配置文件
-```
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
@@ -61,7 +61,7 @@ mybatis:
 ```
 
 5. 创建mapper接口
-```
+```java
 package cn.javafroum.mybatis.springboot2.mapper;
 
 import org.apache.ibatis.annotations.Select;
@@ -82,7 +82,31 @@ public interface LogMapper {
 ```
 
 6. 在mapper文件夹下创建配置文件,并按照配置的方式命名
-```
+
+   **特别注意：.xml文件最好放到sources目录下，如果放在src/main/java代码里面，java打包将不会把xml文件打入会报下面的错误**
+
+   ```
+   org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): 
+   ```
+
+   如果要放在src/main/java代码里面，需要在maven进行配置
+
+   ```xml
+   <resources>
+       <resource>
+           <directory>src/main/java</directory>
+           <includes>
+               <include>**/*.xml</include>
+           </includes>
+       </resource>
+       <resource>
+           <directory>src/main/resources</directory>
+       </resource>
+   </resources>
+   ```
+
+   
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -96,7 +120,7 @@ public interface LogMapper {
 例如：log-mapper.xml
 
 7. 在springboot入口添加包扫描
-```
+```java
 @MapperScan(basePackages = {"cn.javafroum.mybatis.springboot2.mapper"},annotationClass = Repository.class)
 @SpringBootApplication
 public class Springboot2Application {
@@ -108,7 +132,7 @@ public class Springboot2Application {
 ```
 
 8. 测试
-```
+```java
 @Controller
 public class MybatisTest {
     
