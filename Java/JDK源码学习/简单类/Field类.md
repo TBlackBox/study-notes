@@ -13,11 +13,7 @@ Field 提供有关类或接口的单个字段的信息，以及对它的动态�
 
  下面的代码演示了上述方法的使用过程
 
-```
-/**
- * Created by zejian on 2017/5/1.
- * Blog : http://blog.csdn.net/javazejian [原文地址,请尊重原创]
- */
+```java
 public class ReflectField {
 
     public static void main(String[] args) throws ClassNotFoundException, NoSuchFieldException {
@@ -72,7 +68,7 @@ class Student extends Person{
 
 上述方法需要注意的是，如果我们不期望获取其父类的字段，则需使用Class类的getDeclaredField/getDeclaredFields方法来获取字段即可，倘若需要连带获取到父类的字段，那么请使用Class类的getField/getFields，但是也只能获取到public修饰的的字段，无法获取父类的私有字段。下面将通过Field类本身的方法对指定类属性赋值，代码演示如下：
 
-```
+```java
 //获取Class对象引用
 Class<?> clazz = Class.forName("reflect.Student");
 
@@ -111,7 +107,5 @@ System.out.println(scoreField.get(st));
 | `String`   | `getName()`                     | 返回此 Field 对象表示的字段的名称                            |
 | `Class`    | `getDeclaringClass()`           | 返回表示类或接口的 Class 对象，该类或接口声明由此 Field 对象表示的字段 |
 | void       | setAccessible(boolean flag)     | 将此对象的 accessible 标志设置为指示的布尔值,即设置其可访问性 |
-
-
 
  上述方法可能是较为常用的，事实上在设置值的方法上，Field类还提供了专门针对基本数据类型的方法，如setInt()/getInt()、setBoolean()/getBoolean、setChar()/getChar()等等方法，这里就不全部列出了，需要时查API文档即可。需要特别注意的是被final关键字修饰的Field字段是安全的，在运行时可以接收任何修改，但最终其实际值是不会发生改变的。

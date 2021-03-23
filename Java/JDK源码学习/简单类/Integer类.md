@@ -4,13 +4,12 @@ Integer 类被关键字`final`修饰，也就是说不会又子类。
 
 ## 属性
 
-```
+```java
 //MIN_VALUE静态变量表示int能取的最小值，为-2的31次方(-2147483648 )，被final修饰说明不可变。
 public static final int   MIN_VALUE = 0x80000000;
 //类似的还有MAX_VALUE，表示int最大值为2的31次方减1(2147483647)。
 public static final int   MAX_VALUE = 0x7fffffff;
 public static final int SIZE = 32;
-
 ```
 1. 一些不变的常量
 *** 注意： ***
@@ -20,16 +19,16 @@ public static final int SIZE = 32;
 - SIZE用来表示二进制补码形式的int值的比特数，值为32，因为是静态变量所以值不可变。
 
 
-```
+```java
 public static final Class<Integer>  TYPE = (Class<Integer>) Class.getPrimitiveClass("int");
 ```
 
 1. 这个应该是指类型，类型是int。
 
-```
+```java
 final static int [] sizeTable = { 9, 99, 999, 9999, 99999, 999999, 9999999,
                                       99999999, 999999999, Integer.MAX_VALUE };
-// Requires positive xstatic int stringSize(int x) {
+Requires positive xstatic int stringSize(int x) {
     for (int i=0; ; i++)
         if (x <= sizeTable[i])
             return i+1;
@@ -39,20 +38,20 @@ final static int [] sizeTable = { 9, 99, 999, 9999, 99999, 999999, 9999999,
 
 1. stringSize主要是为了判断一个int型数字对应字符串的长度。sizeTable这个数组存储了该位数的最大值。
 
-```
-   final static char[] digits = {
-        '0' , '1' , '2' , '3' , '4' , '5' ,
-        '6' , '7' , '8' , '9' , 'a' , 'b' ,
-        'c' , 'd' , 'e' , 'f' , 'g' , 'h' ,
-        'i' , 'j' , 'k' , 'l' , 'm' , 'n' ,
-        'o' , 'p' , 'q' , 'r' , 's' , 't' ,
-        'u' , 'v' , 'w' , 'x' , 'y' , 'z'
-    };
+```java
+final static char[] digits = {
+    '0' , '1' , '2' , '3' , '4' , '5' ,
+    '6' , '7' , '8' , '9' , 'a' , 'b' ,
+    'c' , 'd' , 'e' , 'f' , 'g' , 'h' ,
+    'i' , 'j' , 'k' , 'l' , 'm' , 'n' ,
+    'o' , 'p' , 'q' , 'r' , 's' , 't' ,
+    'u' , 'v' , 'w' , 'x' , 'y' , 'z'
+};
 ```
 
 1. digits数组里面存的是数字从二进制到36进制所表示的字符，所以需要有36个字符才能表示所有不用进制的数字。
 
-```
+```java
 final static char [] DigitTens = {
         '0', '0', '0', '0', '0', '0', '0', '0', '0', '0',
         '1', '1', '1', '1', '1', '1', '1', '1', '1', '1',
@@ -91,8 +90,8 @@ DigitOnes是为了获取0到99之间某个数的个位
 2、Integer变量必须实例化后才能使用，而int变量不需要 
 3、Integer实际是对象的引用，当new一个Integer时，实际上是生成一个指针指向此对象；而int则是直接存储数据值 
 
-非new生成的Integer变量指向的是java常量池中的对象，而new Integer()生成的变量指向堆中新建的对象，两者在内存中的地址不同）
-```
+非new生成的Integer变量指向的是**java常量池**中的对象，而new Integer()生成的变量指向堆中新建的对象，两者在内存中的地址不同）
+```java
 Integer a = new Integer(12);
 Integer b = 12;
 System.out.println(a == b); //false
@@ -110,40 +109,40 @@ Java的Ingeter是int的包装类,在开发中我们基本可以将两者等价�
 Integer类是对int进行封装,里面包含处理int类型的方法，比如int到String类型的转换方法或String类型转int类型的方法，也有与其他类型之间的转换方，当然也包括操作位的方法。
 
 # IntegerCache内部类
-```
-    private static class IntegerCache {
-        static final int low = -128;
-        static final int high;
-        static final Integer cache[];
+```java
+private static class IntegerCache {
+    static final int low = -128;
+    static final int high;
+    static final Integer cache[];
 
-        static {
-            // high value may be configured by property
-            int h = 127;
-            String integerCacheHighPropValue =
-                sun.misc.VM.getSavedProperty("java.lang.Integer.IntegerCache.high");
-            if (integerCacheHighPropValue != null) {
-                try {
-                    int i = parseInt(integerCacheHighPropValue);
-                    i = Math.max(i, 127);
-                    // Maximum array size is Integer.MAX_VALUE
-                    h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
-                } catch( NumberFormatException nfe) {
-                    // If the property cannot be parsed into an int, ignore it.
-                }
+    static {
+        // high value may be configured by property
+        int h = 127;
+        String integerCacheHighPropValue =
+            sun.misc.VM.getSavedProperty("java.lang.Integer.IntegerCache.high");
+        if (integerCacheHighPropValue != null) {
+            try {
+                int i = parseInt(integerCacheHighPropValue);
+                i = Math.max(i, 127);
+                // Maximum array size is Integer.MAX_VALUE
+                h = Math.min(i, Integer.MAX_VALUE - (-low) -1);
+            } catch( NumberFormatException nfe) {
+                // If the property cannot be parsed into an int, ignore it.
             }
-            high = h;
-
-            cache = new Integer[(high - low) + 1];
-            int j = low;
-            for(int k = 0; k < cache.length; k++)
-                cache[k] = new Integer(j++);
-
-            // range [-128, 127] must be interned (JLS7 5.1.7)
-            assert IntegerCache.high >= 127;
         }
+        high = h;
 
-        private IntegerCache() {}
+        cache = new Integer[(high - low) + 1];
+        int j = low;
+        for(int k = 0; k < cache.length; k++)
+            cache[k] = new Integer(j++);
+
+        // range [-128, 127] must be interned (JLS7 5.1.7)
+        assert IntegerCache.high >= 127;
     }
+
+    private IntegerCache() {}
+}
 ```
 
 IntegerCache是Integer的一个静态内部类，它包含了int可能值得Integer数组，它负责存储了(high -low)个静态Integer对象，并且在静态代码块中初始化。
@@ -151,7 +150,7 @@ IntegerCache是Integer的一个静态内部类，它包含了int可能值得Inte
 
 如果不去配置虚拟机参数，这个值不会变。配合valueOf(int) 方法，可以节省创建对象造成的资源消耗。
 ### valueOf(int) 方法
-```
+```java
 public static Integer valueOf(int i) {
     if (i >= IntegerCache.low && i <= IntegerCache.high)
     	return IntegerCache.cache[i + (-IntegerCache.low)];
@@ -162,11 +161,11 @@ public static Integer valueOf(int i) {
 ## 该改变缓存值得范围
 
 启动JVM时可以通过
-```
+```java
 -Djava.lang.Integer.IntegerCache.high=xxx
 ```
 就可以改变缓存值的最大值，比如
-```
+```java
 -Djava.lang.Integer.IntegerCache.high=888
 ```
 则会缓存[-888]。 
@@ -175,7 +174,7 @@ public static Integer valueOf(int i) {
 
 ### parseInt
 
-```
+```java
 public static int parseInt(String s) throws NumberFormatException {
     return parseInt(s,10);
 }
@@ -286,7 +285,7 @@ public static int parseInt(String s, int radix)
 
 ### 构造函数
 
-```
+```java
 public Integer(int value) {
         this.value = value;
     }
@@ -300,7 +299,7 @@ public Integer(String s) throws NumberFormatException {
 
 ### getChars方法
 
-```
+```java
 static void getChars(int i, int index, char[] buf) {
     int q, r;
     int charPos = index;
@@ -336,8 +335,6 @@ static void getChars(int i, int index, char[] buf) {
 }
 ```
 
-
-
 该方法主要做的事情是将某个int型数值放到char数组里面。
 
 这里面处理用了一些技巧，int高位的两个字节和低位的两个字节分开处理，
@@ -348,7 +345,7 @@ while (i >= 65536)部分就是处理高位的两个字节，大于65536的部分
 
 ### toString方法
 
-```
+```java
 public static String toString(int i) {
         if (i == Integer.MIN_VALUE)
             return "-2147483648";
@@ -400,7 +397,7 @@ public static String toString(int i, int radix) {
 
 ## valueOf方法
 
-```
+```java
 public static Integer valueOf(int i) {
         if (i >= IntegerCache.low && i <= IntegerCache.high)
             return IntegerCache.cache[i + (-IntegerCache.low)];
@@ -412,18 +409,17 @@ public static Integer valueOf(String s) throws NumberFormatException {
 public static Integer valueOf(String s, int radix) throws NumberFormatException {
         return Integer.valueOf(parseInt(s,radix));
     }
-复制代码
 ```
 
 
 
 第一个valueOf中，因为IntegerCache缓存了【low,high】值的Integer对象，对于在【-128,127】范围内的直接从IntegerCache的数组中获取对应的Integer对象即可，而在范围外的则需要重新实例化了。
 
-第二个和第三个都是调用第一个valueOf方法，只不过调用的parseInt（）的方法不一样。
+第二个和第三个都是调用第一个valueOf方法，只不过调用的parseInt()的方法不一样。
 
 ### decode方法
 
-```
+```java
 public static Integer decode(String nm) throws NumberFormatException {
     int radix = 10;
     int index = 0;
@@ -478,7 +474,7 @@ decode方法主要作用是对字符串进行解码。
 
 ### xxxvalue方法（byteValue，shortValue，intValue，longValue，floatValue，doubleValue）
 
-```
+```java
 public byte byteValue() {
         return (byte)value;
     }
@@ -499,13 +495,11 @@ public double doubleValue() {
     }
 ```
 
-
-
 其实就是转换成对应的类型
 
 ### hashCode方法
 
-```
+```java
 public int hashCode() {
     return value;
 }
@@ -517,44 +511,39 @@ public int hashCode() {
 
 ### equals方法
 
-```
+```java
 public boolean equals(Object obj) {
     if (obj instanceof Integer) {
         return value == ((Integer)obj).intValue();
     }
     return false;
 }
-复制代码
 ```
-
-
 
 比较是否相同之前会将int类型通过valueof转换成Integer类型，equals本质就是值得比较
 
 ### compare方法
 
-```
+```java
 public static int compare(int x, int y) {      
-
     return (x < y) ? -1 : ((x == y) ? 0 : 1);
-}复制代码
+}
 ```
 
 x小于y则返回-1，相等则返回0，否则返回1。
 
 bitCount方法
 
-```
-   public static int bitCount(int i) {
-        // HD, Figure 5-2
-        i = i - ((i >>> 1) & 0x55555555);
-        i = (i & 0x33333333) + ((i >>> 2) & 0x33333333);
-        i = (i + (i >>> 4)) & 0x0f0f0f0f;
-        i = i + (i >>> 8);
-        i = i + (i >>> 16);
-        return i & 0x3f;
-    }
-复制代码
+```java
+public static int bitCount(int i) {
+    // HD, Figure 5-2
+    i = i - ((i >>> 1) & 0x55555555);
+    i = (i & 0x33333333) + ((i >>> 2) & 0x33333333);
+    i = (i + (i >>> 4)) & 0x0f0f0f0f;
+    i = i + (i >>> 8);
+    i = i + (i >>> 16);
+    return i & 0x3f;
+}
 ```
 
 该方法主要用于计算二进制数中1的个数。
@@ -567,16 +556,16 @@ bitCount方法
 
 ### highestOneBit方法
 
-```
-    public static int highestOneBit(int i) {
-        // HD, Figure 3-1
-        i |= (i >>  1);
-        i |= (i >>  2);
-        i |= (i >>  4);
-        i |= (i >>  8);
-        i |= (i >> 16);
-        return i - (i >>> 1);
-    }
+```java
+public static int highestOneBit(int i) {
+    // HD, Figure 3-1
+    i |= (i >>  1);
+    i |= (i >>  2);
+    i |= (i >>  4);
+    i |= (i >>  8);
+    i |= (i >> 16);
+    return i - (i >>> 1);
+}
 // 随便一个例子，不用管最高位之后有多少个1，都会被覆盖
 // 00010000 00000000 00000000 00000000      raw
 // 00011000 00000000 00000000 00000000      i | (i >> 1)
@@ -606,19 +595,19 @@ bitCount方法
 
 ### numberOfLeadingZeros方法
 
-```
-    public static int numberOfLeadingZeros(int i) {
-        // HD, Figure 5-6
-        if (i == 0)
-            return 32;
-        int n = 1;
-        if (i >>> 16 == 0) { n += 16; i <<= 16; }
-        if (i >>> 24 == 0) { n +=  8; i <<=  8; }
-        if (i >>> 28 == 0) { n +=  4; i <<=  4; }
-        if (i >>> 30 == 0) { n +=  2; i <<=  2; }
-        n -= i >>> 31;
-        return n;
-    }
+```java
+public static int numberOfLeadingZeros(int i) {
+    // HD, Figure 5-6
+    if (i == 0)
+        return 32;
+    int n = 1;
+    if (i >>> 16 == 0) { n += 16; i <<= 16; }
+    if (i >>> 24 == 0) { n +=  8; i <<=  8; }
+    if (i >>> 28 == 0) { n +=  4; i <<=  4; }
+    if (i >>> 30 == 0) { n +=  2; i <<=  2; }
+    n -= i >>> 31;
+    return n;
+}
 // 方法很巧妙， 类似于二分法。不断将数字左移缩小范围。例子用最差情况：
 // i: 00000000 00000000 00000000 00000001         n = 1
 // i: 00000000 00000001 00000000 00000000         n = 17
@@ -633,18 +622,18 @@ bitCount方法
 
 ### numberOfTrailingZeros方法
 
-```
-    public static int numberOfTrailingZeros(int i) {
-        // HD, Figure 5-14
-        int y;
-        if (i == 0) return 32;
-        int n = 31;
-        y = i <<16; if (y != 0) { n = n -16; i = y; }
-        y = i << 8; if (y != 0) { n = n - 8; i = y; }
-        y = i << 4; if (y != 0) { n = n - 4; i = y; }
-        y = i << 2; if (y != 0) { n = n - 2; i = y; }
-        return n - ((i << 1) >>> 31);
-    }
+```java
+public static int numberOfTrailingZeros(int i) {
+    // HD, Figure 5-14
+    int y;
+    if (i == 0) return 32;
+    int n = 31;
+    y = i <<16; if (y != 0) { n = n -16; i = y; }
+    y = i << 8; if (y != 0) { n = n - 8; i = y; }
+    y = i << 4; if (y != 0) { n = n - 4; i = y; }
+    y = i << 2; if (y != 0) { n = n - 2; i = y; }
+    return n - ((i << 1) >>> 31);
+}
 // 与求开头多少个0类似，也是用了二分法，先锁定1/2, 再锁定1/4，1/8，1/16，1/32。
 // i: 11111111 11111111 11111111 11111111    n: 31
 // i: 11111111 11111111 00000000 00000000    n: 15
@@ -658,7 +647,7 @@ bitCount方法
 
 ### reerse方法
 
-```
+```java
 public static int reverse(int i) {
         i = (i & 0x55555555) << 1 | (i >>> 1) & 0x55555555;
         i = (i & 0x33333333) << 2 | (i >>> 2) & 0x33333333;
@@ -673,7 +662,7 @@ public static int reverse(int i) {
 
 ### toHexString和toOctalString方法
 
-```
+```java
 public static String toHexString(int i) {
         return toUnsignedString0(i, 4);
     }

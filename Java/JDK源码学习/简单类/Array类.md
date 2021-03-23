@@ -19,11 +19,9 @@ java.lang.reflect.Array中的常用静态方法如下：
 | `static Object` | `newInstance(Class componentType, int length)`        | 创建一个具有指定的组件类型和长度的新数组。     |
 | `static void`   | `set(Object array, int index, Object value)`          | 将指定数组对象中索引组件的值设置为指定的新值。 |
 
-
-
 下面通过一个简单例子来演示这些方法
 
-```
+```java
 package reflect;
 
 import java.lang.reflect.Array;
@@ -68,9 +66,9 @@ public class ReflectArray {
 }
 ```
 
-通过上述代码演示，确实可以利用Array类和反射相结合动态创建数组，也可以在运行时动态获取和设置数组中元素的值，其实除了上的set/get外Array还专门为8种基本数据类型提供特有的方法，如setInt/getInt、setBoolean/getBoolean，其他依次类推，需要使用是可以查看API文档即可。除了上述动态修改数组长度或者动态创建数组或动态获取值或设置值外，可以利用泛型动态创建泛型数组如下：
+通过上述代码演示，确实可以利用Array类和反射相结合动态创建数组，也可以在运行时动态获取和设置数组中元素的值，其实除了上的set/get外Array还专门为8种基本数据类型提供特有的方法，如setInt/getInt、setBoolean/getBoolean，其他依次类推，需要使用是可以查看API文档即可。除了上述动态修改数组长度或者动态创建数组或动态获取值或设置值外，可以利用**泛型动态创建泛型数组**如下：
 
-```
+```java
 /**
   * 接收一个泛型数组，然后创建一个长度与接收的数组长度一样的泛型数组，
   * 并把接收的数组的元素复制到新创建的数组中，
@@ -81,9 +79,12 @@ public class ReflectArray {
  public  <T extends Comparable<T>> void min(T[] a) {
      //通过反射创建相同类型的数组
      T[] b = (T[]) Array.newInstance(a.getClass().getComponentType(), a.length);
+     //将原数组的值赋值给新数组
      for (int i = 0; i < a.length; i++) {
          b[i] = a[i];
      }
+     
+     //找到数组中最小的值
      T min = null;
      boolean flag = true;
      for (int i = 0; i < b.length; i++) {
@@ -101,7 +102,7 @@ public class ReflectArray {
 
 毕竟我们无法直接创建泛型数组，有了Array的动态创建数组的方式这个问题也就迎刃而解了。
 
-```
+```java
 //无效语句，编译不通
 T[] a = new T[];
 ```

@@ -15,7 +15,7 @@ final 一般用于修饰那些通用性的功能、实现方式或取值不能�
 
 如果变量被标记为 final，其结果是使它成为常数。想改变 final 变量的值会导致一个编译错误。下面是一个正确定义 final 变量的例子：
 
-```
+```java
 public final int MAX_ARRAY_SIZE = 25;  // 常量名一般大写
 ```
 
@@ -23,21 +23,37 @@ public final int MAX_ARRAY_SIZE = 25;  // 常量名一般大写
 
 请看下面的代码：
 
-```
-public final class Demo{    public static final int TOTAL_NUMBER = 5;    public int id;    public Demo() {        // 非法，对final变量TOTAL_NUMBER进行二次赋值了        // 因为++TOTAL_NUMBER相当于 TOTAL_NUMBER=TOTAL_NUMBER+1        id = ++TOTAL_NUMBER;    }    public static void main(String[] args) {        final Demo t = new Demo();        final int i = 10;        final int j;        j = 20;        j = 30;  // 非法，对final变量进行二次赋值    }}
+```java
+public final class Demo{    
+    public static final int TOTAL_NUMBER = 5;   
+    public int id;    
+    public Demo() {      
+        // 非法，对final变量TOTAL_NUMBER进行二次赋值了       
+        // 因为++TOTAL_NUMBER相当于 TOTAL_NUMBER=TOTAL_NUMBER+1       
+        id = ++TOTAL_NUMBER;    
+    }   
+    public static void main(String[] args) {        
+        final Demo t = new Demo();      
+        final int i = 10;     
+        final int j;      
+        j = 20;        
+        j = 30;  
+        // 非法，对final变量进行二次赋值
+    }
+}
 ```
 
 
 final 也可以用来修饰类（放在 class 关键字前面），阻止该类再派生出子类，例如 Java.lang.String 就是一个 final 类。这样做是出于安全原因，因为要保证一旦有字符串的引用，就必须是类 String 的字符串，而不是某个其它类的字符串（String 类可能被恶意继承并篡改）。
 
-方法也可以被 final 修饰，被 final 修饰的方法不能被覆盖；变量也可以被 final 修饰，被 final 修饰的变量在创建对象以后就不允许改变它们的值了。一旦将一个类声明为 final，那么该类包含的方法也将被隐式地声明为 final，但是变量不是。
+方法也可以被 final 修饰，被 final 修饰的方法不能被覆盖；
+
+变量也可以被 final 修饰，被 final 修饰的变量在创建对象以后就不允许改变它们的值了。一旦将一个类声明为 final，那么该类包含的方法也将被隐式地声明为 final，但是变量不是。
 
 
 
+**被 final 修饰的方法为静态绑定，不会产生多态（动态绑定），程序在运行时不需要再检索方法表，能够提高代码的执行效率。在Java中，被 static 或 private 修饰的方法会被隐式的声明为 final，因为动态绑定没有意义**。
 
+由于动态绑定会消耗资源并且很多时候没有必要，所以有一些程序员认为：**除非有足够的理由使用多态性，否则应该将所有的方法都用 final 修饰。**
 
-被 final 修饰的方法为静态绑定，不会产生多态（动态绑定），程序在运行时不需要再检索方法表，能够提高代码的执行效率。在Java中，被 static 或 private 修饰的方法会被隐式的声明为 final，因为动态绑定没有意义。
-
-由于动态绑定会消耗资源并且很多时候没有必要，所以有一些程序员认为：除非有足够的理由使用多态性，否则应该将所有的方法都用 final 修饰。
-
-这样的认识未免有些偏激，因为 JVM 中的即时编译器能够实时监控程序的运行信息，可以准确的知道类之间的继承关系。如果一个方法没有被覆盖并且很短，编译器就能够对它进行优化处理，这个过程为称为内联(inlining)。例如，内联调用 e.getName() 将被替换为访问 e.name 变量。这是一项很有意义的改进，这是由于CPU在处理调用方法的指令时，使用的分支转移会扰乱预取指令的策略，所以，这被视为不受欢迎的。然而，如果 getName() 在另外一个类中被覆盖，那么编译器就无法知道覆盖的代码将会做什么操作，因此也就不能对它进行内联处理了。
+这样的认识未免有些偏激，因为 JVM 中的即时编译器能够实时监控程序的运行信息，可以准确的知道类之间的继承关系。如果一个方法没有被覆盖并且很短，编译器就能够对它进行优化处理，这个过程为称为**内联(inlining)**。例如，内联调用 e.getName() 将被替换为访问 e.name 变量。这是一项很有意义的改进，这是由于CPU在处理调用方法的指令时，使用的分支转移会扰乱预取指令的策略，所以，这被视为不受欢迎的。然而，如果 getName() 在另外一个类中被覆盖，那么编译器就无法知道覆盖的代码将会做什么操作，因此也就不能对它进行内联处理了。

@@ -16,7 +16,7 @@ JDK的动态代理有一个限制，就是使用动态代理的对象必须实�
 3. 使用cglib需要引入cglib的jar包，如果你已经有spring-core的jar包，则无需引入，因为spring中包含了cglib。
 
 ## cglib的Maven坐标
-```
+```xml
 <dependency>
     <groupId>cglib</groupId>
     <artifactId>cglib</artifactId>
@@ -26,7 +26,7 @@ JDK的动态代理有一个限制，就是使用动态代理的对象必须实�
 ## 例子
 举例：用户跳舞例子实现
 ### 穿件类
-```
+```java
 public class UserServiceImpl{
 	public void dance() {
 		System.out.println("本人正在跳舞");
@@ -35,7 +35,7 @@ public class UserServiceImpl{
 ```
 
 ### 创建代理对象
-```
+```java
 public class ProxyFactory implements MethodInterceptor{
 
     private Object target;//维护一个目标对象
@@ -66,7 +66,7 @@ public class ProxyFactory implements MethodInterceptor{
 }
 ```
 ## 调用方式
-```
+```java
 public static void main(String[] args) {
 		UserServiceImpl userServiceImpl = new UserServiceImpl();
 		UserServiceImpl proxy = (UserServiceImpl) new ProxyFactory(userServiceImpl).getProxyInstance();

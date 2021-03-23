@@ -4,7 +4,7 @@ static 修饰符能够与变量、方法一起使用，表示是“静态”的�
 
 请看下面的例子：
 
-```
+```java
 public class Demo {
     static int i = 10;
     int j;
@@ -31,7 +31,7 @@ public class Demo {
 
 请看下面的代码：
 
-```
+```java
 public class Demo {
     static int i;
     int j;
@@ -63,7 +63,9 @@ obj2.i=10, obj2.j=0
 
 注意：static 的变量是在类装载的时候就会被初始化。也就是说，只要类被装载，不管你是否使用了这个static 变量，它都会被初始化。
 
-小结：类变量(class variables)用关键字 static 修饰，在类加载的时候，分配类变量的内存，以后再生成类的实例对象时，将共享这块内存（类变量），任何一个对象对类变量的修改，都会影响其它对象。外部有两种访问方式：通过对象来访问或通过类名来访问。
+小结：**类变量(class variables)用关键字 static 修饰，在类加载的时候，分配类变量的内存，以后再生成类的实例对象时，将共享这块内存（类变量），任何一个对象对类变量的修改，都会影响其它对象。外部有两种访问方式：通过对象来访问或通过类名来访问。**
+
+
 
 ## 静态方法
 
@@ -92,7 +94,7 @@ obj2.i=10, obj2.j=0
 
 静态方法举例：
 
-```
+```java
 public class Demo {
     static int sum(int x, int y){
         return x + y;
@@ -114,11 +116,11 @@ static 方法不需它所属的类的任何实例就会被调用，因此没有 
 
 ## 静态初始器（静态块）
 
-块是由大括号包围的一段代码。静态初始器(Static Initializer)是一个存在于类中、方法外面的静态块。静态初始器仅仅在类装载的时候（第一次使用类的时候）执行一次，往往用来初始化静态变量。
+块是由大括号包围的一段代码。静态初始器(Static Initializer)是一个存在于类中、方法外面的静态块。**静态初始器仅仅在类装载的时候（第一次使用类的时候）执行一次，往往用来初始化静态变量。**
 
 示例代码：
 
-```
+```java
 public class Demo {
     public static int i;
     static{
@@ -147,26 +149,26 @@ test method: i=10
 
 一般我们导入类都这样写：
 
-```
+```java
 import packageName.className;  // 导入某个特定的类
 ```
 
 或
 
-```
+```java
 import packageName.*;  // 导入包中的所有类
 ```
 
 
 而静态导入可以这样写：
 
-```
+```java
 import static packageName.className.methonName;  // 导入某个特定的静态方法
 ```
 
 或
 
-```
+```java
 import static packageName.className.*;  // 导入类中的所有静态成员
 ```
 
@@ -177,7 +179,7 @@ import static packageName.className.*;  // 导入类中的所有静态成员
 
 请看下面的代码：
 
-```
+```java
 import static java.lang.System.*;
 import static java.lang.Math.random;
 public class Demo {

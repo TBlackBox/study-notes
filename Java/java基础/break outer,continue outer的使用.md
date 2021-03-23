@@ -24,13 +24,13 @@ i=0, j=2
 这里的`outer`换成其他的都可以，如果不使用`outer`标签的话，则是下面的效果
 ```java
 for(int i =0; i < 3; i++) {
-			for(int j = 0; j < 3; j++) {
-				if(i == 1) {
-					break;
-				}else {
-					System.out.println("i=" + i + ", j=" + j);
-				}
-			}
+    for(int j = 0; j < 3; j++) {
+        if(i == 1) {
+            break;
+        }else {
+            System.out.println("i=" + i + ", j=" + j);
+        }
+    }
 }
 ```
 ```java
@@ -62,13 +62,13 @@ i=2, j=0
 不使用标签
 ```java
 for(int i =0; i < 3; i++) {
-			for(int j = 0; j < 3; j++) {
-				if(j == 1) {
-					continue;
-				}else {
-					System.out.println("i=" + i + ", j=" + j);
-				}
-			}
+    for(int j = 0; j < 3; j++) {
+        if(j == 1) {
+            continue;
+        }else {
+            System.out.println("i=" + i + ", j=" + j);
+        }
+    }
 }
 
 ```

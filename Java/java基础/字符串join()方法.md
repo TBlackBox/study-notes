@@ -6,7 +6,7 @@
 ## 案列
 jdk8中，join()重载了两个方法出来，分别是
 - 使用可变字符串
-```
+```java
  public static String join(CharSequence delimiter, CharSequence... elements) {
         Objects.requireNonNull(delimiter);
         Objects.requireNonNull(elements);
@@ -19,7 +19,7 @@ jdk8中，join()重载了两个方法出来，分别是
     }
 ```
 - 使用数组或者列表
-```
+```java
 public static String join(CharSequence delimiter,
             Iterable<? extends CharSequence> elements) {
             Objects.requireNonNull(delimiter);
@@ -32,7 +32,7 @@ public static String join(CharSequence delimiter,
 }
 ```
 ## 例子
-```
+```java
 String value = String.join(":", "1","2","3");
 //输出：1:2:3
 System.out.println(value);

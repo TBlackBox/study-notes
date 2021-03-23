@@ -4,7 +4,7 @@
 含有很多库，如图形绘制，socket等等
 
 主要特点
-一次编译  到处运行
+**一次编译  到处运行**
 
 # JVM
 是一个软件
@@ -53,7 +53,7 @@ Java类库中有很多包：
 - 以 javax.* 开头的是扩展包，x 是 extension 的意思，也就是扩展。虽然 javax.* 是对 java.* 的优化和扩展，但是由于 javax.* 使用的越来越多，很多程序都依赖于 javax.*，所以 javax.* 也是核心的一部分了，也随JDK一起发布。
 - 以 org.* 开头的是各个机构或组织发布的包，因为这些组织很有影响力，它们的代码质量很高，所以也将它们开发的部分常用的类随JDK一起发布。
 
-在包的命名方面，为了防止重名，有一个惯例：大家都以自己域名的倒写形式作为开头来为自己开发的包命名，例如百度发布的包会以 com.baidu.* 开头，w3c组织发布的包会以 org.w3c.* 开头，微学苑发布的包会以 net.weixueyuan.* 开头……
+在包的命名方面，为了防止重名，有一个惯例：大家都以自己域名的倒写形式作为开头来为自己开发的包命名，例如百度发布的包会以 com.baidu.* 开头，w3c组织发布的包会以 org.w3c.* 开头……
 
 组织机构的域名后缀一般为 org，公司的域名后缀一般为 com，可以认为 org.* 开头的包为非盈利组织机构发布的包，它们一般是开源的，可以免费使用在自己的产品中，不用考虑侵权问题，而以 com.* 开头的包往往由盈利性的公司发布，可能会有版权问题，使用时要注意。
 
@@ -79,7 +79,7 @@ import语句与C语言中的 #include 有些类似，语法为：
   import package1[.package2…].classname;
 package 为包名，classname 为类名。例如：
 
-```
+```java
 import java.util.Date;  // 导入 java.util 包下的 Date 类
 import java.util.Scanner;  // 导入 java.util 包下的 Scanner 类
 import javax.swing.*;  // 导入 javax.swing 包下的所有类，* 表示所有类

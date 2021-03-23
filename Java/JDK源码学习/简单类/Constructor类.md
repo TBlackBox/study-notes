@@ -15,16 +15,12 @@ Constructor类存在于反射包(java.lang.reflect)中，反映的是Class 对�
 
 下面看一个简单例子来了解Constructor对象的使用：
 
-```
+```java
 package reflect;
 
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 
-/**
- * Created by zejian on 2017/5/1.
- * Blog : http://blog.csdn.net/javazejian [原文地址,请尊重原创]
- */
 public class ReflectDemo implements Serializable{
     public static void main(String[] args) throws Exception {
 
@@ -108,7 +104,7 @@ class User {
 
 运行结果：
 
-```
+```java
 User [age=20, name=Rollen]
 --------------------------------------------
 user1:User [age=22, name=xiaolong]
@@ -138,7 +134,7 @@ user2:User [age=25, name=lidakang]
 
 代码演示如下：
 
-```
+```java
 Constructor cs3=clazz.getDeclaredConstructor(int.class,String.class);
 
 System.out.println("-----getDeclaringClass-----");

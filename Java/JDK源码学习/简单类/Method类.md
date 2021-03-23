@@ -13,7 +13,7 @@ Method 提供关于类或接口上单独某个方法（以及如何访问该方�
 
 同样通过案例演示上述方法：
 
-```
+```java
 import java.lang.reflect.Method;
 
 public class ReflectMethod  {
@@ -94,7 +94,7 @@ class Circle extends Shape{
 
 在通过getMethods方法获取Method对象时，会把父类的方法也获取到，如上的输出结果，把Object类的方法都打印出来了。而getDeclaredMethod/getDeclaredMethods方法都只能获取当前类的方法。我们在使用时根据情况选择即可。下面将演示通过Method对象调用指定类的方法：
 
-```
+```java
 Class clazz = Class.forName("reflect.Circle");
 //创建对象
 Circle circle = (Circle) clazz.newInstance();

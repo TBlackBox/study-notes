@@ -2,7 +2,7 @@
 
 instanceof 运算符用来判断一个变量所引用的对象的实际类型，注意是它引用的对象的类型，不是变量的类型。
 
-```
+```java
 if(obj instanceof Object){
 	System.out.println("我是一个对象");
 }

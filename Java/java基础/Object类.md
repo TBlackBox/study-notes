@@ -2,13 +2,13 @@ Object 类位于 java.lang 包中，是所有 Java 类的祖先，Java 中的每
 
 定义Java类时如果没有显示的指明父类，那么就默认继承了 Object 类。例如：
 
-```
+```java
 public class Demo{    // ...}
 ```
 
 实际上是下面代码的简写形式：
 
-```
+```java
 public class Demo extends Object{    // ...}
 ```
 
@@ -20,9 +20,8 @@ Object 类定义了一些有用的方法，由于是根类，这些方法在其�
 
 Object 类中的 equals() 方法用来检测一个对象是否等价于另外一个对象，语法为：
   public boolean equals(Object obj)
-例如：
 
-```
+```java
 obj1.equals(obj2);
 ```
 
@@ -44,8 +43,6 @@ hashCode() 方法主要用来在集合中实现快速查找等操作，也可以
 
 - 在同一个应用程序执行期间，对同一个对象调用 hashCode()，必须返回相同的整数结果——前提是 equals() 所比较的信息都不曾被改动过。至于同一个应用程序在不同执行期所得的调用结果，无需一致。
 - 如果两个对象被 equals() 方法视为相等，那么对这两个对象调用 hashCode() 必须获得相同的整数结果。
-- 
-
 - 如果两个对象被 equals() 方法视为不相等，那么对这两个对象调用 hashCode() 不必产生不同的整数结果。然而程序员应该意识到，对不同对象产生不同的整数结果，有可能提升hashTable（后面会学到，集合框架中的一个类）的效率。
 
 
@@ -54,7 +51,12 @@ hashCode() 方法主要用来在集合中实现快速查找等操作，也可以
 ## toString() 方法
 
 toString() 方法是 Object 类中定义的另一个重要方法，是对象的字符串表现形式，语法为：
+
+```java
   public String toString()
+```
+
+
 返回值是 String 类型，用于描述当前对象的有关信息。Object 类中实现的 toString() 方法是返回当前对象的类型和内存地址信息，但在一些子类（如 String、Date 等）中进行了 重写，也可以根据需要在用户自定义类型中重写 toString() 方法，以返回更适用的信息。
 
 除显式调用对象的 toString() 方法外，在进行 String 与其它类型数据的连接操作时，会自动调用 toString() 方法。

@@ -1,7 +1,7 @@
 
 
 ## 创建日志的注解
-```
+```java
 @Retention(RUNTIME)
 @Target(METHOD)
 public @interface OperationLog {
@@ -12,7 +12,7 @@ public @interface OperationLog {
 ```
 ## 创建切面
 
-```
+```java
 
 @Aspect
 @Component
@@ -141,7 +141,7 @@ public class OperationLogAspect {
 ## 使用
 ```
 @OperationLog(name = "获取客服列表")
-	public Object list(}{
-	
-	}
+public Object list(}{
+
+}
 ```

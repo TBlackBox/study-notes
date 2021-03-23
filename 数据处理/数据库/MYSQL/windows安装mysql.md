@@ -32,7 +32,7 @@ path添加如下：
 
 ### 在`MYSQL_HOME`目录下创建my.ini配置文件（也就是安装目录下）
 配置下面内容
-```
+```properties
 [client]
 port=3306
 default-character-set=utf8
