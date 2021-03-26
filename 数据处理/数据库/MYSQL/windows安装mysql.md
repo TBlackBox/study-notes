@@ -39,26 +39,33 @@ default-character-set=utf8
 
 [mysqld]
 #解压目录
-basedir=D:\mysql-5.7.31-winx64
+basedir=C:\mysql-5.7.33-winx64
 #解压目录下data目录
-datadir=D:\mysql-5.7.31-winx64\data
+datadir=C:\mysql-5.7.33-winx64\data
 port=3306
 character_set_server=utf8
 #导出mysql数据的目录
-secure_file_priv =D:\mysql-5.7.31-winx64\data
+secure_file_priv =C:\mysql-5.7.33-winx64\data
 sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 #开启查询缓存
 explicit_defaults_for_timestamp=true
 skip-grant-tables
 
 [WinMySQLAdmin]
-D:\mysql-5.7.31-winx64\bin\mysqld.exe
+C:\mysql-5.7.33-winx64\bin\mysqld.exe
 ```
 ### 在根目录下创建data文件夹
 这个时候我们的初始化配制文件已经写好了，但是由于mysql 5.7版本后已经不自带data，我们还没有默认数据库就是上文说的data文件夹。我们在管理员模式下运行命令行。并且打开到自己的解压缩目录下。
 并取得管理员权限运行,mysqld在bin文件夹里
-打开管理员模式cmd的，
+
+**打开管理员模式cmd**,不让要报错
+
+```
+Could not create or access the registry key needed for the MySQL application
+```
+
 进入mysql\bin目录下，
+
 ```
 mysqld –initialize-insecure –user=mysql
 ```
@@ -80,12 +87,14 @@ mysql -u root -p
 
 由于我们是第一次登陆mysql 直接回车键登录。
 设置密码
+
 ```
 set password for root@localhost = password('1234');
 ```
 修改密码成功后输入quit退出mysql
 然后再次登录：mysql -u root -p, 输入password 验证是否修改成功
 若出现错误：
+
 ```
 mysql access denied for user 'root'@'localhost' (using password: YES)
 ```
