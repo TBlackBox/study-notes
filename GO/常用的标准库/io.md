@@ -2,10 +2,6 @@
 
 io 是go的标准库，是对文件的操作和标准输入输出的底层
 
-
-
-
-
 # 输入输出的底层原理
 
 终端其实是一个文件，相关实例如下：
@@ -23,9 +19,7 @@ io 是go的标准库，是对文件的操作和标准输入输出的底层
   os.Stdin.WriteString(string(buf[:]))
   ```
 
-
-
-File 的内幕
+**File 的内幕**
 
 ```go
 //file 结构体
@@ -106,3 +100,217 @@ func Remove(name string) Error
  ```
 
   
+
+### bufio
+
+- bufio包实现了带缓冲区的读写，是对文件读写的封装
+- bufio缓冲写数据
+
+| 模式        | 含义     |
+| ----------- | -------- |
+| os.O_WRONLY | 只写     |
+| os.O_CREATE | 创建文件 |
+| os.O_RDONLY | 只读     |
+| os.O_RDWR   | 读写     |
+| os.O_TRUNC  | 清空     |
+| os.O_APPEND | 追加     |
+
+bufio读数据
+```go
+import (
+    "bufio"
+    "fmt"
+    "io"
+    "os"
+)
+
+func wr() {
+    // 参数2：打开模式，所有模式d都在上面
+    // 参数3是权限控制
+    // w写 r读 x执行   w  2   r  4   x  1
+    file, err := os.OpenFile("./xxx.txt", os.O_CREATE|os.O_WRONLY, 0666)
+    if err != nil {
+        return
+    }
+    defer file.Close()
+    // 获取writer对象
+    writer := bufio.NewWriter(file)
+    for i := 0; i < 10; i++ {
+        writer.WriteString("hello\n")
+    }
+    // 刷新缓冲区，强制写出
+    writer.Flush()
+}
+
+func re() {
+    file, err := os.Open("./xxx.txt")
+    if err != nil {
+        return
+    }
+    defer file.Close()
+    reader := bufio.NewReader(file)
+    for {
+        line, _, err := reader.ReadLine()
+        if err == io.EOF {
+            break
+        }
+        if err != nil {
+            return
+        }
+        fmt.Println(string(line))
+    }
+
+}
+
+func main() {
+    re()
+}
+```
+
+
+
+### ioutil工具包
+
+- 工具包写文件
+- 工具包读取文件
+
+```go
+import (
+   "fmt"
+   "io/ioutil"
+)
+
+func wr() {
+   err := ioutil.WriteFile("./yyy.txt", []byte("www.5lmh.com"), 0666)
+   if err != nil {
+      fmt.Println(err)
+      return
+   }
+}
+
+func re() {
+   content, err := ioutil.ReadFile("./yyy.txt")
+   if err != nil {
+      fmt.Println(err)
+      return
+   }
+   fmt.Println(string(content))
+}
+
+func main() {
+   re()
+}
+```
+
+
+
+# 案列
+
+`os.Open()`函数能够打开一个文件，返回一个`*File`和一个`err`。对得到的文件实例调用close()方法能够关闭文件。
+
+```go
+func main() {
+    // 只读方式打开当前目录下的main.go文件
+    file, err := os.Open("./main.go")
+    if err != nil {
+        fmt.Println("open file failed!, err:", err)
+        return
+    }
+    // 关闭文件
+    file.Close()
+}
+```
+
+写文件
+
+```go
+func main() {
+    // 新建文件
+    file, err := os.Create("./xxx.txt")
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    defer file.Close()
+    for i := 0; i < 5; i++ {
+        file.WriteString("ab\n")
+        file.Write([]byte("cd\n"))
+    }
+}
+```
+
+读文件
+
+文件读取可以用file.Read()和file.ReadAt()，读到文件末尾会返回io.EOF的错误
+
+```go
+
+import (
+    "fmt"
+    "io"
+    "os"
+)
+func main() {
+    // 打开文件
+    file, err := os.Open("./xxx.txt")
+    if err != nil {
+        fmt.Println("open file err :", err)
+        return
+    }
+    defer file.Close()
+    // 定义接收文件读取的字节数组
+    var buf [128]byte
+    var content []byte
+    for {
+        n, err := file.Read(buf[:])
+        if err == io.EOF {
+            // 读取结束
+            break
+        }
+        if err != nil {
+            fmt.Println("read file err ", err)
+            return
+        }
+        content = append(content, buf[:n]...)
+    }
+    fmt.Println(string(content))
+}
+```
+
+文件拷贝
+
+```go
+func main() {
+    // 打开源文件
+    srcFile, err := os.Open("./xxx.txt")
+    if err != nil {
+        fmt.Println(err)
+        return
+    }
+    // 创建新文件
+    dstFile, err2 := os.Create("./abc2.txt")
+    if err2 != nil {
+        fmt.Println(err2)
+        return
+    }
+    // 缓冲读取
+    buf := make([]byte, 1024)
+    for {
+        // 从源文件读数据
+        n, err := srcFile.Read(buf)
+        if err == io.EOF {
+            fmt.Println("读取完毕")
+            break
+        }
+        if err != nil {
+            fmt.Println(err)
+            break
+        }
+        //写出去
+        dstFile.Write(buf[:n])
+    }
+    srcFile.Close()
+    dstFile.Close()
+}
+```
+

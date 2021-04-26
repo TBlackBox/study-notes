@@ -14,8 +14,6 @@ hashkey2 = hash(xiaoli) = 6
 index2  = hashkey2% length= 2
 ```
 
-
-
 hash 冲突
 
 - 有线性探测法： 冲突了，往后找，有空位就用
