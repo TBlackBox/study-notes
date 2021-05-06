@@ -1,5 +1,9 @@
 # 简介
 
+
+
+[官方文档(https://github.com/golang/go/wiki/Modules))
+
 Go Modules是官方正式推出的包依赖管理项目，由Russ Cox （即Go 现在的掌舵人）推动，dep是“official experiment”仅此而已。
 
 
@@ -89,7 +93,9 @@ go.mod 是启用了 Go moduels 的项目所必须的最重要的文件，它描�
 
   这里的填写格式基本为包引用路径+版本号，另外比较特殊的是 go $version，目前从 Go1.13 的代码里来看，还只是个标识作用，暂时未知未来是否有更大的作用。
 
-
+```
+indirect 是什么东西，indirect 的意思是传递依赖，也就是非直接依赖。
+```
 
 ### 老项目迁移到Go Modules
 
@@ -115,7 +121,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 go env -w： Go1.13 新增了 go env -w 用于写入环境变量，而写入的地方是 os.UserConfigDir 所返回的路径，需要注意的是 go env -w 不会覆写。需要指出，它不会覆盖系统环境变量。
 
-GO111MODULE：
+1. **GO111MODULE：**
 
 这个环境变量主要是 Go modules 的开关，主要有以下参数：
 
@@ -123,7 +129,9 @@ GO111MODULE：
   ：golang.org/issue/31857。
 - on：无脑启用 Go modules，推荐设置，未来版本中的默认值，让 GOPATH 从此成为历史。
 - off：禁用 Go modules。
-  GOPROXY：
+
+
+2. **GOPROXY：**
 
 这个环境变量主要是用于设置 Go 模块代理，它的值是一个以英文逗号 “,” 分割的 Go module proxy 列表，默认是proxy.golang.org，国内访问不了。这里要感谢盛傲飞和七牛云为中国乃至全世界的 Go 语言开发者提供免费、可靠的、持续在线的且经过CDN加速Go module proxy（goproxy.cn）。
 
@@ -131,12 +139,16 @@ GO111MODULE：
 
 
 
-
 ## go module 的一些说明
+
 在/var/www/demo根目录下，执行 go build
+
+```
 go build
-1
+```
+
 完成后项目
+
 ```go
 ├── demo
 ├── go.mod

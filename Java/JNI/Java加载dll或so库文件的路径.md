@@ -6,20 +6,20 @@
 
 2. 例如你可以这样载入一个windows平台下JNI库文件
 这里用windows举例，linux的动态链接库是.a文件
-```
+```JAVA
 System.load("C://test//TestJNI.dll"); //绝对路径
 ```
 
 3. System.loadLibrary参数为库文件名
 
-```
+```JAVA
 例如你可以这样载入一个windows平台下JNI库文件
 System.loadLibrary (``"TestJNI"``);
 ```
 
 这里TestJNI必须在 java.library.path这一jvm变量所指向的路径中，可以通过如下方法获得该变量的值：
 
-```
+```JAVA
 System.getProperty("java.library.path");
 ```
 

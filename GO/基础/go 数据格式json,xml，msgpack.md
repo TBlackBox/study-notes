@@ -31,7 +31,7 @@ type Person struct {
     Name  string
     Hobby string
 }
-
+	
 func main() {
     p := Person{"5lmh.com", "女"}
     // 编码json

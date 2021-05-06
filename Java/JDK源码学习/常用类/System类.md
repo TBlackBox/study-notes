@@ -2,7 +2,7 @@
 System类是一些与系统相关的属性和方法的集合，而且在System类中所有的属性都是静态的，要想引用这些属性和方法，直接使用System类调用即可。
 
 # 常用方法
-```
+```JAVA
 public static void exit(int status)  系统退出 ，如果status为0就表示退出。
 public static void gc()   运行垃圾收集机制，调用的是Runtime类中的gc方法。
 public static long currentTimeMillis()  返回以毫秒为单位的当前时间。
@@ -11,7 +11,7 @@ public static Properties getProperties() 取得当前系统的全部属性。
 public static String  getProperty(String key) 根据键值取得属性的具体内容。
 ```
 
-# 获取当前系统的时间
+# 获取当前系统的时间	
 System类里面有两个回去时间的方式，但他们有区别，并且区别还多大的，先看使用方法。
 ```java
 long timeMill = System.currentTimeMillis();
