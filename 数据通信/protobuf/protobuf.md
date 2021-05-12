@@ -1,53 +1,3 @@
-# 简介
-
-[官网](https://developers.google.cn/protocol-buffers)
-
-[中文教程](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/)
-
-Protocol Buffer (简称Protobuf) 是Google出品的性能优异、跨语言、跨平台的序列化库。
-
-Xml、Json是目前常用的数据交换格式，它们直接使用字段名称维护序列化后类实例中字段与数据之间的映射关系，一般用字符串的形式保存在序列化后的字节流中。消息和消息的定义相对独立，可读性较好。但序列化后的数据字节很大，序列化和反序列化的时间较长，数据传输效率不高。
-
- Protobuf和Xml、Json序列化的方式不同，采用了二进制字节的序列化方式，用字段索引和字段类型通过算法计算得到字段之前的关系映射，从而达到更高的时间效率和空间效率，特别适合对数据大小和传输速率比较敏感的场合使用。
-
-使用流程
-1. 需要编写协议配置文件
-2. 需要通过protocol编译软件将配置文件编译成对应语言的代码
-
-## 历史
-
-2001年初，Protobuf首先在Google内部创建， 我们把它称之为 `proto1`，一直以来在Google的内部使用，其中也不断的演化，根据使用者的需求也添加很多新的功能，一些内部库依赖它。几乎每个Google的开发者都会使用到它。
-
-Google开始开源它的内部项目时，因为依赖的关系，所以他们决定首先把Protobuf开源出去。 proto1在演化的过程中有些混乱，所以Protobuf的开发者重写了Protobuf的实现，保留了proto1的大部分设计，以及proto1的很多的想法。但是开源的proto2不依赖任何的Google的库，代码也相当的清晰。2008年7月7日，Protobuf开始公布出来。
-
-Protobuf公布出来也得到了大家的广泛的关注， 逐步地也得到了大家的认可，很多项目也采用Protobuf进行消息的通讯，还有基于Protobuf的微服务框架GRPC。在使用的过程中，大家也提出了很多的意见和建议，Protobuf也在演化，于2016年推出了Proto3。 Proto3简化了proto2的开发，提高了开发的效能，但是也带来了版本不兼容的问题。
-
-目前Protobuf的稳定版本是3.9.2，于2019年9月23日发布。由于很多公司很早的就采用了Protobuf，所以很多项目还在使用proto2协议，目前是proto2和proto3同时在使用的状态。
-
-Protocol Buffer名称来自于初期一个主要的类的名称`ProtocolBuffer`。
-
-Google当前并没有Protobuf的相关专利，所以不必担心侵权的问题。
-
-## 序列化
-
-序列化(serialization、marshalling)的过程是指将数据结构或者对象的状态转换成可以存储(比如文件、内存)或者传输的格式(比如网络)。反向操作就是反序列化(deserialization、unmarshalling)的过程。
-
-1987年曾经的Sun Microsystems发布了XDR。
-
-二十世纪九十年代后期，XML开始流行，它是一种人类易读的基于文本的编码方式，易于阅读和理解，但是失去了紧凑的基于字节流的编码的优势。
-
-JSON是一种更轻量级的基于文本的编码方式，经常用在client/server端的通讯中。
-
-YAML类似JSON，新的特性更强大，更适合人类阅读，也更紧凑。
-
-还有苹果系统的property list。
-
-除了上面这些和Protobuf，还有许许多多的序列化格式，比如Thrift、Avro、BSON、CBOR、MessagePack, 还有很多非跨语言的编码格式。项目[gosercomp](https://github.com/smallnest/gosercomp)对比了各种go的序列化库，包括序列化和反序列的性能，以及序列化后的数据大小。总体来说Protobuf序列化和反序列的性能都是比较高的，编码后的数据大小也不错。
-
-**Protobuf支持很多语言，比如C++、C#、Dart、Go、Java、Python、Rust等，同时也是跨平台的，所以得到了广泛的应用。**
-
-Protobuf包含序列化格式的定义、各种语言的库以及一个IDL编译器。**正常情况下你需要定义proto文件，然后使用IDL编译器编译成你需要的语言。**
-
 ## proto教程
 
 鉴于官方推荐新代码采用proto3,这个教程主要介绍proto3的开发。官方建议新项目采用proto3，老项目因为兼容性的问题继续使用proto2,并且会长时间的支持proto2。
@@ -327,13 +277,13 @@ enum EnumNotAllowingAlias {
 
 如果设置`allow_alias`，允许字段编号重复，`RUNNING`是`STARTED`的别名。
 
-枚举的常量必须是一个32比特的整数，从效率的角度考虑，不推荐采用负数。
+枚举的常量必须是一个32比特的整数，**从效率的角度考虑，不推荐采用负数。**
 
 第一个枚举值必须是0，而且必须定义。
 
 你也可以把枚举类型定义到message中：
 
-```
+```protobuf
 message SearchRequest {
   string query = 1;
   int32 page_number = 2;
@@ -355,9 +305,9 @@ message SearchRequest {
 
 ### 使用其它类型
 
-你也可以使用其它message类型作为字段的类型值。因为前面在介绍字段的类型的时候说了，类型可以是消息类型和枚举类型，枚举类型如上所示，而消息类型如下所示：
+你也可以使用其它message**类型作为字段的类型值**。因为前面在介绍字段的类型的时候说了，类型可以是消息类型和枚举类型，枚举类型如上所示，而消息类型如下所示：
 
-```
+```protobuf
 message SearchResponse {
   repeated Result results = 1;
 }
@@ -375,7 +325,7 @@ message Result {
 
 嵌套类型就是消息类型里面定义了消息类型：
 
-```
+```protobuf
 message SearchResponse {
   message Result {
     string url = 1;
@@ -386,9 +336,9 @@ message SearchResponse {
 }
 ```
 
-如果`Result`不需要共用，只被`SearchResponse`使用，可以采用这种定义方式， 如果你需要在外部使用这个类型，其实你也可以使用，但是不如把这个内部的消息类型定义抽取出来，除非你有很特别的含义：
+如果`Result`不需要共用，只被`SearchResponse`使用，可以采用这种定义方式， 如果你**需要在外部使用这个类型**，其实你也可以使用，但是不如把这个内部的消息类型定义抽取出来，除非你有很特别的含义：
 
-```
+```protobuf
 message SomeOtherMessage {
   SearchResponse.Result result = 1;
 }
@@ -406,7 +356,7 @@ proto3最开始对于不能识别的数据就丢弃掉了，但是自3.5 版本�
 
 为了使用`Any`类型，你需要引入`google/protobuf/any.proto`。
 
-```
+```protobuf
 import "google/protobuf/any.proto";
 
 message ErrorStatus {
@@ -448,7 +398,7 @@ Protobuf提供了`github.com/golang/protobuf/ptypes/timestamp.Timestamp`和`gith
 
 同时，它还是以指针的方式定义字段，这也意味着我们我们可以分别反序列化的时候，可以区分对应字段是否在数据中存在。
 
-```
+```go
 package main
 
 import (
@@ -493,7 +443,7 @@ Go标准库`encoding/binary`有对`varint`处理[方法](https://golang.org/src/
 事实上。Protobuf是编码的键值对，其中键用varint来表示，其中后三位代表wire type。
 
 Protobuf只定义了6种wire类型。
-[![img](protobuf.assets/wire-type.png)](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/wire-type.png)
+[![img](sources/protobuf/wire-type.png)](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/wire-type.png)
 
 对于字段比较少(2^4=16)情况，使用一个字节就可以表示key。
 
@@ -501,7 +451,7 @@ Protobuf只定义了6种wire类型。
 
 这个例子的proto定义文件为:
 
-```
+```protobuf
 syntax = "proto3";
 
 option go_package = "main";
@@ -517,7 +467,7 @@ message Person {
 
 定义一个实例：
 
-```
+```go
 p := &Person{
 	Name:  "smallnest",
 	Id:    9527,
@@ -527,16 +477,16 @@ p := &Person{
 
 编码后是一个32字节的数据：
 
-[![img](protobuf.assets/msg-data.png)](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/msg-data.png)
+[![img](sources/protobuf/msg-data.png)](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/msg-data.png)
 
 第一个字段的类型是字符串(wire type是2), 字段编号是1 (00000001)， 字段编号左移三位再加上wiretype就是`0a`(00001010)。
-[![img](protobuf.assets/field1.png)](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/field1.png)
+[![img](sources/protobuf/field1.png)](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/field1.png)
 
 第二个字段的类型是int32(wire type是0), 字段编号是2 (00000010)， 字段编号左移三位再加上wiretype就是`10`(00010000)。
-[![img](protobuf.assets/field2.png)](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/field2.png)
+[![img](sources/protobuf/field2.png)](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/field2.png)
 
 第三个字段的类型是字符串(wire type是2), 字段编号是3 (00000011)， 字段编号左移三位再加上wiretype就是`1a`(00011010)。
-[![img](protobuf.assets/field3.png)](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/field3.png)
+[![img](sources/protobuf/field3.png)](https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/field3.png)
 
 为了更有效的处理`sint32`和`sint64`, Protobuf采用ZigZag[编码](https://developers.google.com/protocol-buffers/docs/encoding#signed-integers)。
 
@@ -554,12 +504,12 @@ Proto3中对数字类型的repeated字段采用`pack`处理方式，同一个rep
 
 gogo库基于官方库开发，增加了很多的功能，包括：
 
-- 快速的序列化和反序列化
-- 更规范的Go数据结构
-- goprotobuf兼容
-- 可选择的产生一些辅助方法，减少使用中的代码输入
-- 可以选择产生测试代码和benchmark代码
-- 其它序列化格式
+- **快速的序列化和反序列化**
+- **更规范的Go数据结构**
+- **goprotobuf兼容**
+- **可选择的产生一些辅助方法，减少使用中的代码输入**
+- **可以选择产生测试代码和benchmark代码**
+- **其它序列化格式**
 
 比如etcd、k8s、dgraph、docker swarmkit都使用它。
 
@@ -567,7 +517,7 @@ gogo库基于官方库开发，增加了很多的功能，包括：
 
 - `gofast`: 速度优先，不支持其它gogoprotobuf extensions。
 
-```
+```shell
 go get github.com/gogo/protobuf/protoc-gen-gofast
 protoc --gofast_out=. myproto.proto
 ```
@@ -578,7 +528,7 @@ protoc --gofast_out=. myproto.proto
 `gogofaster`类似`gogofast`, 不会产生`XXX_unrecognized`指针字段，可以减少垃圾回收时间。
 `gogoslick`类似`gogofaster`,但是可以增加一些额外的方法`gostring`和`equal`等等。
 
-```
+```shell
 go get github.com/gogo/protobuf/proto
 go get github.com/gogo/protobuf/{binary} //protoc-gen-gogofast、protoc-gen-gogofaster 、protoc-gen-gogoslick 
 go get github.com/gogo/protobuf/gogoproto
@@ -590,7 +540,7 @@ protoc -I=. -I=$GOPATH/src -I=$GOPATH/src/github.com/gogo/protobuf/protobuf --{b
 
 你可以通过扩展定制序列化: [扩展](https://github.com/gogo/protobuf/blob/master/extensions.md).
 
-```
+```shell
 go get github.com/gogo/protobuf/proto
 go get github.com/gogo/protobuf/jsonpb
 go get github.com/gogo/protobuf/protoc-gen-gogo
@@ -620,7 +570,7 @@ gogo提供了非常多的option, 以便在产生代码的时候进行更多的�
 
 下面是一个比较全面的扩展类型的proto的定义，增加了很多gogo的特别控制。运行`protoc -I=. -I=$(GOPATH)/src --gogo_out=. example.proto`会产生对应的代码以及测试和benchmark代码，你可以运行测试一下，以便更好的了解gogo库的威力。
 
-```
+```protobuf
 syntax = "proto3";
 
 package gogo_p3;

@@ -27,7 +27,6 @@ Go Modules是官方正式推出的包依赖管理项目，由Russ Cox （即Go �
 - 目前所有模块版本数据均缓存在 $GOPATH/pkg/mod和 $GOPATH/pkg/sum 下，未来或将移至 $GOCACHE/mod和$GOCACHE/sum 下( 可能会在当 $GOPATH 被淘汰后)。
 - 可以使用 go clean -modcache 清理所有已缓存的模块版本数据。
 - 另外在 Go1.11 之后 GOCACHE 已经不允许设置为 off 了，我想着这也是为了模块数据缓存移动位置做准备，因此大家应该尽快做好适配。
-- 
 
 go 版本需要在1.13后
 
