@@ -2,7 +2,7 @@
 在Spring中，filter默认继承OncePerRequestFilter,为什么诶？
 
 ## 部分源码
-```
+```java
 @Override
 public final void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {

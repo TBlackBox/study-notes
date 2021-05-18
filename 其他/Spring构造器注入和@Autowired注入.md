@@ -40,9 +40,6 @@ public class AdminServiceImpl implements AdminService {
 
 ```java
 @RestController
-
-
-
 @RequestMapping("/test")
 public class TestController {
 

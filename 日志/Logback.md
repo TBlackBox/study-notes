@@ -63,7 +63,7 @@ Logback的配置文件如下：
 </configuration>
 ```
 Logback的配置文件读取顺序（默认都是读取classpath下的）：logback.groovy -> logback-test.xml -> logback.xml。如果想要自定义配置文件路径，那么只有通过修改logback.configurationFile的系统属性。
-```xml
+```java
 System.setProperty("logback.configurationFile", "...");
 或者
 -Dlogback.configurationFile="xx"

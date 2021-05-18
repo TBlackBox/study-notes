@@ -5,7 +5,7 @@
 spring-boot-starter-actuator模块的实现对于实施微服务的中小团队来说，可以有效地减少监控系统在采集应用指标时的开发量。当然，它也并不是万能的，有时候我们也需要对其做一些简单的扩展来帮助我们实现自身系统个性化的监控需求。
 
 1. 引入依赖文件
-```
+```xml
 //需要这个  方便查看
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -154,7 +154,7 @@ http://127.0.0.1/actuator
 
 4. 对路径简单的介绍
 
-|端点名|解释|  
+|端点名|解释|
 |-------|---------|
 |autoconfig |所有自动配置信息|
 |auditevents |审计事件|
@@ -178,11 +178,11 @@ endpoints.beans.id=mybeans
 * – 开启远程应用关闭功能
 ```
 endpoints.shutdown.enabled=true
-``` 
+```
 * – 关闭端点
 ```
 endpoints.beans.enabled=false
-``` 
+```
 * – 开启所需端点
 ```
 endpoints.enabled=false

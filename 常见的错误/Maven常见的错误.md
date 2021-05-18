@@ -12,29 +12,29 @@ Maven官方文档有如下描述： 编译器插件用来编译项目的源文�
 
 ### 方案1
 在pom.xml文件中增加如下配置（可以在父的pom添加）：
-```
+```xml
 <build>
-            <pluginManagement>
-                        <plugins>
-                                    <plugin> 
-                                                <groupId>org.apache.maven.plugins</groupId> 
-                                                <artifactId>maven-compiler-plugin</artifactId> 
-                                                <version>2.3.2</version> 
-                                                <configuration> 
-                                                <source>1.8</source> 
-                                                <target>1.8</target> 
-                                                <encoding>UTF-8</encoding> 
-                                                </configuration> 
-                                    </plugin> 
-                        </plugins>
-            </pluginManagement>
+    <pluginManagement>
+        <plugins>
+            <plugin> 
+                <groupId>org.apache.maven.plugins</groupId> 
+                <artifactId>maven-compiler-plugin</artifactId> 
+                <version>2.3.2</version> 
+                <configuration> 
+                    <source>1.8</source> 
+                    <target>1.8</target> 
+                    <encoding>UTF-8</encoding> 
+                </configuration> 
+            </plugin> 
+        </plugins>
+    </pluginManagement>
 </build>
 
 ```
 
 ### 方案2：
 在maven的setting文件中配置下面的配置：
-```
+```xml
  <profiles>
       <profile>
         <id>development</id>
