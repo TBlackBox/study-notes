@@ -2,7 +2,7 @@
 Period在概念上和Duration类似，区别在于Period是以年月日来衡量一个时间段，比如4年5个月23天
 
 ## 通过of()创建
-```
+```java
 Period period = Period.of(4, 5, 23);
 		
 int year = period.getYears();

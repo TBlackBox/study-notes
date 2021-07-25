@@ -13,7 +13,7 @@ Lambda是一个匿名的函数，可以吧Lambda表达式理解为`一段可传�
 1. 需要`函数式接口`的支持
 函数式接口(Functional Interface)就是一个有且仅有一个抽象方法，但是可以有多个非抽象方法的接口。函数式接口可以被隐式转换为 lambda 表达式。
 例如：
-```
+```java
 @FunctionalInterface
 interface GreetingService 
 {
@@ -24,50 +24,50 @@ interface GreetingService
 
 ## 几种格式 
 1. 无参数,无返回值
-```
+```java
 () -> System.out.println("嘿嘿");
 ```
 例如：
-```
+```java
 Runnable r = new Runnable() {
-                        @Override
-                        public void run() {
-                                    System.out.println("Hello World!" + num);
-                        }
-            };
+    @Override
+    public void run() {
+        System.out.println("Hello World!" + num);
+    }
+};
 
 r.run();
 ```
 
 通过lambda实现：
-```
+```java
 Runnable r1 = () -> System.out.println("Hello Lambda!");
 r1.run();
 ```
 
 2. 有一个参数,无返回值
-```
+```java
 (param1) ->System.out.println(param1);
 ```
 例子：
-```
+```java
 Consumer<String> con = x -> System.out.println(x);
-		con.accept("我大尚硅谷威武！");
+con.accept("我大尚硅谷威武！");
 ```
 注意：如果只有一个参数,()可以不写
-```
-param1 ->System.out.println(param1);
+```java
+param1 -> System.out.println(param1);
 ```
 3. 多参数，又返回值，方法体里面有多行
-```
+```java
 Comparator<Integer> com = (x, y) -> {
-                        System.out.println("函数式接口");
-                        return Integer.compare(x, y);
-            };
+    System.out.println("函数式接口");
+    return Integer.compare(x, y);
+};
 ```
 
 4. lambda只有一条语句,{},return都可以不写
-```
+```java
 Comparator<Integer> com = (x, y) -> Integer.compare(x, y);
 ```
 
@@ -78,13 +78,12 @@ Comparator<Integer> com = (x, y) -> Integer.compare(x, y);
 这里列出4个核心接口，还有很多接口，都是这4个的子接口。这些接口都可以在`java.util.function`包下能看到
 
 ## 消费型接口
-```
-Consumer<T>
-    void accept(T t);
+```java
+Consumer<T> void accept(T t);
 ```
 
 例子：
-```
+```java
 public class TestLambad {
     public static void main(String[] args) {
     	new test().consumer(1200,(e) -> System.out.println("吃饭消费："+ e+ "元"));
@@ -98,7 +97,7 @@ class test{
 ```
 
 ## 共给型接口
-```
+```java
 @FunctionalInterface
 public interface Supplier<T> {
 
@@ -114,16 +113,14 @@ public interface Supplier<T> {
 用于获取一个值（注意理解），
 
 ## 函数型接口
-```
-Function<T, R>
-     R apply(T t);
+```java
+Function<T, R> R apply(T t);
 ```
 穿一个参数，处理后返回一个值
 
 ## 断言型接口
-```
-Predicate<T>
-     boolean test(T t);
+```java
+Predicate<T> boolean test(T t);
 ```
 判断接口，通常用于过滤这些。
 
@@ -131,7 +128,7 @@ Predicate<T>
 # 引用
 
 为方便说明；我们创建一个对象user
-```
+```java
 public class User {
 
 	private String name;
@@ -163,13 +160,13 @@ public class User {
 ```
 ## 方法引用
 什么是方法引用啦
-若Lambad体中的功能，如果已经有方法提供了实现,可以使用方法引用，可以理解为lambda的表现形式。提供了3种规则,安装这个形式套都可以了。好好理解吧。
+若Lambad体中的功能，如果已经有方法提供了实现,可以使用方法引用，可以理解为lambda的表现形式。提供了3种规则,按照这个形式套都可以了。好好理解吧。
 
 ## 方法引用的3种规则
 
 1. 对象的引用::实例方法名
 
-```
+```java
 User user = new User("张三", 25);
 //获取名字
 Supplier<String> sup = () -> user.getName();
@@ -184,7 +181,7 @@ System.out.println("通过方法引用获取值："+ sup.get());
 
 2. 静态类名::静态方法名   
 
-```
+```java
 Comparator<Integer> com = (x,y) -> Integer.compare(x, y);
 System.out.println(com.compare(3, 2));
 
@@ -194,7 +191,7 @@ System.out.println(com1.compare(3, 2));
 ```
 
 3. 类名::实例方法名
-```
+```java
 //看两个字符串是否相等
 BiPredicate<String, String> bp = (x, y) -> x.equals(y);
 System.out.println(bp.test("www", "sss"));
@@ -213,7 +210,7 @@ System.out.println(bp2.test("qw", "wq"));
 ## 构造器引用
 构造器的参数列表，需要与函数式接口中参数列表保持一致！
 1. 类名::new
-```
+```java
 Supplier<User> sup = () -> new User();
 User user = sup.get();
 
@@ -229,7 +226,7 @@ BiFunction<String, Integer, User> user2 = User::new;
 ## 数组引用
 类型[]::new
 
-```
+```java
 //正常的声明一个数组
 Function<Integer, String[]> fun = (args) -> new String[args];
 String[] strs = fun.apply(10);
@@ -246,3 +243,4 @@ System.out.println(users.length);
 
 # 总结
 这里只介绍了基本的用法,这些东西要仔细思考，细细的品味。才能灵活使用。
+

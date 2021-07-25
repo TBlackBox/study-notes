@@ -32,7 +32,7 @@ eclipse.ini的配置文件如下
 
 + maven导入
 
-```
+```xml
  <dependency>
      <groupId>org.projectlombok</groupId>
      <artifactId>lombok</artifactId>
@@ -69,7 +69,7 @@ val：用在局部变量前面，相当于将变量声明为final
 # 3.2 Lombok代码示例
 
 val示例
-```
+```java
 public static void main(String[] args) {
     val sets = new HashSet<String>();
     val lists = new ArrayList<String>();
@@ -97,7 +97,7 @@ public void notNullExample(String string) {
 ```
 复制代码
 @Cleanup示例
-```
+```java
 public static void main(String[] args) {
     try {
         @Cleanup InputStream inputStream = new FileInputStream(args[0]);
@@ -123,7 +123,7 @@ public static void main(String[] args) {
 ```
 复制代码
 @Getter/@Setter示例
-```
+```java
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PROTECTED)
 private int id;
@@ -131,7 +131,7 @@ private String shap;
 ```
 
 @ToString示例
-```
+```java
 @ToString(exclude = "id", callSuper = true, includeFieldNames = true)
 public class LombokDemo {
     private int id;
@@ -146,7 +146,7 @@ public class LombokDemo {
 
 @EqualsAndHashCode示例
 
-```
+```java
 @EqualsAndHashCode(exclude = {"id", "shape"}, callSuper = false)
 public class LombokDemo {
     private int id;
@@ -155,7 +155,7 @@ public class LombokDemo {
 ```
 
 @NoArgsConstructor, @RequiredArgsConstructor and @AllArgsConstructor示例
-```
+```java
 @NoArgsConstructor
 @RequiredArgsConstructor(staticName = "of")
 @AllArgsConstructor
@@ -179,7 +179,7 @@ public class LombokDemo {
 ```
 
 @Data示例
-```
+```java
 import lombok.Data;
 @Data
 public class Menu {
@@ -199,7 +199,7 @@ public class Menu {
 }
 ```
 @Value示例
-```
+```java
 @Value
 public class LombokDemo {
     @NonNull
@@ -217,7 +217,7 @@ public class LombokDemo {
 ```
 
 @Builder示例
-```
+```java
 @Builder
 public class BuilderExample {
     private String name;
@@ -231,7 +231,7 @@ public class BuilderExample {
 ```
 
 @SneakyThrows示例
-```
+```java
 import lombok.SneakyThrows;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -257,7 +257,7 @@ public class Test {
 ```
 
 @Synchronized示例
-```
+```java
 public class SynchronizedDemo {
     @Synchronized
     public static void hello() {
@@ -273,7 +273,7 @@ public class SynchronizedDemo {
 }
 ```
 @Getter(lazy = true)
-```
+```java
 public class GetterLazyExample {
     @Getter(lazy = true)
     private final double[] cached = expensive();

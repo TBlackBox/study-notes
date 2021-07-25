@@ -2,7 +2,7 @@
 Instant : 时间戳，使用 Unix 元年1970年1月1日 00:00:00 所经历的毫秒值。
 
 ## 获取时间
-```
+```java
 //输出 当前时间:2020-01-20T16:00:31.661
 System.out.println("当前时间:" + LocalDateTime.now()); 
 Instant instant = Instant.now(); //默认使用 UTC 时区

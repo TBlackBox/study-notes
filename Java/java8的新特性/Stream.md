@@ -1,21 +1,18 @@
 # 简介
-Stream 是 Java8 中处理集合的关键抽象概念，它可以指定你希望对
-集合进行的操作，可以执行非常复杂的查找、过滤和映射数据等操作。
-使用Stream API 对集合数据进行操作，就类似于使用 SQL 执行的数
-据库查询。也可以使用 Stream API 来并行执行操作。简而言之，
+Stream 是 Java8 中处理集合的关键抽象概念，它可以指定你希望对集合进行的操作，可以执行非常复杂的查找、过滤和映射数据等操作。
+使用Stream API 对集合数据进行操作，就类似于使用 SQL 执行的数据库查询。也可以使用 Stream API 来并行执行操作。简而言之，
 Stream API 提供了一种高效且易于使用的处理数据的方式。
 
 流(Stream) 到底是什么呢？ 
 是数据渠道，用于操作数据源（集合、数组等）所生成的元素序列。
 `集合讲的是数据，流讲的是计算！`
-可以这样理解, 数据源（集合，数组等）通过一定的方法转化为流对象，这个流对象可以做很多的操作（过滤，分片等等），各种中间操作后得到一个新的数据源（我们想要的结果）。看下面的内容，慢慢理解吧!
+可以这样理解, 数据源（集合，数组等）通过一定的方法转化为流对象，这个流对象可以做很多的操作（过滤，分片等等），各种中间操作后得到一个**新的数据源**（我们想要的结果）。看下面的内容，慢慢理解吧!
 
 # 操作过程
 Stream 的操作分为3个步骤，分别是`创建Stream` `中间操作` `终止操作（终端操作）`,下面分别看这些是什么东西。
 ## 创建Stream
-1. 通过集合的扩展方法创建
-Java8中的Collection的接口被扩展，提供了两个获取流的方法。
-```
+1. 通过集合的扩展方法创建Java8中的Collection的接口被扩展，提供了两个获取流的方法。
+```java
 //创建一个顺序流
 default Stream<E> stream() {
             return StreamSupport.stream(spliterator(), false);
@@ -28,7 +25,7 @@ default Stream<E> parallelStream() {
 
 ```
 例子：
-```
+```java
 //1. Collection 提供了两个方法  stream() 与 parallelStream()
 List<String> list = new ArrayList<>();
 Stream<String> stream = list.stream(); //获取一个顺序流
@@ -37,14 +34,13 @@ Stream<String> parallelStream = list.parallelStream(); //获取一个并行流
 
 2. 由数组创建流
 Java8中Arrays的静态方法`stream()`可以获取数组流
-```
+```java
 public static <T> Stream<T> stream(T[] array) {
-            return stream(array, 0, array.length);
+	return stream(array, 0, array.length);
 }
-
 ```
 里面有很多不同重载的方法使用，例如：
-```
+```java
 public static IntStream stream(int[] array) {
             return stream(array, 0, array.length);
 }
@@ -57,7 +53,7 @@ public static LongStream stream(long[] array) {
 
 3. 由值创建
 可以使用Stream 类中静态方法 of(),通过显示的值创建一个流，接受任意数量级的参数。
-```
+```java
 public static<T> Stream<T> of(T t) {
             return StreamSupport.stream(new Streams.StreamBuilderImpl<>(t), false);
 }
@@ -68,7 +64,7 @@ public static<T> Stream<T> of(T... values) {
 }
 ```
 例如：
-```
+```java
 Stream<Integer> stream = Stream.of(1,2,3,4,5,6);
 ```
 
@@ -160,6 +156,7 @@ stream.forEach(System.out::println);
 
 *** 常用的说明 ***
 为方便说明,构建下面的列表
+
 ```
 List<Employee> emps = Arrays.asList(
             new Employee(102, "李四", 79, 6666.66, Status.BUSY),

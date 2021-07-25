@@ -11,3 +11,6 @@ Kali Linux 无线安全入门指南：wizardforcel/kali-linux-wireless-pentest -
 Kali Linux 网络扫描秘籍：wizardforcel/kali-linux-network-scanning-cookbook-zh - 码云 - 开源中国
 
 
+
+kail   netcat nmap  openvas
+

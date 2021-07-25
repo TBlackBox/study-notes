@@ -7,7 +7,7 @@ Duration的内部实现与Instant类似，也是包含两部分：seconds表示�
 Instant用于表示一个时间戳（或者说是一个时间点），而Duration表示一个时间段，所以Duration类中不包含now()静态方法。
 
 ## 通过 Duration.between()方法创建Duration对象
-```
+```java
 //2020-01-10 12:00:00
 LocalDateTime from = LocalDateTime.of(2020, Month.JANUARY, 10, 12, 0, 0);   
 // 2020-02-10 12:10:10
@@ -30,7 +30,7 @@ long nanoSeconds = duration.toNanos();
 ```
 
 ## 通过of()创建
-```
+```java
 // 10天  
 Duration duration1 = Duration.of(10, ChronoUnit.DAYS);   
 // 10000毫秒
