@@ -16,7 +16,7 @@ Spring Cloud Gateway 中的过滤器分为两大类：
 AddRequestParameter 过滤器使用：
  `添加请求参数的过滤器`
 
-```objectivec
+```yaml
 spring:
   cloud:
     gateway:
