@@ -11,7 +11,6 @@ https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.
 
 ```
 https://repo.huaweicloud.com/java/jdk/
-
 ```
 
 2. 创建文件夹并进入
