@@ -1,15 +1,14 @@
 # 引入依赖
 
-```
+```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-data-jpa</artifactId>
 </dependency>
-
 ```
 
 # 配置
-```
+```properties
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

@@ -1,7 +1,7 @@
 
 ## 通过实现`ApplicationContextAware`获取spring容器的上下文
 
-```
+```java
 package com.video.common.spring;
 
 import org.slf4j.Logger;
