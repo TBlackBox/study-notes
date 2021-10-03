@@ -19,12 +19,25 @@ yum install lrzsz
 rm -rf jdk-8u261-linux-x64.tar.gz 
 ```
 
+如果是rpm安装,直接下面命令就可以了
+
+```
+rpm -ivh jdk-8u131-linux-x64.rpm
+```
+
 # 配置
+
 ```
  vi /etc/profile
 ```
  添加下面到最后
 ```
+export JAVA_HOME=/usr/local/java/jdk1.8.0_261
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=${JAVA_HOME}/bin:$PATH
+
+
 export JAVA_HOME=/usr/local/java/jdk1.8.0_261
 export JRE_HOME=${JAVA_HOME}/jre
 export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib
