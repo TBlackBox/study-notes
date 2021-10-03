@@ -11,8 +11,6 @@ spring-boot-starter-actuator模块的实现对于实施微服务的中小团队�
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-web</artifactId>
 </dependency>
-
-
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-actuator</artifactId>
@@ -22,7 +20,7 @@ spring-boot-starter-actuator模块的实现对于实施微服务的中小团队�
 2. 开启安全权限
 
 * 单个暴露端点的方式
-```
+```yaml
 # 启用端点 env
 management:
   endpoint:
@@ -38,7 +36,7 @@ management:
 ```
 
 + 全部暴露
-```
+```yaml
 management:
   endpoint:
     env:

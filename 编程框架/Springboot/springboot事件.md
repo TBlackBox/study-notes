@@ -1,7 +1,7 @@
 # springboot事件
 
 ## 声明一个事件
-```
+```java
 package com.video.api.spring.event;
 
 import org.springframework.context.ApplicationEvent;
@@ -32,7 +32,7 @@ public class OrderStealEvent extends ApplicationEvent{
 ```
 
 ## 监听事件
-```
+```java
 @Component
 public class StealEventListener {
 	
@@ -53,6 +53,7 @@ public class StealEventListener {
 ```
 
 ## 发送一个事件
-```
+```java
 SpringHelper.applicationContext.publishEvent(new OrderStealEvent(orderEntity));
 ```
+

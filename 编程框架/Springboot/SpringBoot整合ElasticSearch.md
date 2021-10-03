@@ -1,7 +1,7 @@
 
 # 简介
 SpringBoot默认支持Jest和SpringDate ElasticSearch两种方式，SpringBoot默认使用SpringData来操作ElasticSearch，
- 
+
 [elasticsearch文档](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html)  
 
 [githb地址](https://github.com/elastic/elasticsearch)
@@ -10,7 +10,7 @@ SpringBoot默认支持Jest和SpringDate ElasticSearch两种方式，SpringBoot�
 在SpringBoot的JestAutoConfiguration自动配置类里面，默认是不生效的，需要引入JestClient类。Jset相当于通过http的形式炒作ES.
 
 1. 导入依赖,注意版本要和es的版本相对于。
-```java
+```xml
 <!-- https://mvnrepository.com/artifact/io.searchbox/jest -->
 <dependency>
     <groupId>io.searchbox</groupId>
@@ -20,7 +20,7 @@ SpringBoot默认支持Jest和SpringDate ElasticSearch两种方式，SpringBoot�
 ```
 
 2. 配置地址
-```java
+```yaml
 spring:
   elasticsearch:
     jest:
@@ -60,7 +60,7 @@ public void testJestClient() throws IOException {
 SpringBoot的ES自动配置类ElasticsearchDataAutoConfiguration注入了ElasticsearchTemplate进行ES的交互。我们只需要引入相关配制即可，第二总方式定义一个类，继承ElasticsearchRepositoriesAutoConfiguration，就像操作jpa一样，可通过名字来操作ES,详情查看[soringdate文档](https://spring.io/projects/spring-data-elasticsearch).
 
 1. pom.xml里面引入启动器
-```java
+```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-data-elasticsearch</artifactId>

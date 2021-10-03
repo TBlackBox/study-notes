@@ -1,5 +1,5 @@
 # 引入maven依赖
-```
+```xml
 <dependency>
     <groupId>com.h2database</groupId>
     <artifactId>h2</artifactId>
@@ -9,7 +9,7 @@
 
 
 # 配置配置文件
-```
+```yaml
 spring:
    datasource:
        url: jdbc:h2:mem:h2test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
@@ -35,7 +35,7 @@ http://127.0.0.1/console
 ```
 
 # 一些配置的说明
-```
+```properties
 # h2配置
 spring.jpa.show-sql = true #启用SQL语句的日志记录
 spring.jpa.hibernate.ddl-auto = update  #设置ddl模式

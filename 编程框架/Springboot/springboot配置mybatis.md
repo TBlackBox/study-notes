@@ -1,6 +1,6 @@
 # 配置步骤
 1. 引入依赖
-```
+```xml
 <dependency>
     <groupId>org.mybatis.spring.boot</groupId>
     <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -29,7 +29,7 @@ spring:
 ```
 
 3. pom.xml里面添加配置文件路径和映射文件路径
-```xml
+```yaml
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations:
