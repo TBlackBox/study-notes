@@ -58,7 +58,7 @@ acme.sh --installcert -d javafroum.cn -d *.javafroum.cn  --keypath    /usr/local
 ```
 
 ## nginx 配置
-```
+```json
 server {
         listen 443;
         server_name javafroum.cn *.javafroum.cn;
@@ -116,7 +116,7 @@ keytool -importkeystore -srckeystore springboot.io.keystore -destkeystore spring
 ```
 
 3. springboot配置
-```
+```properties
 #ssl
 server.ssl.enabled=true
 server.ssl.key-store=classpath:ssl/springboot.io.keystore
