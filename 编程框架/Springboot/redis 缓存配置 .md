@@ -4,12 +4,11 @@ springboot提供了许多的缓存类型，redis缓存配置只需要引入start
 # 配置
 1. 添加starter
 
-```java
+```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-data-redis</artifactId>
 </dependency>
-
 ```
 
 2. 修改配置文件
@@ -70,7 +69,6 @@ public class RedisConfigtion {
         return redisTemplate;
     }
 }
-
 ```
 
 **注意：如果需要序列化其他类型，改变序列化参数即可**
@@ -95,3 +93,7 @@ public void testRedis() throws JSONException {
 
 # 总结
 这只是一个简单的配置用法，springboot的详细用法需要参照其他文档使用。
+
+一篇文章
+
+https://www.iocoder.cn/Spring-Boot/Redis/?yudao
