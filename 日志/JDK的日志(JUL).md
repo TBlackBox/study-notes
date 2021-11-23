@@ -3,7 +3,7 @@ JDK Logging就是JDK自带的日志操作类，在java.util.logging包下面，�
 
 # 配置
 JDK Logging配置文件默认位于$JAVA_HOME/jre/lib/logging.properties中，可以使用系统属性java.util.logging.config.file指定相应的配置文件对默认的配置文件进行覆盖。
-```
+```properties
 handlers= java.util.logging.FileHandler,java.util.logging.ConsoleHandler
 .handlers = java.util.logging.FileHandler,java.util.logging.ConsoleHandler #rootLogger使用的Handler
 .level= INFO #rootLogger的日志级别
@@ -31,7 +31,7 @@ JDK Logging的日志级别比较多，从高到低为：OFF(2^31-1)—>SEVERE(10
 # 使用
 JDK Logging的使用非常简单：
 
-```
+```java
 public class JDKLogger {
 
 	private static final Logger  logger = Logger.getLogger(JDKLogger.class.getName());

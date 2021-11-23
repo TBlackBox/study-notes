@@ -46,9 +46,10 @@ public final void doFilter(ServletRequest request, ServletResponse response, Fil
 ```
 
 # 原因
-OncePerRequestFilter顾名思义，他能够确保在一次请求只通过一次filter，而不需要重复执行。大家常识上都认为，一次请求本来就只过一次，为什么还要由此特别限定呢，此方式是为了兼容不同的web container，特意而为之（jsr168），也就是说并不是所有的container都像我们期望的只过滤一次，servlet版本不同，表现也不同：。
+OncePerRequestFilter顾名思义，他能够确保在**一次请求只通过一次filter**，而不需要重复执行。大家常识上都认为，一次请求本来就只过一次，为什么还要由此特别限定呢，此方式是为了兼容不同的web container，特意而为之（jsr168），也就是说并不是所有的container都像我们期望的只过滤一次，servlet版本不同，表现也不同：。
 如，servlet2.3与servlet2.4也有一定差异
 写道
+
 ```
 在servlet-2.3中，Filter会过滤一切请求，包括服务器内部使用forward转发请求和<%@ include file="/index.jsp"%>的情况。
 

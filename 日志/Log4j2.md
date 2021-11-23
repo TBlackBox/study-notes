@@ -19,7 +19,7 @@ System.setProperty("log4j.configurationFile", "...");
 -Dlog4j.configurationFile="xx"
 ```
 配置文件示例：
-```
+```xml
 <!--log4j2.xml-->
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" monitorInterval="30">
@@ -77,7 +77,7 @@ LOGGER.debug("error: {} ", e.getMessage());
 
 # 性能优化
 在性能方面，Log4j2引入了基于LMAX的Disruptor的无锁异步日志实现进一步提升异步日志的性能：
-```
+```xml
 <AsyncLogger name="asyncTestLogger" level="trace" includeLocation="true">
     <AppenderRef ref="Console"/>
 </AsyncLogger>
@@ -85,7 +85,7 @@ LOGGER.debug("error: {} ", e.getMessage());
 需要注意的是，由于默认日志位置信息并没有被传给异步Logger的I/O线程，因此这里的includeLocation必须要设置为true。
 
 和Log4j一样，Log4j2也提供了缓冲配置来优化日志输出性能。
-```
+```xml
 <Appenders>
   <File name="File" fileName="app.log" bufferedIO="true" immediateFlush="true">
     <PatternLayout>
