@@ -27,8 +27,6 @@ public class OrderMain80 {
 
 ```
 
-      
-
 ## 手写ribbon负载均衡算法
 
 可以去看springclound 文档
