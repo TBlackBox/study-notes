@@ -10,7 +10,7 @@
 2. 将需要调用的微服务集中处理到接口中
 
    ```java
-   @Component
+   @Component //这里可以不要  但必须保证@EnableFeignClients 能扫描到@FeignClient修饰的类
    @FeignClient(value = "CLOUD-PAYMENT-SERVICE")
    public interface PaymentFeignService {
    

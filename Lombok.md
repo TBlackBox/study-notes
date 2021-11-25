@@ -11,6 +11,12 @@ setting -> plugins   搜索  lombok  安装即可
 
 # eclipse 安装Lombok
 
+- lombok 下载地址
+
+```
+https://projectlombok.org/download
+```
+
 1. 点击maven生成的lombok-1.16.18.jar右键，以jar的方式打开
 2. 弹出如下对话框，点击【specify location……】选择eclipse.exe文件，然后点击【Install / Update】
 3. .上述操作完成后，在eclipse.exe同级目录会出现lombok.jar文件且eclipse.ini文件中生成：-javaagent:lombok.jar，表明已经成功。
@@ -57,13 +63,22 @@ val：用在局部变量前面，相当于将变量声明为final
 - @Synchronized：用在方法上，将方法声明为同步的，并自动加锁，而锁对象是一个私有的属性$lock或$LOCK，而java中的synchronized关键字锁对象是this，锁在this或者自己的类对象上存在副作用，就是你不能阻止非受控代码去锁this或者类对象，这可能会导致竞争条件或者其它线程错误
 - @Getter(lazy=true)：可以替代经典的Double Check Lock样板代码
 - @Log：根据不同的注解生成不同类型的log对象，但是实例名称都是log，有六种可选实现类
-
+```java
 @CommonsLog Creates log = org.apache.commons.logging.LogFactory.getLog(LogExample.class);
 @Log Creates log = java.util.logging.Logger.getLogger(LogExample.class.getName());
 @Log4j Creates log = org.apache.log4j.Logger.getLogger(LogExample.class);
 @Log4j2 Creates log = org.apache.logging.log4j.LogManager.getLogger(LogExample.class);
 @Slf4j Creates log = org.slf4j.LoggerFactory.getLogger(LogExample.class);
 @XSlf4j Creates log = org.slf4j.ext.XLoggerFactory.getXLogger(LogExample.class);
+```
+## `@RequiredArgsConstructor`注解
+### 使用
+定义到类上
+### 作用
+生成有必须参数的构造函数，必需的参数是最终字段和具有约束的字段，例如@NonNull 。
+### 要点
+1. 必须声明的变量魏final.
+2. 根据构造器注入的，相当于当容器调用带有一组参数的类构造函数时，基于构造函数的 DI 就完成了，其中每个参数代表一个对其他类的依赖。
 
 
 # 3.2 Lombok代码示例
@@ -82,7 +97,7 @@ public static void main(String[] args) {
 ```
 复制代码
 @NonNull示例
-```
+```JAVA
 public void notNullExample(@NonNull String string) {
     string.length();
 }
@@ -95,8 +110,9 @@ public void notNullExample(String string) {
     }
 }
 ```
-复制代码
+
 @Cleanup示例
+
 ```java
 public static void main(String[] args) {
     try {
@@ -121,8 +137,9 @@ public static void main(String[] args) {
     }
 }
 ```
-复制代码
+
 @Getter/@Setter示例
+
 ```java
 @Setter(AccessLevel.PUBLIC)
 @Getter(AccessLevel.PROTECTED)
@@ -288,7 +305,7 @@ public class GetterLazyExample {
 ```
 
 // 相当于如下所示: 
-
+```
 import java.util.concurrent.atomic.AtomicReference;
 public class GetterLazyExample {
     private final AtomicReference<java.lang.Object> cached = new AtomicReference<>();
@@ -314,6 +331,7 @@ public class GetterLazyExample {
         return result;
     }
 }
+```
 复制代码4 Lombok注解原理
 说道 Lombok，我们就得去提到 JSR 269: Pluggable Annotation Processing API (www.jcp.org/en/jsr/deta…) 。JSR 269 之前我们也有注解这样的神器，可是我们比如想要做什么必须使用反射，反射的方法局限性较大。首先，它必须定义@Retention为RetentionPolicy.RUNTIME，只能在运行时通过反射来获取注解值，使得运行时代码效率降低。其次，如果想在编译阶段利用注解来进行一些检查，对用户的某些不合理代码给出错误报告，反射的使用方法就无能为力了。而 JSR 269 之后我们可以在 Javac的编译期利用注解做这些事情。所以我们发现核心的区分是在 运行期 还是 编译期。
 
@@ -338,6 +356,7 @@ IDE工具问题解决：
 一般javac的编译过程，java文件首先通过进行解析构建出一个AST，然后执行注解处理，最后经过分析优化生成二进制的.class文件。我们能做到的是，在注解处理阶段进行一些相应处理。首先我们在META-INF.services下创建如下文件：
 
 文件中指定我们的注解处理器：com.alipay.kris.other.lombok.MyAnnotaionProcessor，然后我们接可以编写自己的注解处理器，一个简单的实例代码如下：
+```JAVA
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedAnnotationTypes("com.alipay.kris.other.lombok.*")
 public class MyAnnotaionProcessor extends AbstractProcessor {
@@ -356,11 +375,4 @@ public class MyAnnotaionProcessor extends AbstractProcessor {
         return true; // no further processing of this annotation type
     }
 }
-
-```
-
-```
-
-```
-
 ```

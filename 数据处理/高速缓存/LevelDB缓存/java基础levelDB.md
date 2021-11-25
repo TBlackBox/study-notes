@@ -3,7 +3,7 @@ https://blog.csdn.net/future_1024/article/details/82155680
 
 
 # 引入Java包
-```
+```xml
 <dependency>
     <groupId>org.iq80.leveldb</groupId>
     <artifactId>leveldb</artifactId>
@@ -12,7 +12,7 @@ https://blog.csdn.net/future_1024/article/details/82155680
 ```
 
 # 例子
-```
+```java
 package com.cicada.cache;
 
 import com.cicada.configuration.properties.CicadaProperties;

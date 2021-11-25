@@ -36,7 +36,7 @@ service mysql start
 mysql -uroot
 ```
 (不需要密码)
- 
+
  不行的话尝试：
 
  ```
@@ -61,3 +61,17 @@ grant all privileges on blogdb.* to blog@"%" identified by '123456';
  ```
 
  这样就可以连接了，记到开3306的端口哦
+
+
+
+
+
+## 通过命令授权所有ip能访问
+
+```sql
+use mysql;
+select host,user from user;
+update user set host = '%' where user = 'root';
+flush privileges;
+```
+

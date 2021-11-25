@@ -71,3 +71,13 @@ mvn archetype:generate -DgroupId=[groupId] -DartifactId=[artifactId] -Darchetype
 org.apache.maven.plugins:maven-archetype-plugin:2.4:generate配合-DarchetypeRepository=http://xxx[远程repository的url]或者-DarchetypeCatalog=http://xxx[catalog的远程url]来使用远程的archetype。
 
 此外，可以使用-q参数使Maven的日志输出只包含错误信息。
+
+
+
+- 循环删除`lastUpdated` 文件
+
+  ```
+  for /r %i in (*.lastUpdated)do del %i
+  ```
+
+  

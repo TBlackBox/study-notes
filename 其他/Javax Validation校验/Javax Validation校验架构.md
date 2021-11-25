@@ -1,7 +1,7 @@
 # 简介
 JSR303 是一套JavaBean参数校验的标准，它定义了很多常用的校验注解，我们可以直接将这些注解加在我们JavaBean的属性上面(面向注解编程的时代)，就可以在需要校验的时候进行校验了,在SpringBoot中已经包含在starter-web中,再其他项目中可以引用依赖,并自行调整版本:
 
-```
+```xml
  <!--jsr 303-->
  <dependency>
      <groupId>javax.validation</groupId>
@@ -46,13 +46,9 @@ JSR303 是一套JavaBean参数校验的标准，它定义了很多常用的校�
 
 此处只列出Hibernate Validator提供的大部分验证约束注解，请参考hibernate validator官方文档了解其他验证约束注解和进行自定义的验证约束注解定义。
 
-
-
 # @Validated 声明要检查的参数
 
 这里我们在控制器层进行注解声明
-
-
 
 ```kotlin
  /**
@@ -69,8 +65,6 @@ JSR303 是一套JavaBean参数校验的标准，它定义了很多常用的校�
 ```
 
 ### 2. 对参数的字段进行注解标注
-
-
 
 ```kotlin
 import lombok.Data;
