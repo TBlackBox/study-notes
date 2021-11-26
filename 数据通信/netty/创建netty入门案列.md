@@ -3,7 +3,7 @@
 
 # 添加项目依赖
 新建maven工程，并在破灭。xml里面添加项目依赖。
-```
+```xml
 <properties>
     <netty-all.version>4.1.38.Final</netty-all.version>
 </properties>
@@ -21,7 +21,7 @@
 这里都都不详解的介绍包的结构了，安需安排就可以了。
 
 ## 常见SocketServer,用于初始化socket配置和启动
-```
+```java
 /**
  * 1. 双线程组
  * 2. Bootstrap配置启动信息
@@ -131,7 +131,7 @@ public class SocketServer {
 ```
 
 ## 参见测试handler,方便我们处理客服端传来的消息
-```
+```java
 package cn.javafroum.netty.server.handler;
 
 import io.netty.buffer.ByteBuf;
@@ -192,7 +192,7 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter { // (1)
 ```
 
 ## 创建启动类
-```
+```java
 package cn.javafroum.netty.server;
 
 import cn.javafroum.netty.server.handler.DiscardServerHandler;
@@ -231,7 +231,7 @@ public class StartupServer {
 # 客服端结构创建
 
 ## 创建客服端配置和初始化类
-```
+```java
 /**
  * 1. 单线程组
  * 2. Bootstrap配置启动信息
@@ -304,7 +304,7 @@ public class SocketClient {
 ```
 
 ## 创建客服端的handler，用于处理接收到服务端的返回消息
-```
+```java
 package cn.javafroum.netty.client.handler;
 
 import io.netty.buffer.ByteBuf;
@@ -355,7 +355,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 ```
 
 ## 创建客服端的启动类
-```
+```java
 package cn.javafroum.netty.client;
 
 import cn.javafroum.netty.client.handler.ClientHandler;
@@ -412,3 +412,4 @@ public class StartupClient {
 # 总结
 按照上面的配置创建好相应的客服端和服务端，只需要运行启动类就可以了，代码里面有比较详细的注释，文档上面也都不说明了，源码可以参照   
 [github学习案列](https://github.com/TBlackBox/study-example) 
+

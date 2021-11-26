@@ -6,7 +6,7 @@
 
 > NettyServer.java
 
-```
+```java
 serverBootstrap
                 .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     protected void initChannel(NioSocketChannel ch) {
@@ -34,7 +34,7 @@ serverBootstrap
 
 > LoginRequestHandler.java
 
-```
+```java
 // 1. 加上注解标识，表明该 handler 是可以多个 channel 共享的
 @ChannelHandler.Sharable
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
@@ -55,7 +55,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
 
 > NettyServer.java
 
-```
+```java
 serverBootstrap
         .childHandler(new ChannelInitializer<NioSocketChannel>() {
             protected void initChannel(NioSocketChannel ch) {
@@ -74,7 +74,7 @@ serverBootstrap
 
 > NettyServer.java
 
-```
+```java
 serverBootstrap
         .childHandler(new ChannelInitializer<NioSocketChannel>() {
             protected void initChannel(NioSocketChannel ch) {
@@ -98,7 +98,7 @@ pipeline 中第一个 handler - `Spliter`，我们是无法动它的，因为他
 
 > PacketCodecHandler.java
 
-```
+```java
 @ChannelHandler.Sharable
 public class PacketCodecHandler extends MessageToMessageCodec<ByteBuf, Packet> {
     public static final PacketCodecHandler INSTANCE = new PacketCodecHandler();
@@ -161,7 +161,7 @@ serverBootstrap
 
 > IMHandler.java
 
-```
+```java
 @ChannelHandler.Sharable
 public class IMHandler extends SimpleChannelInboundHandler<Packet> {
     public static final IMHandler INSTANCE = new IMHandler();
@@ -195,7 +195,7 @@ public class IMHandler extends SimpleChannelInboundHandler<Packet> {
 
 > NettyServer.java
 
-```
+```java
 serverBootstrap
         .childHandler(new ChannelInitializer<NioSocketChannel>() {
             protected void initChannel(NioSocketChannel ch) {

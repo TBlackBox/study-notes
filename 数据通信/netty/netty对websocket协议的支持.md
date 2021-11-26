@@ -1,7 +1,7 @@
 
 
 ## 初始化链接的组件
-```
+```java
 public class ChannelHandler extends ChannelInitializer<SocketChannel>{
 
     @Override

@@ -8,7 +8,7 @@ Netty 内置了很多开箱即用的 ChannelHandler。下面，我们通过学�
 
 > ChannelInboundHandlerAdapter.java
 
-```
+```java
 @Override
 public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
     ctx.fireChannelRead(msg);
@@ -21,7 +21,7 @@ public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception 
 
 > ChannelOutboundHandlerAdapter.java
 
-```
+```java
 @Override
 public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
     ctx.write(msg, promise);
@@ -32,7 +32,7 @@ public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)
 
 我们往 pipeline 添加的第一个 handler 中的 `channelRead` 方法中，`msg` 对象其实就是 `ByteBuf`。服务端在接受到数据之后，应该首先要做的第一步逻辑就是把这个 ByteBuf 进行解码，然后把解码后的结果传递到下一个 handler，像这样
 
-```
+```java
 @Override
 public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf requestByteBuf = (ByteBuf) msg;
@@ -49,7 +49,7 @@ public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception 
 
 通常情况下，无论我们是在客户端还是服务端，当我们收到数据之后，首先要做的事情就是把二进制数据转换到我们的一个 Java 对象，所以 Netty 很贴心地写了一个父类，来专门做这个事情，下面我们来看一下，如何使用这个类来实现服务端的解码
 
-```
+```java
 public class PacketDecoder extends ByteToMessageDecoder {
 
     @Override
@@ -97,7 +97,7 @@ if (packet instanceof XXXPacket) {
 
 > LoginRequestHandler.java
 
-```
+```java
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket) {
@@ -112,7 +112,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
 
 > MessageRequestHandler.java
 
-```
+```java
 public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRequestPacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, MessageRequestPacket messageRequestPacket) {
@@ -125,7 +125,7 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRe
 
 在前面几个小节，我们已经实现了登录和消息处理逻辑，处理完请求之后，我们都会给客户端一个响应，在写响应之前，我们需要把响应对象编码成 ByteBuf，结合我们本小节的内容，最后的逻辑框架如下
 
-```
+```java
 public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginRequestPacket> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, LoginRequestPacket loginRequestPacket) {
@@ -149,7 +149,7 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRe
 
 > PacketCodeC.java
 
-```
+```java
 public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
     // 1. 创建 ByteBuf 对象
     ByteBuf byteBuf = byteBufAllocator.ioBuffer();
@@ -165,7 +165,7 @@ public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
 
 下面，我们来看一下，我们如何来实现编码逻辑
 
-```
+```java
 public class PacketEncoder extends MessageToByteEncoder<Packet> {
 
     @Override
@@ -181,7 +181,7 @@ public class PacketEncoder extends MessageToByteEncoder<Packet> {
 
 > PacketCodeC.java
 
-```
+```java
 // 更改前的定义
 public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
     // 1. 创建 ByteBuf 对象
@@ -234,7 +234,7 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRe
 
 > 服务端
 
-```
+```java
 serverBootstrap
                .childHandler(new ChannelInitializer<NioSocketChannel>() {
                     protected void initChannel(NioSocketChannel ch) {
@@ -248,7 +248,7 @@ serverBootstrap
 
 > 客户端
 
-```
+```java
 bootstrap
         .handler(new ChannelInitializer<SocketChannel>() {
             @Override
