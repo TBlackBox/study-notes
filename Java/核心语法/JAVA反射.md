@@ -33,6 +33,7 @@ new Hero().getClass()
 在同一个类加载器，一个jvm下，一种类，只会有一个类对象存在，所以上面三种方式取出来的对象都一样。
 下面通过例子解释：
 为了方便，假设我么有一个User类
+
 ```
 package test;
 public class User {
@@ -129,7 +130,7 @@ getField和getDeclaredField的区别
    + getDeclaredField 可以获取本类所有的字段，包括private的，但是 不能获取继承来的字段。 (注： 这里只能获取到private的字段，但并不能访问该private字段的值,除非加上setAccessible(true))
 
 例如：
-```
+```java
 //类名(全名)
 String className = "test.User";
 //获取类对象   常用
