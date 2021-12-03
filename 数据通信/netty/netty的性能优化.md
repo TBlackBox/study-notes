@@ -295,7 +295,7 @@ protected void channelRead0(ChannelHandlerContext ctx, T packet) {
 
 我们接着前面的逻辑来讨论，通常，应用程序都有统计某个操作响应时间的需求，比如，基于我们上面的栗子，我们会这么做
 
-```
+```java
 protected void channelRead0(ChannelHandlerContext ctx, T packet) {
     threadPool.submit(new Runnable() {
         long begin = System.currentTimeMillis();

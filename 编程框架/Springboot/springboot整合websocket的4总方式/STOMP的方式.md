@@ -4,7 +4,7 @@
 
 # 例子
 1. 引入依赖
-```
+```xml
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-websocket</artifactId>
@@ -12,7 +12,7 @@
 ```
 
 2. 创建配置类
-```
+```java
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
@@ -37,7 +37,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 ```
 
 3. 创建controller
-```
+```java
 @Controller
 public class WSController {
 
@@ -78,7 +78,7 @@ public class WSController {
 - **@SendTo**这个注解会把返回值的内容发送给订阅了 **/topic/hello** 的客户端，与之类似的还有一个**@SendToUser** 只不过他是发送给用户端一对一通信的。这两个注解一般是应答时响应的，如果服务端主动发送消息可以通过 **simpMessagingTemplate**类的**convertAndSend**方法。注意 **simpMessagingTemplate.convertAndSendToUser(token, "/msg", msg)** ，联系到我们上文配置的 **registry.setUserDestinationPrefix("/user/"),**这里客户端订阅的是**/user/{token}/msg**,千万不要搞错。
 
 4. 简单的消息实体
-```
+```java
 public class ResponseMsg {
 
 	private String responseBody;
@@ -98,7 +98,7 @@ public class ResponseMsg {
 ```
 
 5. 简单的html测试页面
-```
+```java
 <html>
 <head>
     <meta charset="UTF-8"/>
@@ -185,5 +185,4 @@ public class ResponseMsg {
 1. 其中 **enableSimpleBroker** 配置的广播节点，也就是服务端发送消息，客户端订阅就能接收消息的节点。
 2. 覆盖**setApplicationDestinationPrefixes** 方法，设置客户端向服务端发送消息的节点。
 3. 覆盖 **setUserDestinationPrefix** 方法，设置一对一通信的节点。
-
 
