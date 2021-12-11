@@ -7,7 +7,7 @@
 
 # 引入方式
 1. manven引入
-```
+```xml
 <dependency>
     <groupId>com.alibaba</groupId>
     <artifactId>fastjson</artifactId>
@@ -15,7 +15,7 @@
 </dependency>
 ```
 android
-```
+```xml
 <dependency>
     <groupId>com.alibaba</groupId>
     <artifactId>fastjson</artifactId>
