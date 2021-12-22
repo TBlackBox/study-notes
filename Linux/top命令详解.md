@@ -2,30 +2,40 @@
 top命令是Linux下常用的性能分析工具，能够实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。
 
 # 语法
-```
+```shell
 top [-] [d delay] [q] [c] [S] [s] [i] [n] [b]
 ```
 ## **参数说明**：
 
 - d : 改变显示的更新速度，或是在交谈式指令列( interactive command)按 s
+
 - q : 没有任何延迟的显示速度，如果使用者是有 superuser 的权限，则 top 将会以最高的优先序执行
-- c : 切换显示模式，共有两种模式，一是只显示执行档的名称，另一种是显示完整的路径与名称S : 累积模式，会将己完成或消失的子行程 ( dead child process ) 的 CPU time 累积起来
+
+- c : 切换显示模式，共有两种模式：
+
+	- 一是只显示执行档的名称
+	- 一种是显示完整的路径与名称S
+		累积模式，会将己完成或消失的子行程 ( dead child process ) 的 CPU time 累积起来
+
 - s : 安全模式，将交谈式指令取消, 避免潜在的危机
+
 - i : 不显示任何闲置 (idle) 或无用 (zombie) 的行程
+
 - n : 更新的次数，完成后将会退出 top
+
 - b : 批次档模式，搭配 "n" 参数一起使用，可以用来将 top 的结果输出到档案内
 
 ## 实例
 
 显示进程信息
 
-```
+```shell
 # top
 ```
 
 显示完整命令
 
-```
+```shell
 # top -c
 ```
 
@@ -74,7 +84,7 @@ top -s
 
 
 # 参数详解
-```
+```shell
 top - 14:06:22 up 55 days,  2:13,  1 user,  load average: 0.33, 0.21, 0.16
 Tasks: 306 total,   1 running, 305 sleeping,   0 stopped,   0 zombie
 %Cpu(s):  0.6 us,  0.1 sy,  0.0 ni, 99.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
@@ -131,7 +141,7 @@ KiB Swap:  1048572 total,  1003280 free,    45292 used.   993772 avail Mem
 
 > 备注：
 >
-> 可用内存=free + buffer + cached
+> 可用内存 = free + buffer + cached
 >
 > 对于内存监控，在top里我们要时刻监控第五行swap交换分区的used，如果这个数值在不断的变化，说明内核在不断进行内存和swap的数据交换，这是真正的内存不够用了。
 >
@@ -201,7 +211,7 @@ KiB Swap:  1048572 total,  1003280 free,    45292 used.   993772 avail Mem
 
 **如果不按1，则在top视图里面显示的是所有cpu的平均值。也就是第三行cpu的信息**
 
-```
+```shell
 //命令没经过验证
 # mpstat -P ALL 
 # sar -P ALL 

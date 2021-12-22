@@ -71,12 +71,11 @@ Stream<Integer> stream = Stream.of(1,2,3,4,5,6);
 4. 创建无限流
 可以使用静态方法`Stream.iterate()`和`Stream.generate()`,创建无限流。
 * 通过迭代的方式
-```
-public static<T> Stream<T> iterate(final T seed, final 
-UnaryOperator<T> f)
+```java
+public static<T> Stream<T> iterate(final T seed, final UnaryOperator<T> f)
 ```
 例如：
-```
+```java
 Stream<Integer> stream3 = Stream.iterate(0, (x) -> x + 2).limit(3);
 stream3.forEach(System.out::println);
 ```
@@ -90,7 +89,7 @@ stream3.forEach(System.out::println);
 
 * 通过生成的方式
 
-```
+```java
 Stream<Double> stream = Stream.generate(Math::random).limit(2);
 stream.forEach(System.out::println);
 ```
@@ -125,8 +124,29 @@ stream.forEach(System.out::println);
 |sorted()|产生一个新流，其中按自然顺序排序|
 |sorted(Comparatr comp)|产生一个新流，其中按照比较器的顺序排序|
 
+```java
+1、sorted() 默认使用自然序排序， 其中的元素必须实现Comparable 接口
+2、sorted(Comparator<? super T> comparator) ：我们可以使用lambada 来创建一个Comparator 实例。可以按照升序或着降序来排序元素。
+
+#自然序排序一个list
+list.stream().sorted() 
+ 
+#自然序逆序元素，使用Comparator 提供的reverseOrder() 方法
+list.stream().sorted(Comparator.reverseOrder()) 
+ 
+# 使用Comparator 来排序一个list
+list.stream().sorted(Comparator.comparing(Student::getAge)) 
+ 
+# 颠倒使用Comparator 来排序一个list的顺序，使用Comparator 提供的reverseOrder() 方法
+list.stream().sorted(Comparator.comparing(Student::getAge).reversed()) 
+```
+
+
+
+
 
 # Stream的终止操作
+
 终端操作会从流的流水线生产结果，其结果可以是任何不时流的值，例如：List,Integer,慎重void。下面看一下有哪些终端操作。
 1. 查找与匹配
 |方法|描述|
@@ -157,7 +177,7 @@ stream.forEach(System.out::println);
 *** 常用的说明 ***
 为方便说明,构建下面的列表
 
-```
+```java
 List<Employee> emps = Arrays.asList(
             new Employee(102, "李四", 79, 6666.66, Status.BUSY),
             new Employee(101, "张三", 18, 9999.99, Status.FREE),
@@ -171,7 +191,7 @@ List<Employee> emps = Arrays.asList(
 上面的字段分别表示，员工ID,名字，年龄，工资，工作状态
 
 * 获取所有工资的总和
-```
+```java
 Optional<Double> sum = emps.stream()
             .map(Employee::getSalary)
             .collect(Collectors.reducing(Double::sum));
@@ -181,7 +201,7 @@ System.out.println(sum.get());
 ```
 
 * 将名字转化为字符串，用`,`分隔，收尾加`+`
-```
+```java
 String str = emps.stream()
             .map(Employee::getName)
             .collect(Collectors.joining("," , "+", "+"));
@@ -192,7 +212,7 @@ System.out.println(str);
 * 分区
 
 工资大于5000一个集合，工资小于5000一个集合
-```
+```java
 Map<Boolean, List<Employee>> map = emps.stream()
 			.collect(Collectors.partitioningBy((e) -> e.getSalary() >= 5000));
 		
@@ -201,7 +221,7 @@ System.out.println(map);
 
 * 分组
 1. 单级分组
-```
+```java
 Map<Status, List<Employee>> map = emps.stream()
                         .collect(Collectors.groupingBy(Employee::getStatus));
             
@@ -210,7 +230,7 @@ Map<Status, List<Employee>> map = emps.stream()
 
 2. 多级分组
 下面就实现了先按照状态分，分类在按照年龄分组。
-```
+```java
 Map<Status, Map<String, List<Employee>>> map = emps.stream()
 			.collect(Collectors.groupingBy(Employee::getStatus, Collectors.groupingBy((e) -> {
 				if(e.getAge() >= 60)
@@ -226,7 +246,7 @@ System.out.println(map);
 ```
 
 * 常用的操作
-```
+```java
 //获取工资最大
 Optional<Double> max = emps.stream()
             .map(Employee::getSalary)
@@ -264,7 +284,6 @@ System.out.println("--------------------------------------------");
 //通过这种形式也能获取上面的值 看DoubleSummaryStatistics的方法
 DoubleSummaryStatistics dss = emps.stream()
             .collect(Collectors.summarizingDouble(Employee::getSalary));
-
 System.out.println(dss.getMax());
 
 ```

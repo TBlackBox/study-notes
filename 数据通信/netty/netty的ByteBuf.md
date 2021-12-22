@@ -365,20 +365,20 @@ ByteBufAllocator allocator2 = ctx.alloc()
 
 ##### ByteBufUtil
 1. ByteBufUtil提供了用于操作ByteBuf的静态的辅助方法。因为这个API是通用的，并且和池化无关，所以这些方法已然在分配类的外部实现 。
-2. 这些静态方法中最有价值的可能就是hexdump()方法，它以十六进制的表示形式打印 ByteBuf 的内容。 这在各种情况下都很有用，例如，出于调试 的目的记录ByteBuf的内容。十六进制的表示通常会提供一个比字节值的直接表示形式更加有用的日志条目，此外，十六进制的版本还可以很容易地转换回实际的字节表示 。
-3. 另一个有用的方法是boolean equals(ByteBuf , ByteBuf)，它被用来判断两个ByteBuf实例的相等性。 如果你实现自己的 ByteBuf子类，你可能会发现ByteBufUtil的其他有用方法。
-4. encodeString(ByteBufAllocator alloc, CharBuffer src, Charset charset):对需要编码的字符串src按照指定的字符集charset进行编码，利用指定的ByteBufAllocator生成一个新的ByteBuf。
-5. decodeString(ByteBuffer src, Charset charset)：使用指定的ByteBuffer和charset进行对ByteBuffer进行解码，获取解码后的字符串。
+2. 这些静态方法中最有价值的可能就是**hexdump()**方法，它以十六进制的表示形式打印 ByteBuf 的内容。 这在各种情况下都很有用，例如，出于调试 的目的记录ByteBuf的内容。十六进制的表示通常会提供一个比字节值的直接表示形式更加有用的日志条目，此外，十六进制的版本还可以很容易地转换回实际的字节表示 。
+3. 另一个有用的方法是**boolean equals(ByteBuf , ByteBuf)**，它被用来判断两个ByteBuf实例的相等性。 如果你实现自己的 ByteBuf子类，你可能会发现ByteBufUtil的其他有用方法。
+4. **encodeString(ByteBufAllocator alloc, CharBuffer src, Charset charset)**:对需要编码的字符串src按照指定的字符集charset进行编码，利用指定的ByteBufAllocator生成一个新的ByteBuf。
+5. **decodeString(ByteBuffer src, Charset charset)**：使用指定的ByteBuffer和charset进行对ByteBuffer进行解码，获取解码后的字符串。
 ##### 零拷贝
 1. byte数组转换为ByteBuf对象。Unpooled.wrappedBuffer方法来将bytes 包装成为一个UnpooledHeapByteBuf对象, 而在包装的过程中, 是不会有拷贝操作的。最后我们生成的生成的ByteBuf对象是和bytes数组共用了同一个存储空间, 对bytes的修改也会反映到ByteBuf对象中.
 
 ```java
-1. 传统做法，这样的方式也是有一个额外的拷贝操作的
+//1. 传统做法，这样的方式也是有一个额外的拷贝操作的
 byte[] bytes = ...
 ByteBuf byteBuf = Unpooled.buffer();
 byteBuf.writeBytes(bytes);
 
-2. 无额外copy方式
+//2. 无额外copy方式
 byte[] bytes = ...
 ByteBuf byteBuf = Unpooled.wrappedBuffer(bytes);
 ```
@@ -395,7 +395,7 @@ public ByteBuf slice(int index, int length);
 ```
 
 
-5. 不带参数的slice方法等同于buf.slice(buf.readerIndex(), buf.readableBytes())调用, 即返回buf中可读部分的切片. 而 slice(int index, int length) 方法相对就比较灵活了, 我们可以设置不同的参数来获取到 buf的不同区域的切片.
+5. **不带参数的slice方法等同于buf.slice(buf.readerIndex(), buf.readableBytes())**调用, 即返回buf中可读部分的切片. 而 slice(int index, int length) 方法相对就比较灵活了, 我们可以设置不同的参数来获取到 buf的不同区域的切片.
 
     ByteBuf byteBuf = ...
     ByteBuf header = byteBuf.slice(0, 5);
@@ -417,8 +417,8 @@ public ByteBuf slice(int index, int length);
 
 #### 转化为已存在的JDK类型
 ##### Byte Array
-1. 假如一个ByteBuf是有一个byte数组作为支持的, 你可以直接通过array()方法访问它。判断一个buffer是否是被byte array作为支持,调用hasArray()
-2. 只有堆内内存的ByteBuf是有array支持的, 如果是堆外内存的ByteBuf, 是不能通过array()获取到数据的, 而CompositeByteBuf可能由堆内的ByteBuf和堆外的DirectByteBuf组成, 所以它也不能直接通过array()获取数据
+1. **假如一个ByteBuf是有一个byte数组作为支持的, 你可以直接通过array()方法访问它。判断一个buffer是否是被byte array作为支持,调用hasArray().**
+2. **只有堆内内存的ByteBuf是有array支持的, 如果是堆外内存的ByteBuf, 是不能通过array()获取到数据的, 而CompositeByteBuf可能由堆内的ByteBuf和堆外的DirectByteBuf组成, 所以它也不能直接通过array()获取数据。**
 ##### NIO Buffers
 1. 如果一个ByteBuf可以被转换为NIO ByteBuffer,它共享它的内容,你可以通过nioBuffer()获取它。判断一个buffer能否被转化为NIO buffer, 使用nioBufferCount().
 

@@ -58,7 +58,7 @@ Truncate table tableName
 
 ### drop
 
-```
+```sql
 Drop table Tablename
 ```
 
